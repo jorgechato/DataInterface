@@ -57,12 +57,15 @@ public class ActionDojo extends FatherAction{
         }
         if (actionEvent.getSource() == window.getBtCancelDojo()) {
             setNew(true);
+            navigate();
             activateDeactivateEdition(false);
             activateDeactivateButton(true);
             return;
         }
         if (actionEvent.getSource() == window.getBtChangeDojo()) {
             setNew(false);
+            disableNavigation();
+
             activateDeactivateEdition(true);
             activateDeactivateButton(false);
             return;
@@ -172,6 +175,8 @@ public class ActionDojo extends FatherAction{
 
     @Override
     public void newData() {
+        disableNavigation();
+        setNew(true);
         window.getTxtNameDojo().setText("");
         window.getTxtStreetDojo().setText("");
         window.getDateDojo().setDate(null);
@@ -205,25 +210,28 @@ public class ActionDojo extends FatherAction{
     }
 
     private void loadListBoxer(){
+        window.getModelBoxerInDojo().removeAllElements();
+
         if (window.getArrayListBoxer().size() == 0)
             return;
 
-        window.getModelBoxerInDojo().removeAllElements();
-
         for (Boxer boxer : window.getArrayListBoxer())
-            if (boxer.getDojo().toString().equals(window.getArrayListDojo().get(getPos()).toString()))
-                window.getModelBoxerInDojo().addElement(boxer);
+            if (boxer.getDojo()!=null)
+                if (boxer.getDojo().toString().equals(window.getArrayListDojo().get(getPos()).toString()))
+                    window.getModelBoxerInDojo().addElement(boxer);
     }
 
     private void loadListCoach(){
-        if (window.getArrayListCoach().size() == 0)
-            return;
-
         window.getModelCoachInDojo().removeAllElements();
 
+        if (window.getArrayListCoach().size() == 0) {
+            return;
+        }
+
         for (Coach coach : window.getArrayListCoach())
-            if (coach.getDojo().toString().equals(window.getArrayListDojo().get(getPos()).toString()))
-                window.getModelCoachInDojo().addElement(coach);
+            if (coach.getDojo()!=null)
+                if (coach.getDojo().toString().equals(window.getArrayListDojo().get(getPos()).toString()))
+                    window.getModelCoachInDojo().addElement(coach);
     }
 
     @Override

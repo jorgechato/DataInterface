@@ -57,12 +57,15 @@ public class ActionCoach extends FatherAction{
         }
         if (actionEvent.getSource() == window.getBtCancelCoach()) {
             setNew(true);
+            navigate();
             activateDeactivateEdition(false);
             activateDeactivateButton(true);
             return;
         }
         if (actionEvent.getSource() == window.getBtChangeCoach()) {
             setNew(false);
+            disableNavigation();
+
             activateDeactivateEdition(true);
             activateDeactivateButton(false);
             return;
@@ -198,6 +201,8 @@ public class ActionCoach extends FatherAction{
 
     @Override
     public void newData() {
+        disableNavigation();
+        setNew(true);
         window.getTxtNameCoach().setText("");
         window.getTxtYearCoach().setText("");
         window.getDateCoach().setDate(null);
@@ -208,10 +213,15 @@ public class ActionCoach extends FatherAction{
 
     public void loadComboBox(){
         window.getCbDojoInCoach().removeAllItems();
-        if (window.getArrayListDojo().isEmpty())
+        if (window.getArrayListDojo().isEmpty()) {
+            window.getCbDojoInCoach().addItem(null);
             return;
+        }
+        if (getPos()>=0 && null == window.getArrayListCoach().get(getPos()).getDojo())
+            window.getCbDojoInCoach().addItem(null);
         for (Dojo dojo : window.getArrayListDojo())
             window.getCbDojoInCoach().addItem(dojo);
+
     }
 
     @Override
@@ -234,20 +244,23 @@ public class ActionCoach extends FatherAction{
         window.getTxtNameCoach().setText(window.getArrayListCoach().get(getPos()).getName());
         window.getTxtYearCoach().setText(String.valueOf(window.getArrayListCoach().get(getPos()).getYears()));
         window.getDateCoach().setDate(window.getArrayListCoach().get(getPos()).getBirthday());
-        loadComboBox();
-        window.getCbDojoInCoach().setSelectedItem(window.getArrayListCoach().get(getPos()).getDojo().toString());
         loadListBoxer();
+        loadComboBox();
+        if (null == window.getArrayListCoach().get(getPos()).getDojo())
+            return;
+        window.getCbDojoInCoach().setSelectedItem(window.getArrayListCoach().get(getPos()).getDojo().toString());
+
     }
 
     private void loadListBoxer(){
-        if (window.getArrayListBoxer().size() == 0)
-            return;
-
         window.getModelBoxerInCoach().removeAllElements();
 
+        if (window.getArrayListBoxer().size() == 0)
+            return;
         for (Boxer boxer : window.getArrayListBoxer())
-            if (boxer.getCoach().toString().equals(window.getArrayListCoach().get(getPos()).toString()))
-                window.getModelBoxerInCoach().addElement(boxer);
+            if (boxer.getCoach()!=null)
+                if (boxer.getCoach().toString().equals(window.getArrayListCoach().get(getPos()).toString()))
+                    window.getModelBoxerInCoach().addElement(boxer);
     }
 
     @Override

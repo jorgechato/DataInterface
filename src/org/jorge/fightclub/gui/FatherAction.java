@@ -99,6 +99,13 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
         this.model = model;
     }
 
+    public void disableNavigation(){
+        before.setEnabled(false);
+        last.setEnabled(false);
+        first.setEnabled(false);
+        after.setEnabled(false);
+    }
+
     /**
      * method to navigate in the list of the different tags. You had to cast the List parameter
      * to Arraylist<¿> in setters.
@@ -221,6 +228,8 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
      */
     public void loadDataBase(){
         loadInFile();
+        if (array == null)
+            return;
         navigate();
         loadData();
         reloadModelData();

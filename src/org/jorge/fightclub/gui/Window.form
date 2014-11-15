@@ -407,7 +407,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <editable value="true"/>
+                  <editable value="false"/>
                   <enabled value="false"/>
                 </properties>
               </component>
@@ -716,7 +716,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <editable value="true"/>
+                  <editable value="false"/>
                   <enabled value="false"/>
                 </properties>
               </component>
@@ -726,7 +726,7 @@
                   <forms/>
                 </constraints>
                 <properties>
-                  <editable value="true"/>
+                  <editable value="false"/>
                   <enabled value="false"/>
                 </properties>
               </component>

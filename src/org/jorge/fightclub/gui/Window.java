@@ -78,11 +78,14 @@ public class Window extends JFrame{
 
     private boolean manual;
 
+    private String path;
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Window");
         menuBar = new MenuBar();
         Window window = new Window();
         frame.setJMenuBar(menuBar.menuBar());
+        menuBar.setWindow(window);
         frame.setContentPane(window.panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

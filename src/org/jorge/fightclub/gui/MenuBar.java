@@ -100,17 +100,13 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         int tag = window.getTabbedPane1().getSelectedIndex();
         switch (tag){
             case 0:
-                labelok = "dojo";
                 break;
             case 1:
-                labelok = "coach";
                 break;
             case 2:
-                labelok = "boxer";
                 break;
             default:
                 break;
         }
-
     }
 }

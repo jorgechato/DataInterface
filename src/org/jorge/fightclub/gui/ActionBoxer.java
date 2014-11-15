@@ -57,12 +57,15 @@ public class ActionBoxer extends FatherAction{
         }
         if (actionEvent.getSource() == window.getBtCancelBoxer()) {
             setNew(true);
+            navigate();
             activateDeactivateEdition(false);
             activateDeactivateButton(true);
             return;
         }
         if (actionEvent.getSource() == window.getBtChangeBoxer()) {
             setNew(false);
+            disableNavigation();
+
             activateDeactivateEdition(true);
             activateDeactivateButton(false);
             return;
@@ -197,6 +200,8 @@ public class ActionBoxer extends FatherAction{
 
     @Override
     public void newData() {
+        disableNavigation();
+        setNew(true);
         window.getTxtNameBoxer().setText("");
         window.getTxtWinBoxer().setText("");
         window.getTxtLoseBoxer().setText("");
@@ -208,16 +213,24 @@ public class ActionBoxer extends FatherAction{
 
     public void loadComboBoxDojo(){
         window.getCbDojoInBoxer().removeAllItems();
-        if (window.getArrayListDojo().isEmpty())
+        if (window.getArrayListDojo().isEmpty()) {
+            window.getCbDojoInBoxer().addItem(null);
             return;
+        }
+        if (getPos()>=0 && null == window.getArrayListBoxer().get(getPos()).getDojo())
+            window.getCbDojoInBoxer().addItem(null);
         for (Dojo dojo : window.getArrayListDojo())
             window.getCbDojoInBoxer().addItem(dojo);
     }
 
     public void loadComboBoxCoach(){
         window.getCbCoachInBoxer().removeAllItems();
-        if (window.getArrayListCoach().isEmpty())
+        if (window.getArrayListCoach().isEmpty()) {
+            window.getCbCoachInBoxer().addItem(null);
             return;
+        }
+        if (getPos()>=0 && null == window.getArrayListBoxer().get(getPos()).getCoach())
+            window.getCbCoachInBoxer().addItem(null);
         for (Coach coach : window.getArrayListCoach())
             window.getCbCoachInBoxer().addItem(coach);
     }
@@ -246,8 +259,10 @@ public class ActionBoxer extends FatherAction{
         window.getTxtWeightBoxer().setText(String.valueOf(window.getArrayListBoxer().get(getPos()).getWeight()));
         loadComboBoxDojo();
         loadComboBoxCoach();
-        window.getCbDojoInBoxer().setSelectedItem(window.getArrayListBoxer().get(getPos()).getDojo().toString());
-        window.getCbCoachInBoxer().setSelectedItem(window.getArrayListBoxer().get(getPos()).getCoach().toString());
+        if (null != window.getArrayListBoxer().get(getPos()).getDojo())
+            window.getCbDojoInBoxer().setSelectedItem(window.getArrayListBoxer().get(getPos()).getDojo().toString());
+        if (null != window.getArrayListBoxer().get(getPos()).getCoach())
+            window.getCbCoachInBoxer().setSelectedItem(window.getArrayListBoxer().get(getPos()).getCoach().toString());
     }
 
     @Override
