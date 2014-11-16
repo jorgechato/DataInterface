@@ -79,6 +79,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
             return;
         }
         if (actionEvent.getSource() == exportJson) {
+            newFileJson();
             window.exportToJson(tag);
             return;
         }
@@ -111,23 +112,39 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Cambiar la ruta de guardado");
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (fileChooser.showOpenDialog(this) != JFileChooser.CANCEL_OPTION){
-            window.setNewPath(fileChooser.getSelectedFile().getAbsolutePath());
-            window.getLoadLabel().setText("Has cambiado la ruta a "+fileChooser.getSelectedFile().getAbsolutePath());
-        }
+        if (fileChooser.showSaveDialog(this) == JFileChooser.CANCEL_OPTION)
+            return;
+        window.setNewPath(fileChooser.getSelectedFile().getAbsolutePath());
+        window.getLoadLabel().setText("Has cambiado la ruta a "+fileChooser.getSelectedFile().getAbsolutePath());
+
     }
 
+    /**
+     * Set new file path; save as the file.
+     */
     public void newFilePath(){
         fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar como...");
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setFileFilter(new FileNameExtensionFilter("Text files (*.txt, *.bat)", "bat"));
-        if (fileChooser.showSaveDialog(this) != JFileChooser.CANCEL_OPTION){
-            window.setFileNewPath(fileChooser.getSelectedFile().getAbsolutePath());
-            window.getLoadLabel().setText("Has cambiado la ruta a "+fileChooser.getSelectedFile().getAbsolutePath());
-        }
+        if (fileChooser.showSaveDialog(this) == JFileChooser.CANCEL_OPTION)
+            return;
+        window.setFileNewPath(fileChooser.getSelectedFile().getAbsolutePath());
+        window.getLoadLabel().setText("Has cambiado la ruta a "+fileChooser.getSelectedFile().getAbsolutePath());
     }
 
+    /**
+     * chose path to export to JSON
+     */
+    public void newFileJson(){
+        fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Exportar como JSON...");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("JSON, XML files", "json"));
+        if (fileChooser.showSaveDialog(this) == JFileChooser.CANCEL_OPTION)
+            return;
+        window.setJsonPath(fileChooser.getSelectedFile().getAbsolutePath());
+    }
     /**
      * control tag events even if you not change between tags.
      * @param changeEvent

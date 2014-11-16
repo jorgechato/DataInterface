@@ -7,6 +7,10 @@ import org.jorge.fightclub.base.Coach;
 import org.jorge.fightclub.base.Dojo;
 
 import javax.swing.*;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.*;
 
@@ -79,7 +83,7 @@ public class Window extends JFrame{
 
     private boolean manual;
 
-    private String newPath,fileNewPath;
+    private String newPath,fileNewPath,jsonPath;
 
     private ActionBoxer actionBoxer;
     private ActionCoach actionCoach;
@@ -125,6 +129,7 @@ public class Window extends JFrame{
         manual = false;
         newPath = "";
         fileNewPath = "";
+        jsonPath = "";
     }
 
     public Window(){
@@ -241,27 +246,37 @@ public class Window extends JFrame{
     }
 
     public void exportToJson(int tag){
-        String nombre = "";
+        String nombre = "", json="";
         Gson gson = new Gson();
 
         switch (tag){
             case 0:
                 nombre = "las escuelas";
-                System.out.println(gson.toJson(arrayListDojo));
+                json = gson.toJson(arrayListDojo);
                 break;
             case 1:
                 nombre = "los coach";
-                System.out.println(gson.toJson(arrayListCoach));
+                json = gson.toJson(arrayListCoach);
                 break;
             case 2:
                 nombre = "los boxeadores";
-                System.out.println(gson.toJson(arrayListBoxer));
+                json = gson.toJson(arrayListBoxer);
                 break;
             default:
                 break;
         }
+        try {
+            FileWriter fileWriter = new FileWriter(jsonPath+".json");
+            fileWriter.write(json);
+            fileWriter.close();
+            loadLabel.setText("Has exportado "+nombre+" a Json");
+        } catch (IOException e) {
+            loadLabel.setText(e.getMessage());
+        }
+    }
 
-        loadLabel.setText("Has exportado "+nombre+" a Json");
+    public void setJsonPath(String jsonPath) {
+        this.jsonPath = jsonPath;
     }
 
     public void setFileNewPath(String fileNewPath) {
