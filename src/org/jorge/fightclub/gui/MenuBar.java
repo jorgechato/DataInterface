@@ -16,9 +16,9 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     private JMenuItem manualSave,saveAs,importJson,exportJson, changePath;
     private JCheckBoxMenuItem automaticSaved;
     private Window window;
-    private String loadLabel;
     private JFileChooser fileChooser;
     private boolean changeTag;
+    private int tag;
 
     public MenuBar(){}
 
@@ -57,6 +57,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         save.add(automaticSaved);
         save.add(changePath);
 
+        tag = 0;
         manualSave.setEnabled(false);
         return jmb;
     }
@@ -68,6 +69,8 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == saveAs) {
+            newFilePath();
+            window.saveAsFile(tag);
             return;
         }
         if (actionEvent.getSource() == importJson) {
@@ -78,7 +81,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         }
         if (actionEvent.getSource() == changePath) {
             changePath();
-            window.changePath();
+            //window.changePath();
             return;
         }
         if (actionEvent.getSource() == automaticSaved) {
@@ -94,27 +97,46 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
             return;
         }
         if (actionEvent.getSource() == manualSave){
-            window.manualSave();
+            window.manualSave(tag);
             return;
         }
     }
 
+    /**
+     * change path where you save the files.
+     */
     public void changePath(){
         fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Cambiar la ruta");
+        fileChooser.setDialogTitle("Cambiar la ruta de guardado");
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        //fileChooser.setFileFilter(new FileNameExtensionFilter("Text files (*.txt, *.bat)", "bat"));
-        if (fileChooser.showOpenDialog(this) != JFileChooser.CANCEL_OPTION)
+        if (fileChooser.showOpenDialog(this) != JFileChooser.CANCEL_OPTION){
             window.setNewPath(fileChooser.getSelectedFile().getAbsolutePath());
             window.getLoadLabel().setText("Has cambiado la ruta a "+fileChooser.getSelectedFile().getAbsolutePath());
+        }
     }
 
+    public void newFilePath(){
+        fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar como...");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Text files (*.txt, *.bat)", "bat"));
+        if (fileChooser.showSaveDialog(this) != JFileChooser.CANCEL_OPTION){
+            window.setFileNewPath(fileChooser.getSelectedFile().getAbsolutePath());
+            window.getLoadLabel().setText("Has cambiado la ruta a "+fileChooser.getSelectedFile().getAbsolutePath());
+        }
+    }
+
+    /**
+     * control tag events even if you not change between tags.
+     * @param changeEvent
+     */
     @Override
     public void stateChanged(ChangeEvent changeEvent) {
         changeTag = true;
-        changeTags();
+        tag = window.getTabbedPane1().getSelectedIndex();
+        //changeTags();
     }
-
+/*
     public Integer changeTags(){
         int tag = window.getTabbedPane1().getSelectedIndex();
         switch (tag){
@@ -128,5 +150,5 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
                 break;
         }
         return tag;
-    }
+    }*/
 }

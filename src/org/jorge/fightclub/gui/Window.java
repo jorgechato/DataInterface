@@ -78,7 +78,7 @@ public class Window extends JFrame{
 
     private boolean manual;
 
-    private String newPath;
+    private String newPath,fileNewPath;
 
     private ActionBoxer actionBoxer;
     private ActionCoach actionCoach;
@@ -123,6 +123,7 @@ public class Window extends JFrame{
 
         manual = false;
         newPath = "";
+        fileNewPath = "";
     }
 
     public Window(){
@@ -186,20 +187,52 @@ public class Window extends JFrame{
         tabbedPane1.addChangeListener(actionBoxer);
     }
 
-    public void manualSave(){
-        actionBoxer.saveInFile();
-        actionCoach.saveInFile();
-        actionDojo.saveInFile();
+    public void manualSave(int tag){
+        switch (tag){
+            case 0:
+                actionDojo.setNewPath(newPath);
+                actionDojo.parseNewPath();
+                actionDojo.saveInFile();
+                break;
+            case 1:
+                actionCoach.setNewPath(newPath);
+                actionCoach.parseNewPath();
+                actionCoach.saveInFile();
+                break;
+            case 2:
+                actionBoxer.setNewPath(newPath);
+                actionBoxer.parseNewPath();
+                actionBoxer.saveInFile();
+                break;
+            default:
+                break;
+        }
     }
 
-    public void changePath(){
-        actionBoxer.setNewPath(newPath);
-        actionCoach.setNewPath(newPath);
-        actionDojo.setNewPath(newPath);
+    public void saveAsFile(int tag){
+        switch (tag){
+            case 0:
+                actionDojo.setNewFilePath(fileNewPath);
+                actionDojo.parseNewFilePath();
+                actionDojo.saveInFile();
+                break;
+            case 1:
+                actionCoach.setNewFilePath(fileNewPath);
+                actionCoach.parseNewFilePath();
+                actionCoach.saveInFile();
+                break;
+            case 2:
+                actionBoxer.setNewFilePath(fileNewPath);
+                actionBoxer.parseNewFilePath();
+                actionBoxer.saveInFile();
+                break;
+            default:
+                break;
+        }
     }
 
-    public String getNewPath() {
-        return newPath;
+    public void setFileNewPath(String fileNewPath) {
+        this.fileNewPath = fileNewPath;
     }
 
     public void setNewPath(String newPath) {
@@ -212,10 +245,6 @@ public class Window extends JFrame{
 
     public void setManual(boolean manual) {
         this.manual = manual;
-    }
-
-    public JPanel getPanel1() {
-        return panel1;
     }
 
     public JTabbedPane getTabbedPane1() {

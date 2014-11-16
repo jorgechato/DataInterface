@@ -1,7 +1,6 @@
 package org.jorge.fightclub.gui;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 import java.io.*;
@@ -20,13 +19,26 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
     private JButton before, after, last, first, btnew, btsave, btchange, btdelete, btcancel;
     private DefaultListModel<?> model;
     private JLabel loadLabel;
-    private String fileName,newPath;
+    private String fileName,newPath,newFilePath,fullPath;
     private boolean manualSave;
 
     public FatherAction(){
         pos = 0;
         isNew = true;
         newPath = "";
+        newFilePath = "";
+    }
+
+    public String getNewPath() {
+        return newPath;
+    }
+
+    public String getNewFilePath() {
+        return newFilePath;
+    }
+
+    public void setNewFilePath(String newFilePath) {
+        this.newFilePath = newFilePath;
     }
 
     public void setNewPath(String newPath) {
@@ -224,13 +236,21 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
         loadData();
     }
 
+    public void parseNewPath(){
+        fullPath = fileName+".bat";
+        if (!newPath.equals(""))
+            fullPath = newPath+"/"+fileName+".bat";
+    }
+
+    public void parseNewFilePath(){
+        fullPath = fileName+".bat";
+        if (!newFilePath.equals(""))
+            fullPath = newFilePath+".bat";
+    }
     /**
      * save the array of each tag in file.
      */
     public void saveInFile(){
-        String fullPath = fileName+".bat";
-        if (!newPath.equals(""))
-            fullPath = newPath+"/"+fileName+".bat";
         try {
             ObjectOutputStream printInFile = new ObjectOutputStream(new FileOutputStream(fullPath));
             printInFile.writeObject(array);
