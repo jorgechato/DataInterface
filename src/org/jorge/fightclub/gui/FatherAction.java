@@ -20,11 +20,21 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
     private JButton before, after, last, first, btnew, btsave, btchange, btdelete, btcancel;
     private DefaultListModel<?> model;
     private JLabel loadLabel;
-    private String fileName;
+    private String fileName,newPath;
+    private boolean manualSave;
 
     public FatherAction(){
         pos = 0;
         isNew = true;
+        newPath = "";
+    }
+
+    public void setNewPath(String newPath) {
+        this.newPath = newPath;
+    }
+
+    public void setManualSave(boolean manualSave) {
+        this.manualSave = manualSave;
     }
 
     public void setFileName(String fileName) {
@@ -182,7 +192,11 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
 
         activateDeactivateButton(true);
         activateDeactivateEdition(false);
-        saveInFile();
+        if (!manualSave)
+            saveInFile();
+        else
+            loadLabel.setText("**Archivo no guardado, recuerda ir a Archivo>Guardar");
+
         if (array.size() == 0){
             btdelete.setEnabled(false);
             btchange.setEnabled(false);
@@ -214,10 +228,16 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
      * save the array of each tag in file.
      */
     public void saveInFile(){
+        String fullPath = fileName+".bat";
+        if (!newPath.equals(""))
+            fullPath = newPath+"/"+fileName+".bat";
         try {
-            ObjectOutputStream printInFile = new ObjectOutputStream(new FileOutputStream(fileName+".bat"));
+            ObjectOutputStream printInFile = new ObjectOutputStream(new FileOutputStream(fullPath));
             printInFile.writeObject(array);
-            loadLabel.setText("Datos guardados automaticamente");
+            if (!manualSave)
+                loadLabel.setText("Datos guardados automaticamente en "+fullPath);
+            else
+                loadLabel.setText("Datos gardados correctamente en directorio "+newPath);
         } catch (IOException e) {
             loadLabel.setText(e.getMessage());
         }

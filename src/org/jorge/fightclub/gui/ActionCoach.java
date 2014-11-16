@@ -71,6 +71,7 @@ public class ActionCoach extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtDeleteCoach()){
+            setManualSave(window.isManual());
             deleteData();
             return;
         }
@@ -99,6 +100,7 @@ public class ActionCoach extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtSaveCoach()){
+            setManualSave(window.isManual());
             saveData();
             return;
         }
@@ -217,7 +219,7 @@ public class ActionCoach extends FatherAction{
             window.getCbDojoInCoach().addItem(null);
             return;
         }
-        if (getPos()>=0 && null == window.getArrayListCoach().get(getPos()).getDojo())
+        if (window.getArrayListCoach().size() != 0 && null == window.getArrayListCoach().get(getPos()).getDojo())
             window.getCbDojoInCoach().addItem(null);
         for (Dojo dojo : window.getArrayListDojo())
             window.getCbDojoInCoach().addItem(dojo);
@@ -323,6 +325,8 @@ public class ActionCoach extends FatherAction{
 
         if (!window.isManual())
             saveInFile();
+        else
+            window.getLoadLabel().setText("**Archivo no guardado, recuerda ir a Archivo>Guardar");
     }
     @Override
     public void findData() {

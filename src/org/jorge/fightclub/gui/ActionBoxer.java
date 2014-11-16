@@ -71,6 +71,7 @@ public class ActionBoxer extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtDeleteBoxer()){
+            setManualSave(window.isManual());
             deleteData();
             return;
         }
@@ -99,6 +100,7 @@ public class ActionBoxer extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtSaveBoxer()){
+            setManualSave(window.isManual());
             saveData();
             return;
         }
@@ -217,7 +219,7 @@ public class ActionBoxer extends FatherAction{
             window.getCbDojoInBoxer().addItem(null);
             return;
         }
-        if (getPos()>=0 && null == window.getArrayListBoxer().get(getPos()).getDojo())
+        if (window.getArrayListBoxer().size() != 0 && null == window.getArrayListBoxer().get(getPos()).getDojo())
             window.getCbDojoInBoxer().addItem(null);
         for (Dojo dojo : window.getArrayListDojo())
             window.getCbDojoInBoxer().addItem(dojo);
@@ -229,7 +231,7 @@ public class ActionBoxer extends FatherAction{
             window.getCbCoachInBoxer().addItem(null);
             return;
         }
-        if (getPos()>=0 && null == window.getArrayListBoxer().get(getPos()).getCoach())
+        if (window.getArrayListBoxer().size() != 0 && null == window.getArrayListBoxer().get(getPos()).getCoach())
             window.getCbCoachInBoxer().addItem(null);
         for (Coach coach : window.getArrayListCoach())
             window.getCbCoachInBoxer().addItem(coach);
@@ -360,6 +362,8 @@ public class ActionBoxer extends FatherAction{
 
         if (!window.isManual())
             saveInFile();
+        else
+            window.getLoadLabel().setText("**Archivo no guardado, recuerda ir a Archivo>Guardar");
     }
 
     @Override

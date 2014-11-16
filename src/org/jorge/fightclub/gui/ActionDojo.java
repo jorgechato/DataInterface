@@ -71,6 +71,7 @@ public class ActionDojo extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtDeleteDojo()){
+            setManualSave(window.isManual());
             deleteData();
             return;
         }
@@ -99,6 +100,7 @@ public class ActionDojo extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtSaveDojo()){
+            setManualSave(window.isManual());
             saveData();
             return;
         }
@@ -277,6 +279,8 @@ public class ActionDojo extends FatherAction{
 
         if (!window.isManual())
             saveInFile();
+        else
+            window.getLoadLabel().setText("**Archivo no guardado, recuerda ir a Archivo>Guardar");
     }
 
     @Override

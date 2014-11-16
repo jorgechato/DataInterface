@@ -78,7 +78,11 @@ public class Window extends JFrame{
 
     private boolean manual;
 
-    private String path;
+    private String newPath;
+
+    private ActionBoxer actionBoxer;
+    private ActionCoach actionCoach;
+    private ActionDojo actionDojo;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Window");
@@ -118,6 +122,7 @@ public class Window extends JFrame{
         listDojo.setModel(modelDojo);
 
         manual = false;
+        newPath = "";
     }
 
     public Window(){
@@ -129,9 +134,9 @@ public class Window extends JFrame{
      * create my own listeners
      */
     public void configureListeners(){
-        ActionBoxer actionBoxer = new ActionBoxer(this);
-        ActionCoach actionCoach = new ActionCoach(this);
-        ActionDojo actionDojo = new ActionDojo(this);
+        actionBoxer = new ActionBoxer(this);
+        actionCoach = new ActionCoach(this);
+        actionDojo = new ActionDojo(this);
 
         //action button
         btNewBoxer.addActionListener(actionBoxer);
@@ -179,6 +184,26 @@ public class Window extends JFrame{
         tabbedPane1.addChangeListener(actionDojo);
         tabbedPane1.addChangeListener(actionCoach);
         tabbedPane1.addChangeListener(actionBoxer);
+    }
+
+    public void manualSave(){
+        actionBoxer.saveInFile();
+        actionCoach.saveInFile();
+        actionDojo.saveInFile();
+    }
+
+    public void changePath(){
+        actionBoxer.setNewPath(newPath);
+        actionCoach.setNewPath(newPath);
+        actionDojo.setNewPath(newPath);
+    }
+
+    public String getNewPath() {
+        return newPath;
+    }
+
+    public void setNewPath(String newPath) {
+        this.newPath = newPath;
     }
 
     public boolean isManual() {
