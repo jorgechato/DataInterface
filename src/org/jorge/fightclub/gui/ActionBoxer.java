@@ -39,6 +39,7 @@ public class ActionBoxer extends FatherAction{
         setLast(window.getBtLastBoxer());
         setLoadLabel(window.getLoadLabel());
         setFileName(fileName);
+        setFullPath(fileName);
         loadDataBase();
         setArray((ArrayList<Boxer>) window.getArrayListBoxer());
     }

@@ -29,12 +29,8 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
         newFilePath = "";
     }
 
-    public String getNewPath() {
-        return newPath;
-    }
-
-    public String getNewFilePath() {
-        return newFilePath;
+    public void setFullPath(String fullPath) {
+        this.fullPath = fullPath+".bat";
     }
 
     public void setNewFilePath(String newFilePath) {

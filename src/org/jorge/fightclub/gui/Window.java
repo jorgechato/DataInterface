@@ -1,5 +1,6 @@
 package org.jorge.fightclub.gui;
 
+import com.google.gson.Gson;
 import com.toedter.calendar.JDateChooser;
 import org.jorge.fightclub.base.Boxer;
 import org.jorge.fightclub.base.Coach;
@@ -187,6 +188,10 @@ public class Window extends JFrame{
         tabbedPane1.addChangeListener(actionBoxer);
     }
 
+    /**
+     * save manually tags. it saved in local directory
+     * @param tag
+     */
     public void manualSave(int tag){
         switch (tag){
             case 0:
@@ -209,6 +214,10 @@ public class Window extends JFrame{
         }
     }
 
+    /**
+     * save as file. Save the file where ever you like.
+     * @param tag
+     */
     public void saveAsFile(int tag){
         switch (tag){
             case 0:
@@ -229,6 +238,30 @@ public class Window extends JFrame{
             default:
                 break;
         }
+    }
+
+    public void exportToJson(int tag){
+        String nombre = "";
+        Gson gson = new Gson();
+
+        switch (tag){
+            case 0:
+                nombre = "las escuelas";
+                System.out.println(gson.toJson(arrayListDojo));
+                break;
+            case 1:
+                nombre = "los coach";
+                System.out.println(gson.toJson(arrayListCoach));
+                break;
+            case 2:
+                nombre = "los boxeadores";
+                System.out.println(gson.toJson(arrayListBoxer));
+                break;
+            default:
+                break;
+        }
+
+        loadLabel.setText("Has exportado "+nombre+" a Json");
     }
 
     public void setFileNewPath(String fileNewPath) {

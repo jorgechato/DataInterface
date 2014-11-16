@@ -39,6 +39,7 @@ public class ActionCoach extends FatherAction{
         setLast(window.getBtLastCoach());
         setLoadLabel(window.getLoadLabel());
         setFileName(fileName);
+        setFullPath(fileName);
         loadDataBase();
         setArray((ArrayList<Coach>) window.getArrayListCoach());
     }

@@ -1,5 +1,7 @@
 package org.jorge.fightclub.gui;
 
+import com.google.gson.Gson;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -77,11 +79,11 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
             return;
         }
         if (actionEvent.getSource() == exportJson) {
+            window.exportToJson(tag);
             return;
         }
         if (actionEvent.getSource() == changePath) {
             changePath();
-            //window.changePath();
             return;
         }
         if (actionEvent.getSource() == automaticSaved) {
@@ -134,21 +136,5 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     public void stateChanged(ChangeEvent changeEvent) {
         changeTag = true;
         tag = window.getTabbedPane1().getSelectedIndex();
-        //changeTags();
     }
-/*
-    public Integer changeTags(){
-        int tag = window.getTabbedPane1().getSelectedIndex();
-        switch (tag){
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                break;
-        }
-        return tag;
-    }*/
 }

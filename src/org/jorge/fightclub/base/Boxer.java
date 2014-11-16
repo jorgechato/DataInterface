@@ -10,9 +10,9 @@ import java.util.Date;
  * without builder.
  */
 public class Boxer implements Serializable{
+    private String name;
     private int win,lose;
     private float weight;
-    private String name;
 
     private Coach coach;
     private Dojo dojo;

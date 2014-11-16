@@ -39,6 +39,7 @@ public class ActionDojo extends FatherAction{
         setLast(window.getBtLastDojo());
         setLoadLabel(window.getLoadLabel());
         setFileName(fileName);
+        setFullPath(fileName);
         loadDataBase();
         setArray((ArrayList<Dojo>) window.getArrayListDojo());
     }

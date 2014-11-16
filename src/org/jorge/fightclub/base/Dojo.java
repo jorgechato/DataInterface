@@ -11,7 +11,7 @@ import java.util.Date;
  * without builder.
  */
 public class Dojo implements Serializable{
-    private String street,name;
+    private String name,street;
     private Date inauguration;
 
     private ArrayList<Coach> coachList;
@@ -19,20 +19,20 @@ public class Dojo implements Serializable{
 
     public Dojo(){}
 
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public Date getInauguration() {
