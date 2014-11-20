@@ -6,7 +6,7 @@ _Javadoc in [link](http://orggue.github.io/DataInterface)_
 
 Program to manage a fight club
 
-![alt tag](https://raw.githubusercontent.com/orggue/DataInterface/prototype.png)
+![alt tag](https://github.com/orggue/DataInterface/blob/FightClub/prototype.png)
 
 ## Clone and run project
 
