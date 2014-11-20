@@ -1,16 +1,17 @@
 package org.jorge.fightclub.gui;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.toedter.calendar.JDateChooser;
 import org.jorge.fightclub.base.Boxer;
 import org.jorge.fightclub.base.Coach;
 import org.jorge.fightclub.base.Dojo;
 
 import javax.swing.*;
-import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.*;
 
@@ -88,6 +89,8 @@ public class Window extends JFrame{
     private ActionBoxer actionBoxer;
     private ActionCoach actionCoach;
     private ActionDojo actionDojo;
+
+    private java.lang.reflect.Type type;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Window");
@@ -245,21 +248,25 @@ public class Window extends JFrame{
         }
     }
 
+    /**
+     * export data to JSON file, it depends on which tag you are.
+     * @param tag
+     */
     public void exportToJson(int tag){
-        String nombre = "", json="";
+        String name = "", json="";
         Gson gson = new Gson();
 
         switch (tag){
             case 0:
-                nombre = "las escuelas";
+                name = "las escuelas";
                 json = gson.toJson(arrayListDojo);
                 break;
             case 1:
-                nombre = "los coach";
+                name = "los coach";
                 json = gson.toJson(arrayListCoach);
                 break;
             case 2:
-                nombre = "los boxeadores";
+                name = "los boxeadores";
                 json = gson.toJson(arrayListBoxer);
                 break;
             default:
@@ -269,7 +276,30 @@ public class Window extends JFrame{
             FileWriter fileWriter = new FileWriter(jsonPath+".json");
             fileWriter.write(json);
             fileWriter.close();
-            loadLabel.setText("Has exportado "+nombre+" a Json");
+            loadLabel.setText("Has exportado "+name+" a Json");
+        } catch (IOException e) {
+            loadLabel.setText(e.getMessage());
+        }
+    }
+
+    public void importFromJson(){
+        Gson gson = new Gson();
+        try {
+            FileReader fileReader = new FileReader(jsonPath);
+
+            type = new TypeToken<ArrayList<Dojo>>(){}.getType();
+            ArrayList<Dojo> newListDojo= gson.fromJson(fileReader,type);
+
+            fileReader.close();
+
+            getArrayListDojo().addAll(newListDojo);
+            actionDojo.loadData();
+            actionDojo.navigate();
+            actionDojo.reloadModelData();
+
+            loadLabel.setText("Datos de escuelas importados correctamente");
+        } catch (FileNotFoundException e) {
+            loadLabel.setText(e.getMessage());
         } catch (IOException e) {
             loadLabel.setText(e.getMessage());
         }

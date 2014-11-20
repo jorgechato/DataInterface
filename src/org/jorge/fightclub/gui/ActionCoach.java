@@ -22,10 +22,12 @@ public class ActionCoach extends FatherAction{
 
     private Window window;
     private String fileName;
+    private boolean canLoadData;
 
     public ActionCoach(Window window){
         this.window = window;
         fileName = "Coach";
+        canLoadData = true;
         setBtnew(window.getBtNewCoach());
         setBtsave(window.getBtSaveCoach());
         setBtchange(window.getBtChangeCoach());
@@ -51,12 +53,14 @@ public class ActionCoach extends FatherAction{
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == window.getBtNewCoach()) {
+            canLoadData = false;
             newData();
             activateDeactivateButton(false);
             activateDeactivateEdition(true);
             return;
         }
         if (actionEvent.getSource() == window.getBtCancelCoach()) {
+            canLoadData = true;
             setNew(true);
             navigate();
             activateDeactivateEdition(false);
@@ -64,6 +68,7 @@ public class ActionCoach extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtChangeCoach()) {
+            canLoadData = false;
             setNew(false);
             disableNavigation();
 
@@ -101,6 +106,7 @@ public class ActionCoach extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtSaveCoach()){
+            canLoadData = true;
             setManualSave(window.isManual());
             saveData();
             return;
@@ -223,7 +229,7 @@ public class ActionCoach extends FatherAction{
         if (window.getArrayListCoach().size() != 0 && null == window.getArrayListCoach().get(getPos()).getDojo())
             window.getCbDojoInCoach().addItem(null);
         for (Dojo dojo : window.getArrayListDojo())
-            window.getCbDojoInCoach().addItem(dojo);
+            window.getCbDojoInCoach().addItem(dojo.toString());
 
     }
 
@@ -241,6 +247,9 @@ public class ActionCoach extends FatherAction{
 
     @Override
     public void loadData() {
+        if (!canLoadData)
+            return;
+
         if (window.getArrayListCoach().size() == 0)
             return;
 
@@ -315,6 +324,7 @@ public class ActionCoach extends FatherAction{
                 return;
             }
             window.getArrayListCoach().get(getPos()).setBirthday(window.getDateCoach().getDate());
+            //fixme error ClassCastException
             window.getArrayListCoach().get(getPos()).setDojo((Dojo) window.getCbDojoInCoach().getSelectedItem());
         }
 

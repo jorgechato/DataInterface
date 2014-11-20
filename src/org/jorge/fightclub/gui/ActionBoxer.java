@@ -22,10 +22,12 @@ public class ActionBoxer extends FatherAction{
 
     private Window window;
     private String fileName;
+    private boolean canLoadData;
 
     public ActionBoxer(Window window){
         this.window = window;
         fileName = "Boxer";
+        canLoadData = true;
         setBtnew(window.getBtNewBoxer());
         setBtsave(window.getBtSaveBoxer());
         setBtchange(window.getBtChangeBoxer());
@@ -51,12 +53,14 @@ public class ActionBoxer extends FatherAction{
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == window.getBtNewBoxer()) {
+            canLoadData = false;
             newData();
             activateDeactivateButton(false);
             activateDeactivateEdition(true);
             return;
         }
         if (actionEvent.getSource() == window.getBtCancelBoxer()) {
+            canLoadData = true;
             setNew(true);
             navigate();
             activateDeactivateEdition(false);
@@ -64,6 +68,7 @@ public class ActionBoxer extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtChangeBoxer()) {
+            canLoadData = false;
             setNew(false);
             disableNavigation();
 
@@ -101,6 +106,7 @@ public class ActionBoxer extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtSaveBoxer()){
+            canLoadData = true;
             setManualSave(window.isManual());
             saveData();
             return;
@@ -253,6 +259,9 @@ public class ActionBoxer extends FatherAction{
 
     @Override
     public void loadData() {
+        if (!canLoadData)
+            return;
+
         if (window.getArrayListBoxer().size() == 0)
             return;
 

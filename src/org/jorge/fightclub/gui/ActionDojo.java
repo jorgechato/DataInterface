@@ -22,10 +22,12 @@ public class ActionDojo extends FatherAction{
 
     private Window window;
     private String fileName;
+    private boolean canLoadData;
 
     public ActionDojo(Window window){
         this.window = window;
         fileName = "Dojo";
+        canLoadData = true;
         setBtnew(window.getBtNewDojo());
         setBtsave(window.getBtSaveDojo());
         setBtchange(window.getBtChangeDojo());
@@ -51,12 +53,14 @@ public class ActionDojo extends FatherAction{
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == window.getBtNewDojo()) {
+            canLoadData = false;
             newData();
             activateDeactivateButton(false);
             activateDeactivateEdition(true);
             return;
         }
         if (actionEvent.getSource() == window.getBtCancelDojo()) {
+            canLoadData = true;
             setNew(true);
             navigate();
             activateDeactivateEdition(false);
@@ -64,6 +68,7 @@ public class ActionDojo extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtChangeDojo()) {
+            canLoadData = false;
             setNew(false);
             disableNavigation();
 
@@ -101,6 +106,7 @@ public class ActionDojo extends FatherAction{
             return;
         }
         if (actionEvent.getSource() == window.getBtSaveDojo()){
+            canLoadData = true;
             setManualSave(window.isManual());
             saveData();
             return;
@@ -202,6 +208,9 @@ public class ActionDojo extends FatherAction{
 
     @Override
     public void loadData() {
+        if (!canLoadData)
+            return;
+
         if (window.getArrayListDojo().size() == 0)
             return;
 

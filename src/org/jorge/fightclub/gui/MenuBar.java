@@ -1,7 +1,5 @@
 package org.jorge.fightclub.gui;
 
-import com.google.gson.Gson;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -14,7 +12,7 @@ import java.awt.event.ActionListener;
  */
 public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     private JMenuBar jmb;
-    private JMenu file,save;
+    private JMenu file,save,importE;
     private JMenuItem manualSave,saveAs,importJson,exportJson, changePath;
     private JCheckBoxMenuItem automaticSaved;
     private Window window;
@@ -35,12 +33,13 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         jmb = new JMenuBar();
         file = new JMenu("Archivo");
         save = new JMenu("Guardado");
+        importE = new JMenu("Importar Json");
         jmb.add(file);
         jmb.add(save);
 
         manualSave = new JMenuItem("Guardar");
         saveAs = new JMenuItem("Guardar como..");
-        importJson = new JMenuItem("Importar Json");
+        importJson = new JMenuItem("Escuela");
         exportJson = new JMenuItem("Exportar a Json");
         changePath = new JMenuItem("Cambiar ruta");
         automaticSaved = new JCheckBoxMenuItem("Manual");
@@ -54,7 +53,8 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
 
         file.add(manualSave);
         file.add(saveAs);
-        file.add(importJson);
+        file.add(importE);
+        importE.add(importJson);
         file.add(exportJson);
         save.add(automaticSaved);
         save.add(changePath);
@@ -76,6 +76,8 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
             return;
         }
         if (actionEvent.getSource() == importJson) {
+            importFromJson();
+            window.importFromJson();
             return;
         }
         if (actionEvent.getSource() == exportJson) {
@@ -134,14 +136,27 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     }
 
     /**
-     * chose path to export to JSON
+     * chose path to export to JSON.
      */
     public void newFileJson(){
         fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Exportar como JSON...");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("JSON, XML files", "json"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("JSON files", "json"));
         if (fileChooser.showSaveDialog(this) == JFileChooser.CANCEL_OPTION)
+            return;
+        window.setJsonPath(fileChooser.getSelectedFile().getAbsolutePath());
+    }
+
+    /**
+     * Select JSON path to import in dojo's array.
+     */
+    public void importFromJson(){
+        fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Importar escuelas desde JSON");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("JSON files", "json"));
+        if (fileChooser.showOpenDialog(this) == JFileChooser.CANCEL_OPTION)
             return;
         window.setJsonPath(fileChooser.getSelectedFile().getAbsolutePath());
     }

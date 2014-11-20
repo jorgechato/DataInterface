@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FightClub:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FightClub_jar</output-path>
+    <root id="archive" name="FightClub.jar">
+      <element id="module-output" name="FightClub" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.3/gson-2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Libraries/java/jCalender/jcalendar-1.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Libraries/java/jCalender/junit-4.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Libraries/java/jCalender/jgoodies-looks-2.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Libraries/java/jCalender/jgoodies-common-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Libraries/java/jgoodies-common-1.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Libraries/java/jgoodies-forms-1.8.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

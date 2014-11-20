@@ -232,12 +232,17 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
         loadData();
     }
 
+    /**
+     * Generate a full path from change path to save the files
+     */
     public void parseNewPath(){
         fullPath = fileName+".bat";
         if (!newPath.equals(""))
-            fullPath = newPath+"/"+fileName+".bat";
+            fullPath = newPath+File.separator+fileName+".bat";
     }
-
+    /**
+     * Generate a full path from save as to save the files
+     */
     public void parseNewFilePath(){
         fullPath = fileName+".bat";
         if (!newFilePath.equals(""))
