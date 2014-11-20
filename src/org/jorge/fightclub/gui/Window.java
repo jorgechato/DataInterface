@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.*;
 
 /**
+ * Main Class
  * Created by jorge on 10/11/14.
  */
 public class Window extends JFrame{
@@ -282,6 +283,9 @@ public class Window extends JFrame{
         }
     }
 
+    /**
+     * Import JSON file. Only import Dojo's data.
+     */
     public void importFromJson(){
         Gson gson = new Gson();
         try {

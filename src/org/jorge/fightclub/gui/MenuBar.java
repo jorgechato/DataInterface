@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * Menu bar Class
  * Created by jorge on 11/11/14.
  */
 public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{

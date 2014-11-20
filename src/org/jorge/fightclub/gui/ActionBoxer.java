@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 /**
+ * Class with Boxer's own listeners
  * Created by jorge on 11/11/14.
  */
 public class ActionBoxer extends FatherAction{

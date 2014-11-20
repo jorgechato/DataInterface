@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 /**
+ * Class with Coach's own listeners
  * Created by jorge on 11/11/14.
  */
 public class ActionCoach extends FatherAction{
