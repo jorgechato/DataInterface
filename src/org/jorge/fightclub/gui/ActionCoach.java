@@ -299,7 +299,12 @@ public class ActionCoach extends FatherAction{
                 return;
             }
             coach.setBirthday(window.getDateCoach().getDate());
-            coach.setDojo((Dojo) window.getCbDojoInCoach().getSelectedItem());
+
+            Dojo selectedDojo = null;
+            for (Dojo dojo : window.getArrayListDojo())
+                if(window.getCbDojoInCoach().getSelectedItem().equals(dojo.toString()))
+                    selectedDojo = dojo;
+            coach.setDojo(selectedDojo);
 
             window.getArrayListCoach().add(coach);
 
@@ -325,8 +330,13 @@ public class ActionCoach extends FatherAction{
                 return;
             }
             window.getArrayListCoach().get(getPos()).setBirthday(window.getDateCoach().getDate());
-            //fixme error ClassCastException
-            window.getArrayListCoach().get(getPos()).setDojo((Dojo) window.getCbDojoInCoach().getSelectedItem());
+
+            Dojo selectedDojo = null;
+            for (Dojo dojo : window.getArrayListDojo())
+                if(window.getCbDojoInCoach().getSelectedItem().equals(dojo.toString()))
+                    selectedDojo = dojo;
+
+            window.getArrayListCoach().get(getPos()).setDojo(selectedDojo);
         }
 
         navigate();

@@ -230,7 +230,7 @@ public class ActionBoxer extends FatherAction{
         if (window.getArrayListBoxer().size() != 0 && null == window.getArrayListBoxer().get(getPos()).getDojo())
             window.getCbDojoInBoxer().addItem(null);
         for (Dojo dojo : window.getArrayListDojo())
-            window.getCbDojoInBoxer().addItem(dojo);
+            window.getCbDojoInBoxer().addItem(dojo.toString());
     }
 
     public void loadComboBoxCoach(){
@@ -242,7 +242,7 @@ public class ActionBoxer extends FatherAction{
         if (window.getArrayListBoxer().size() != 0 && null == window.getArrayListBoxer().get(getPos()).getCoach())
             window.getCbCoachInBoxer().addItem(null);
         for (Coach coach : window.getArrayListCoach())
-            window.getCbCoachInBoxer().addItem(coach);
+            window.getCbCoachInBoxer().addItem(coach.toString());
     }
 
     @Override
@@ -320,8 +320,19 @@ public class ActionBoxer extends FatherAction{
                         "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            boxer.setDojo((Dojo) window.getCbDojoInBoxer().getSelectedItem());
-            boxer.setCoach((Coach) window.getCbCoachInBoxer().getSelectedItem());
+            Dojo selectedDojo = null;
+            for (Dojo dojo : window.getArrayListDojo())
+                if(window.getCbDojoInBoxer().getSelectedItem().equals(dojo.toString()))
+                    selectedDojo = dojo;
+
+            boxer.setDojo(selectedDojo);
+
+            Coach selectedCoach = null;
+            for (Coach coach : window.getArrayListCoach())
+                if(window.getCbCoachInBoxer().getSelectedItem().equals(coach.toString()))
+                    selectedCoach = coach;
+
+            boxer.setCoach(selectedCoach);
 
             window.getArrayListBoxer().add(boxer);
 
@@ -360,9 +371,19 @@ public class ActionBoxer extends FatherAction{
                         "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            Dojo selectedDojo = null;
+            for (Dojo dojo : window.getArrayListDojo())
+                if(window.getCbDojoInBoxer().getSelectedItem().equals(dojo.toString()))
+                    selectedDojo = dojo;
 
-            window.getArrayListBoxer().get(getPos()).setDojo((Dojo) window.getCbDojoInBoxer().getSelectedItem());
-            window.getArrayListBoxer().get(getPos()).setCoach((Coach) window.getCbCoachInBoxer().getSelectedItem());
+            window.getArrayListBoxer().get(getPos()).setDojo(selectedDojo);
+
+            Coach selectedCoach = null;
+            for (Coach coach : window.getArrayListCoach())
+                if(window.getCbCoachInBoxer().getSelectedItem().equals(coach.toString()))
+                    selectedCoach = coach;
+
+            window.getArrayListBoxer().get(getPos()).setCoach(selectedCoach);
         }
 
         navigate();
