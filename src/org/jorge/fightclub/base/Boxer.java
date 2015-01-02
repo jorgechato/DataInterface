@@ -1,7 +1,6 @@
 package org.jorge.fightclub.base;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by jorge on 10/11/14.
@@ -10,6 +9,7 @@ import java.util.Date;
  * without builder.
  */
 public class Boxer implements Serializable{
+    private int id;
     private String name;
     private int win,lose;
     private float weight;
@@ -18,6 +18,14 @@ public class Boxer implements Serializable{
     private Dojo dojo;
 
     public Boxer() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getWin() {

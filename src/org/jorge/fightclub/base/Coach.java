@@ -11,6 +11,7 @@ import java.util.Date;
  * without builder.
  */
 public class Coach implements Serializable{
+    private int id;
     private String name;
     private Date birthday;
     private int years;
@@ -18,8 +19,16 @@ public class Coach implements Serializable{
     private ArrayList<Boxer> boxerList;
     private Dojo dojo;
 
-
     public Coach(){}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

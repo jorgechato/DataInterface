@@ -11,11 +11,21 @@ import java.util.Date;
  * without builder.
  */
 public class Dojo implements Serializable{
+    private int id;
     private String name,street;
-    private Date inauguration;
 
+    private Date inauguration;
     private ArrayList<Coach> coachList;
+
     private ArrayList<Boxer> boxerList;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Dojo(){}
 

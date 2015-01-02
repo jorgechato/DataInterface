@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     private JMenuBar jmb;
     private JMenu file,save,importE;
-    private JMenuItem manualSave,saveAs,importJson,exportJson, changePath;
+    private JMenuItem manualSave,saveAs,importJson,exportJson, changePath,connect;
     private JCheckBoxMenuItem automaticSaved;
     private Window window;
     private JFileChooser fileChooser;
@@ -44,6 +44,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         exportJson = new JMenuItem("Exportar a Json");
         changePath = new JMenuItem("Cambiar ruta");
         automaticSaved = new JCheckBoxMenuItem("Manual");
+        connect = new JMenuItem("Conectar");
 
         manualSave.addActionListener(this);
         saveAs.addActionListener(this);

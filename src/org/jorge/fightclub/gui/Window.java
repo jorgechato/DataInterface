@@ -12,6 +12,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.*;
 
@@ -90,8 +93,11 @@ public class Window extends JFrame{
     private ActionBoxer actionBoxer;
     private ActionCoach actionCoach;
     private ActionDojo actionDojo;
+    private Connection connection;
 
     private java.lang.reflect.Type type;
+
+    private String usr,pass;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Window");
@@ -134,11 +140,26 @@ public class Window extends JFrame{
         newPath = "";
         fileNewPath = "";
         jsonPath = "";
+
+        usr = "root";
+        pass = "2015**Luz";
     }
 
     public Window(){
         initialize();
+        connect();
         configureListeners();
+    }
+
+    private void connect() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fightclub", this.usr, this.pass);
+        } catch (ClassNotFoundException  e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
