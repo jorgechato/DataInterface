@@ -9,11 +9,12 @@ import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Class with Dojo's own listeners
@@ -24,6 +25,7 @@ public class ActionDojo extends FatherAction{
     private Window window;
     private String fileName;
     private boolean canLoadData;
+    private Connection connection;
 
     public ActionDojo(Window window){
         this.window = window;
@@ -306,24 +308,33 @@ public class ActionDojo extends FatherAction{
 
     @Override
     public void loadInFile() {
-        ObjectInputStream readInFile = null;
+        //todo
+        String consult = " SELECT * FROM granjeros ";
+        PreparedStatement statement = null;
+        ResultSet result = null;
+
         try {
-            readInFile = new ObjectInputStream(new FileInputStream(fileName+".bat"));
-            window.setArrayListDojo((ArrayList<Dojo>) readInFile.readObject());
-            setArray((ArrayList<Dojo>)window.getArrayListDojo());
-            window.getLoadLabel().setText("Datos de escuelas cargados automaticamente");
-        } catch (ClassNotFoundException e) {
-            window.getLoadLabel().setText(e.getMessage());
-        } catch (FileNotFoundException e) {
-            window.getLoadLabel().setText(e.getMessage());
-        } catch (IOException e) {
-            window.getLoadLabel().setText(e.getMessage());
-        } finally {
-            if (readInFile != null){
+            statement = connection.prepareStatement(consult);
+            result = statement.executeQuery();
+
+            window.setArrayListDojo(new ArrayList<Dojo>());
+            while (result.next()){
+                Date newDate = result.getTimestamp(4);
+                Dojo dojo = new Dojo(result.getInt(1),result.getString(2),result.getString(3),
+                        newDate);
+                window.getArrayListDojo().add(dojo);
+            }
+            setArray((ArrayList<Dojo>) window.getArrayListDojo());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement != null) {
                 try {
-                    readInFile.close();
-                } catch (IOException e) {
-                    window.getLoadLabel().setText(e.getMessage().toString());
+                    statement.close();
+                    result.close();
+                    window.getLoadLabel().setText("Datos de escuelas cargados automaticamente");
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         }

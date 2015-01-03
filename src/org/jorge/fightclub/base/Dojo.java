@@ -19,6 +19,15 @@ public class Dojo implements Serializable{
 
     private ArrayList<Boxer> boxerList;
 
+    public Dojo(){}
+
+    public Dojo(int id, String name, String street, Date inauguration) {
+        this.id = id;
+        this.name = name;
+        this.street = street;
+        this.inauguration = inauguration;
+    }
+
     public int getId() {
         return id;
     }
@@ -26,8 +35,6 @@ public class Dojo implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
-
-    public Dojo(){}
 
     public String getName() {
         return name;

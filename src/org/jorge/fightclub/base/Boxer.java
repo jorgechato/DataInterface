@@ -20,6 +20,16 @@ public class Boxer implements Serializable{
     public Boxer() {
     }
 
+    public Boxer(int id, String name, int win, int lose, float weight, Coach coach, Dojo dojo) {
+        this.id = id;
+        this.name = name;
+        this.win = win;
+        this.lose = lose;
+        this.weight = weight;
+        this.coach = coach;
+        this.dojo = dojo;
+    }
+
     public int getId() {
         return id;
     }
