@@ -21,12 +21,11 @@ public class Coach implements Serializable{
 
     public Coach(){}
 
-    public Coach(int id, String name, Date birthday, int years, ArrayList<Boxer> boxerList, Dojo dojo) {
+    public Coach(int id, String name, Date birthday, int years, Dojo dojo) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
         this.years = years;
-        this.boxerList = boxerList;
         this.dojo = dojo;
     }
 

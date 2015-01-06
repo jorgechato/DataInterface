@@ -1,10 +1,24 @@
 package org.jorge.fightclub.gui;
 
+import org.jorge.fightclub.base.Coach;
+import org.jorge.fightclub.base.Dojo;
+
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
-import java.awt.event.*;
-import java.io.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Father class to every single action tag. with abstract method and parameters method.
@@ -21,6 +35,7 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
     private JLabel loadLabel;
     private String fileName,newPath,newFilePath,fullPath;
     private boolean manualSave;
+    public static Connection connection;
 
     public FatherAction(){
         pos = 0;
@@ -280,6 +295,63 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
         reloadModelData();
         activateDeactivateButton(true);
         activateDeactivateEdition(false);
+    }
+
+    public Dojo getDojoId(int id){
+        Dojo dojo = null;
+        String consult = " SELECT * FROM dojo WHERE id = " + id;
+        PreparedStatement statement = null;
+        ResultSet result = null;
+
+        try {
+            statement = connection.prepareStatement(consult);
+            result = statement.executeQuery();
+            result.last();
+
+            Date newDate = result.getTimestamp(4);
+            dojo = new Dojo(result.getInt(1),result.getString(2),result.getString(3),
+                    newDate);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                    result.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return dojo;
+    }
+
+    public Coach getCoachId(int id){
+        String consult = " SELECT * FROM coach WHERE id = " + id;
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        Coach coach = null;
+        try {
+            statement = connection.prepareStatement(consult);
+            result = statement.executeQuery();
+            result.last();
+
+            Date newDate = result.getTimestamp(3);
+            coach = new Coach(result.getInt(1),result.getString(2), newDate, result.getInt(4),
+                    getDojoId(result.getInt(5)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                    result.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return coach;
     }
 
     /**

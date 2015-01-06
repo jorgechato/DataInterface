@@ -330,6 +330,10 @@ public class Window extends JFrame{
         }
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     public void setJsonPath(String jsonPath) {
         this.jsonPath = jsonPath;
     }

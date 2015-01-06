@@ -9,7 +9,6 @@ import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,10 +24,10 @@ public class ActionDojo extends FatherAction{
     private Window window;
     private String fileName;
     private boolean canLoadData;
-    private Connection connection;
 
     public ActionDojo(Window window){
         this.window = window;
+        connection = window.getConnection();
         fileName = "Dojo";
         canLoadData = true;
         setBtnew(window.getBtNewDojo());
@@ -308,8 +307,7 @@ public class ActionDojo extends FatherAction{
 
     @Override
     public void loadInFile() {
-        //todo
-        String consult = " SELECT * FROM granjeros ";
+        String consult = " SELECT * FROM dojo ";
         PreparedStatement statement = null;
         ResultSet result = null;
 

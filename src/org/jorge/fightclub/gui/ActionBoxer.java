@@ -9,10 +9,9 @@ import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -27,6 +26,7 @@ public class ActionBoxer extends FatherAction{
 
     public ActionBoxer(Window window){
         this.window = window;
+        connection = window.getConnection();
         fileName = "Boxer";
         canLoadData = true;
         setBtnew(window.getBtNewBoxer());
@@ -176,24 +176,31 @@ public class ActionBoxer extends FatherAction{
 
     @Override
     public void loadInFile() {
-        ObjectInputStream readInFile = null;
+        String consult = " SELECT * FROM boxer ";
+        PreparedStatement statement = null;
+        ResultSet result = null;
+
         try {
-            readInFile = new ObjectInputStream(new FileInputStream(fileName+".bat"));
-            window.setArrayListBoxer((ArrayList<Boxer>) readInFile.readObject());
-            setArray((ArrayList<Boxer>)window.getArrayListBoxer());
-            window.getLoadLabel().setText("Datos de boxeadores cargados automaticamente");
-        } catch (ClassNotFoundException e) {
-            window.getLoadLabel().setText(e.getMessage());
-        } catch (FileNotFoundException e) {
-            window.getLoadLabel().setText(e.getMessage());
-        } catch (IOException e) {
-            window.getLoadLabel().setText(e.getMessage());
-        } finally {
-            if (readInFile != null){
+            statement = connection.prepareStatement(consult);
+            result = statement.executeQuery();
+
+            window.setArrayListBoxer(new ArrayList<Boxer>());
+            while (result.next()){
+                Boxer boxer = new Boxer(result.getInt(1),result.getString(2),result.getInt(3), result.getInt(4),
+                        result.getFloat(5),getCoachId(result.getInt(7)),getDojoId(result.getInt(6)));
+                window.getArrayListBoxer().add(boxer);
+            }
+            setArray((ArrayList<Boxer>) window.getArrayListBoxer());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement != null) {
                 try {
-                    readInFile.close();
-                } catch (IOException e) {
-                    window.getLoadLabel().setText(e.getMessage().toString());
+                    statement.close();
+                    result.close();
+                    window.getLoadLabel().setText("Datos de boxeadores cargados automaticamente");
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         }
