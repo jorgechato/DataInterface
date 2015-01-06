@@ -175,6 +175,35 @@ public class ActionBoxer extends FatherAction{
     }
 
     @Override
+    protected void deleteDatabase(Object object) {
+        Boxer boxer = (Boxer) object;
+/*
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+        String consult = " DELETE FROM boxer WHERE id = ? ";
+        PreparedStatement statement = null;
+
+        try {
+            statement = connection.prepareStatement(consult);
+            statement.setInt(1, boxer.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
     public void loadInFile() {
         String consult = " SELECT * FROM boxer ";
         PreparedStatement statement = null;

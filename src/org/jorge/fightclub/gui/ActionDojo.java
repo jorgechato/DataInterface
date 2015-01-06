@@ -306,6 +306,35 @@ public class ActionDojo extends FatherAction{
     }
 
     @Override
+    protected void deleteDatabase(Object object) {
+        Dojo dojo = (Dojo) object;
+/*
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+        String consult = " DELETE FROM dojo WHERE id = ? ";
+        PreparedStatement statement = null;
+
+        try {
+            statement = connection.prepareStatement(consult);
+            statement.setInt(1, dojo.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
     public void loadInFile() {
         String consult = " SELECT * FROM dojo ";
         PreparedStatement statement = null;

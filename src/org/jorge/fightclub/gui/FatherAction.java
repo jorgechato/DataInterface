@@ -208,7 +208,9 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
                 JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
             return;
         }
-        array.remove(pos);
+        deleteDatabase(array.get(pos));
+        loadInFile();
+
         if (pos > array.size()-1){
             pos = array.size()-1;
         }
@@ -230,6 +232,9 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
             newData();
         }
     }
+
+    protected abstract void deleteDatabase(Object object);
+
     /**
      * method to navigate in JList to each tag.
      * @return
