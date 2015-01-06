@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -259,11 +260,7 @@ public class ActionDojo extends FatherAction{
         }
 
         if (isNew()) {
-            dojo.setName(window.getTxtNameDojo().getText());
-            dojo.setStreet(window.getTxtStreetDojo().getText());
-            dojo.setInauguration(window.getDateDojo().getDate());
-
-            window.getArrayListDojo().add(dojo);
+            insert();
 
             setPos(window.getArrayListDojo().size()-1);
         }else{
@@ -303,6 +300,40 @@ public class ActionDojo extends FatherAction{
             if (dojo.getName().toLowerCase().contains(window.getSearchDojo().getText().toLowerCase()) ||
                     dojo.getStreet().toLowerCase().contains(window.getSearchDojo().getText().toLowerCase()))
                 window.getModelDojo().addElement(dojo);
+    }
+
+    @Override
+    public void insert() {
+        String consult = " INSERT INTO dojo(name, street, inauguration) VALUES (?,?,?) ";
+        PreparedStatement statement = null;
+        Date date = window.getDateDojo().getDate();
+        long current = Calendar.getInstance().getTimeInMillis();
+
+        try {
+            statement = connection.prepareStatement(consult);
+
+            statement.setString(1, window.getTxtNameDojo().getText());
+            statement.setString(2, window.getTxtStreetDojo().getText());
+            if (window.getDateDojo().getDate() == null){
+                statement.setDate(3, new java.sql.Date(current));
+            }else {
+                statement.setDate(3, new java.sql.Date(date.getTime()));
+            }
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement != null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        loadInFile();
     }
 
     @Override

@@ -445,6 +445,11 @@ public class ActionBoxer extends FatherAction{
     }
 
     @Override
+    public void insert() {
+
+    }
+
+    @Override
     public void stateChanged(ChangeEvent changeEvent) {
         loadData();
     }

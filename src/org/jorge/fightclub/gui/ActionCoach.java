@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -328,7 +329,6 @@ public class ActionCoach extends FatherAction{
         }
 
         if (isNew()) {
-            coach.setName(window.getTxtNameCoach().getText());
             try {
                 coach.setYears(Integer.parseInt(window.getTxtYearCoach().getText()));
             }catch (NumberFormatException e){
@@ -336,15 +336,8 @@ public class ActionCoach extends FatherAction{
                         "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            coach.setBirthday(window.getDateCoach().getDate());
 
-            Dojo selectedDojo = null;
-            for (Dojo dojo : window.getArrayListDojo())
-                if(window.getCbDojoInCoach().getSelectedItem().equals(dojo.toString()))
-                    selectedDojo = dojo;
-            coach.setDojo(selectedDojo);
-
-            window.getArrayListCoach().add(coach);
+            insert();
 
             setPos(window.getArrayListCoach().size()-1);
         }else{
@@ -396,6 +389,47 @@ public class ActionCoach extends FatherAction{
             if (coach.getName().toLowerCase().contains(window.getSearchCoach().getText().toLowerCase()) ||
                     String.valueOf(coach.getYears()).contains(window.getSearchCoach().getText()))
                 window.getModelCoach().addElement(coach);
+    }
+
+    @Override
+    public void insert() {
+        String consult = " INSERT INTO coach(name, birthday, sperience, id_dojo) VALUES (?,?,?,?) ";
+        PreparedStatement statement = null;
+        Date date = window.getDateDojo().getDate();
+        long current = Calendar.getInstance().getTimeInMillis();
+
+
+        Dojo selectedDojo = null;
+        for (Dojo dojo : window.getArrayListDojo())
+            if(window.getCbDojoInCoach().getSelectedItem().equals(dojo.toString()))
+                selectedDojo = dojo;
+
+        try {
+            statement = connection.prepareStatement(consult);
+
+            statement.setString(1, window.getTxtNameCoach().getText());
+            if (window.getDateDojo().getDate() == null){
+                statement.setDate(2, new java.sql.Date(current));
+            }else {
+                statement.setDate(2, new java.sql.Date(date.getTime()));
+            }
+            statement.setInt(3, Integer.parseInt(window.getTxtYearCoach().getText()));
+            statement.setInt(4, selectedDojo.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement != null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        loadInFile();
     }
 
     @Override

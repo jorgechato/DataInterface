@@ -390,6 +390,8 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
      */
     public abstract void findData();
 
+    public abstract void insert();
+
     /**
      * load the data when you change between tag.
      * @param actionEvent

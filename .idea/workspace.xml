@@ -31,16 +31,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FatherAction.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FatherAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/FatherAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45695364" vertical-offset="2949" max-vertical-offset="7161">
-              <caret line="211" column="21" selection-start-line="211" selection-start-column="21" selection-end-line="211" selection-end-column="21" />
+            <state vertical-scroll-proportion="-8.151515" vertical-offset="6619" max-vertical-offset="7203">
+              <caret line="392" column="31" selection-start-line="392" selection-start-column="31" selection-end-line="392" selection-end-column="31" />
               <folding>
-                <marker date="1420571007408" expanded="true" signature="7881:7910" placeholder="SELECT * FRO..dojo..." />
-                <marker date="1420571007408" expanded="true" signature="7881:7911" placeholder="SELECT * FRO..dojo..." />
-                <marker date="1420571007408" expanded="true" signature="8754:8784" placeholder="SELECT * FRO..coach..." />
-                <marker date="1420571007408" expanded="true" signature="8754:8785" placeholder="SELECT * FRO..coach..." />
+                <marker date="1420572876628" expanded="true" signature="7881:7910" placeholder="SELECT * FRO..dojo..." />
+                <marker date="1420572876628" expanded="true" signature="7881:7911" placeholder="SELECT * FRO..dojo..." />
+                <marker date="1420572876628" expanded="true" signature="8754:8784" placeholder="SELECT * FRO..coach..." />
+                <marker date="1420572876628" expanded="true" signature="8754:8785" placeholder="SELECT * FRO..coach..." />
               </folding>
             </state>
           </provider>
@@ -49,27 +49,36 @@
       <file leaf-file-name="ActionDojo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionDojo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.5151515" vertical-offset="5968" max-vertical-offset="7455">
-              <caret line="310" column="2" selection-start-line="310" selection-start-column="2" selection-end-line="310" selection-end-column="2" />
+            <state vertical-scroll-proportion="-8.545455" vertical-offset="4674" max-vertical-offset="8085">
+              <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="263" selection-end-column="0" />
               <folding>
-                <element signature="e#11496#11497#0" expanded="true" />
-                <element signature="e#11522#11523#0" expanded="true" />
-                <marker date="1420570854520" expanded="true" signature="9713:9742" placeholder="DELETE FROM ..." />
-                <marker date="1420570854520" expanded="true" signature="10340:10354" placeholder="SELECT * FRO..granjeros..." />
-                <marker date="1420570854520" expanded="true" signature="10340:10358" placeholder="SELECT * FRO..dojo..." />
+                <element signature="e#12427#12428#0" expanded="true" />
+                <element signature="e#12453#12454#0" expanded="true" />
+                <marker date="1420577346456" expanded="true" signature="9319:9378" placeholder="INSERT INTO ..." />
+                <marker date="1420577346456" expanded="true" signature="10644:10673" placeholder="DELETE FROM ..." />
+                <marker date="1420577346456" expanded="true" signature="11271:11285" placeholder="SELECT * FRO..granjeros..." />
+                <marker date="1420577346456" expanded="true" signature="11271:11289" placeholder="SELECT * FRO..dojo..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ActionCoach.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Window.form" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/Window.form">
+          <provider selected="true" editor-type-id="ui-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ActionCoach.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionCoach.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.1818182" vertical-offset="3171" max-vertical-offset="8064">
-              <caret line="181" column="2" selection-start-line="181" selection-start-column="2" selection-end-line="181" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.38007382" vertical-offset="7543" max-vertical-offset="8757">
+              <caret line="395" column="0" selection-start-line="395" selection-start-column="0" selection-end-line="395" selection-end-column="0" />
               <folding>
-                <marker date="1420570854524" expanded="true" signature="5181:5211" placeholder="DELETE FROM ..." />
-                <marker date="1420570854524" expanded="true" signature="5810:5829" placeholder="SELECT * FRO..coach..." />
+                <marker date="1420578899508" expanded="true" signature="5208:5238" placeholder="DELETE FROM ..." />
+                <marker date="1420578899508" expanded="true" signature="5837:5856" placeholder="SELECT * FRO..coach..." />
+                <marker date="1420578899508" expanded="true" signature="12766:12836" placeholder="INSERT INTO ..." />
               </folding>
             </state>
           </provider>
@@ -78,12 +87,12 @@
       <file leaf-file-name="ActionBoxer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionBoxer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.4242425" vertical-offset="3427" max-vertical-offset="9303">
-              <caret line="179" column="2" selection-start-line="179" selection-start-column="2" selection-end-line="179" selection-end-column="2" />
+            <state vertical-scroll-proportion="-9.090909" vertical-offset="8856" max-vertical-offset="9408">
+              <caret line="448" column="0" selection-start-line="448" selection-start-column="0" selection-end-line="448" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1420570854524" expanded="true" signature="5157:5187" placeholder="DELETE FROM ..." />
-                <marker date="1420570854524" expanded="true" signature="5786:5805" placeholder="SELECT * FRO..boxer..." />
+                <marker date="1420573389252" expanded="true" signature="5157:5187" placeholder="DELETE FROM ..." />
+                <marker date="1420573389252" expanded="true" signature="5786:5805" placeholder="SELECT * FRO..boxer..." />
               </folding>
             </state>
           </provider>
@@ -132,10 +141,10 @@
         <option value="$PROJECT_DIR$/src/org/jorge/fightclub/base/Dojo.java" />
         <option value="$PROJECT_DIR$/src/org/jorge/fightclub/gui/Window.java" />
         <option value="$PROJECT_DIR$/src/org/jorge/fightclub/base/Coach.java" />
-        <option value="$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionBoxer.java" />
-        <option value="$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionCoach.java" />
-        <option value="$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionDojo.java" />
         <option value="$PROJECT_DIR$/src/org/jorge/fightclub/gui/FatherAction.java" />
+        <option value="$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionBoxer.java" />
+        <option value="$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionDojo.java" />
+        <option value="$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionCoach.java" />
       </list>
     </option>
   </component>
@@ -255,10 +264,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="fightclub" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="base" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -611,12 +616,12 @@
       <workItem from="1420284764049" duration="1262000" />
       <workItem from="1420368631547" duration="4676000" />
       <workItem from="1420397731857" duration="657000" />
-      <workItem from="1420561801878" duration="8858000" />
+      <workItem from="1420561801878" duration="15029000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="189338000" />
+    <option name="totallyTimeSpent" value="195509000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -664,7 +669,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24961948" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39473686" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39473686" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -704,11 +709,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="4125" max-vertical-offset="6615">
           <caret line="211" column="24" selection-start-line="211" selection-start-column="24" selection-end-line="211" selection-end-column="24" />
           <folding>
-            <element signature="e#11496#11497#0" expanded="true" />
-            <element signature="e#11522#11523#0" expanded="true" />
-            <marker date="1420570854520" expanded="true" signature="9713:9742" placeholder="DELETE FROM ..." />
-            <marker date="1420570854520" expanded="true" signature="10340:10354" placeholder="SELECT * FRO..granjeros..." />
-            <marker date="1420570854520" expanded="true" signature="10340:10358" placeholder="SELECT * FRO..dojo..." />
+            <element signature="e#12427#12428#0" expanded="true" />
+            <element signature="e#12453#12454#0" expanded="true" />
+            <marker date="1420577346456" expanded="true" signature="9319:9378" placeholder="INSERT INTO ..." />
+            <marker date="1420577346456" expanded="true" signature="10644:10673" placeholder="DELETE FROM ..." />
+            <marker date="1420577346456" expanded="true" signature="11271:11285" placeholder="SELECT * FRO..granjeros..." />
+            <marker date="1420577346456" expanded="true" signature="11271:11289" placeholder="SELECT * FRO..dojo..." />
           </folding>
         </state>
       </provider>
@@ -718,8 +724,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="3785" max-vertical-offset="6762">
           <caret line="219" column="8" selection-start-line="219" selection-start-column="8" selection-end-line="220" selection-end-column="52" />
           <folding>
-            <marker date="1420570854524" expanded="true" signature="5181:5211" placeholder="DELETE FROM ..." />
-            <marker date="1420570854524" expanded="true" signature="5810:5829" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="5208:5238" placeholder="DELETE FROM ..." />
+            <marker date="1420578899508" expanded="true" signature="5837:5856" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="12766:12836" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -736,8 +743,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="588" max-vertical-offset="861">
           <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
           <folding>
-            <marker date="1420570854524" expanded="true" signature="5181:5211" placeholder="DELETE FROM ..." />
-            <marker date="1420570854524" expanded="true" signature="5810:5829" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="5208:5238" placeholder="DELETE FROM ..." />
+            <marker date="1420578899508" expanded="true" signature="5837:5856" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="12766:12836" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -780,10 +788,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="866" max-vertical-offset="3318">
           <caret line="8" column="79" selection-start-line="8" selection-start-column="79" selection-end-line="8" selection-end-column="79" />
           <folding>
-            <marker date="1420571007408" expanded="true" signature="7881:7910" placeholder="SELECT * FRO..dojo..." />
-            <marker date="1420571007408" expanded="true" signature="7881:7911" placeholder="SELECT * FRO..dojo..." />
-            <marker date="1420571007408" expanded="true" signature="8754:8784" placeholder="SELECT * FRO..coach..." />
-            <marker date="1420571007408" expanded="true" signature="8754:8785" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420572876628" expanded="true" signature="7881:7910" placeholder="SELECT * FRO..dojo..." />
+            <marker date="1420572876628" expanded="true" signature="7881:7911" placeholder="SELECT * FRO..dojo..." />
+            <marker date="1420572876628" expanded="true" signature="8754:8784" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420572876628" expanded="true" signature="8754:8785" placeholder="SELECT * FRO..coach..." />
           </folding>
         </state>
       </provider>
@@ -793,11 +801,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="3129">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
-            <element signature="e#11496#11497#0" expanded="true" />
-            <element signature="e#11522#11523#0" expanded="true" />
-            <marker date="1420570854520" expanded="true" signature="9713:9742" placeholder="DELETE FROM ..." />
-            <marker date="1420570854520" expanded="true" signature="10340:10354" placeholder="SELECT * FRO..granjeros..." />
-            <marker date="1420570854520" expanded="true" signature="10340:10358" placeholder="SELECT * FRO..dojo..." />
+            <element signature="e#12427#12428#0" expanded="true" />
+            <element signature="e#12453#12454#0" expanded="true" />
+            <marker date="1420577346456" expanded="true" signature="9319:9378" placeholder="INSERT INTO ..." />
+            <marker date="1420577346456" expanded="true" signature="10644:10673" placeholder="DELETE FROM ..." />
+            <marker date="1420577346456" expanded="true" signature="11271:11285" placeholder="SELECT * FRO..granjeros..." />
+            <marker date="1420577346456" expanded="true" signature="11271:11289" placeholder="SELECT * FRO..dojo..." />
           </folding>
         </state>
       </provider>
@@ -807,8 +816,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="588" max-vertical-offset="861">
           <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
           <folding>
-            <marker date="1420570854524" expanded="true" signature="5181:5211" placeholder="DELETE FROM ..." />
-            <marker date="1420570854524" expanded="true" signature="5810:5829" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="5208:5238" placeholder="DELETE FROM ..." />
+            <marker date="1420578899508" expanded="true" signature="5837:5856" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="12766:12836" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -851,10 +861,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1714" max-vertical-offset="2478">
           <caret line="97" column="67" selection-start-line="97" selection-start-column="67" selection-end-line="97" selection-end-column="67" />
           <folding>
-            <marker date="1420571007408" expanded="true" signature="7881:7910" placeholder="SELECT * FRO..dojo..." />
-            <marker date="1420571007408" expanded="true" signature="7881:7911" placeholder="SELECT * FRO..dojo..." />
-            <marker date="1420571007408" expanded="true" signature="8754:8784" placeholder="SELECT * FRO..coach..." />
-            <marker date="1420571007408" expanded="true" signature="8754:8785" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420572876628" expanded="true" signature="7881:7910" placeholder="SELECT * FRO..dojo..." />
+            <marker date="1420572876628" expanded="true" signature="7881:7911" placeholder="SELECT * FRO..dojo..." />
+            <marker date="1420572876628" expanded="true" signature="8754:8784" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420572876628" expanded="true" signature="8754:8785" placeholder="SELECT * FRO..coach..." />
           </folding>
         </state>
       </provider>
@@ -864,11 +874,12 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1680">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#11496#11497#0" expanded="true" />
-            <element signature="e#11522#11523#0" expanded="true" />
-            <marker date="1420570854520" expanded="true" signature="9713:9742" placeholder="DELETE FROM ..." />
-            <marker date="1420570854520" expanded="true" signature="10340:10354" placeholder="SELECT * FRO..granjeros..." />
-            <marker date="1420570854520" expanded="true" signature="10340:10358" placeholder="SELECT * FRO..dojo..." />
+            <element signature="e#12427#12428#0" expanded="true" />
+            <element signature="e#12453#12454#0" expanded="true" />
+            <marker date="1420577346456" expanded="true" signature="9319:9378" placeholder="INSERT INTO ..." />
+            <marker date="1420577346456" expanded="true" signature="10644:10673" placeholder="DELETE FROM ..." />
+            <marker date="1420577346456" expanded="true" signature="11271:11285" placeholder="SELECT * FRO..granjeros..." />
+            <marker date="1420577346456" expanded="true" signature="11271:11289" placeholder="SELECT * FRO..dojo..." />
           </folding>
         </state>
       </provider>
@@ -878,8 +889,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="21" max-vertical-offset="1008">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
-            <marker date="1420570854524" expanded="true" signature="5181:5211" placeholder="DELETE FROM ..." />
-            <marker date="1420570854524" expanded="true" signature="5810:5829" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="5208:5238" placeholder="DELETE FROM ..." />
+            <marker date="1420578899508" expanded="true" signature="5837:5856" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="12766:12836" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -1067,11 +1079,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/Window.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/MenuBar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="3633">
@@ -1124,52 +1131,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionBoxer.java">
+    <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/Window.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/FatherAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.4242425" vertical-offset="3427" max-vertical-offset="9303">
-          <caret line="179" column="2" selection-start-line="179" selection-start-column="2" selection-end-line="179" selection-end-column="2" />
+        <state vertical-scroll-proportion="-8.151515" vertical-offset="6619" max-vertical-offset="7203">
+          <caret line="392" column="31" selection-start-line="392" selection-start-column="31" selection-end-line="392" selection-end-column="31" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1420570854524" expanded="true" signature="5157:5187" placeholder="DELETE FROM ..." />
-            <marker date="1420570854524" expanded="true" signature="5786:5805" placeholder="SELECT * FRO..boxer..." />
+            <marker date="1420572876628" expanded="true" signature="7881:7910" placeholder="SELECT * FRO..dojo..." />
+            <marker date="1420572876628" expanded="true" signature="7881:7911" placeholder="SELECT * FRO..dojo..." />
+            <marker date="1420572876628" expanded="true" signature="8754:8784" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420572876628" expanded="true" signature="8754:8785" placeholder="SELECT * FRO..coach..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionCoach.java">
+    <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionBoxer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.1818182" vertical-offset="3171" max-vertical-offset="8064">
-          <caret line="181" column="2" selection-start-line="181" selection-start-column="2" selection-end-line="181" selection-end-column="2" />
+        <state vertical-scroll-proportion="-9.090909" vertical-offset="8856" max-vertical-offset="9408">
+          <caret line="448" column="0" selection-start-line="448" selection-start-column="0" selection-end-line="448" selection-end-column="0" />
           <folding>
-            <marker date="1420570854524" expanded="true" signature="5181:5211" placeholder="DELETE FROM ..." />
-            <marker date="1420570854524" expanded="true" signature="5810:5829" placeholder="SELECT * FRO..coach..." />
+            <element signature="imports" expanded="true" />
+            <marker date="1420573389252" expanded="true" signature="5157:5187" placeholder="DELETE FROM ..." />
+            <marker date="1420573389252" expanded="true" signature="5786:5805" placeholder="SELECT * FRO..boxer..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionDojo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.5151515" vertical-offset="5968" max-vertical-offset="7455">
-          <caret line="310" column="2" selection-start-line="310" selection-start-column="2" selection-end-line="310" selection-end-column="2" />
+        <state vertical-scroll-proportion="-8.545455" vertical-offset="4674" max-vertical-offset="8085">
+          <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="263" selection-end-column="0" />
           <folding>
-            <element signature="e#11496#11497#0" expanded="true" />
-            <element signature="e#11522#11523#0" expanded="true" />
-            <marker date="1420570854520" expanded="true" signature="9713:9742" placeholder="DELETE FROM ..." />
-            <marker date="1420570854520" expanded="true" signature="10340:10354" placeholder="SELECT * FRO..granjeros..." />
-            <marker date="1420570854520" expanded="true" signature="10340:10358" placeholder="SELECT * FRO..dojo..." />
+            <element signature="e#12427#12428#0" expanded="true" />
+            <element signature="e#12453#12454#0" expanded="true" />
+            <marker date="1420577346456" expanded="true" signature="9319:9378" placeholder="INSERT INTO ..." />
+            <marker date="1420577346456" expanded="true" signature="10644:10673" placeholder="DELETE FROM ..." />
+            <marker date="1420577346456" expanded="true" signature="11271:11285" placeholder="SELECT * FRO..granjeros..." />
+            <marker date="1420577346456" expanded="true" signature="11271:11289" placeholder="SELECT * FRO..dojo..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/FatherAction.java">
+    <entry file="file://$PROJECT_DIR$/src/org/jorge/fightclub/gui/ActionCoach.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45695364" vertical-offset="2949" max-vertical-offset="7161">
-          <caret line="211" column="21" selection-start-line="211" selection-start-column="21" selection-end-line="211" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.38007382" vertical-offset="7543" max-vertical-offset="8757">
+          <caret line="395" column="0" selection-start-line="395" selection-start-column="0" selection-end-line="395" selection-end-column="0" />
           <folding>
-            <marker date="1420571007408" expanded="true" signature="7881:7910" placeholder="SELECT * FRO..dojo..." />
-            <marker date="1420571007408" expanded="true" signature="7881:7911" placeholder="SELECT * FRO..dojo..." />
-            <marker date="1420571007408" expanded="true" signature="8754:8784" placeholder="SELECT * FRO..coach..." />
-            <marker date="1420571007408" expanded="true" signature="8754:8785" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="5208:5238" placeholder="DELETE FROM ..." />
+            <marker date="1420578899508" expanded="true" signature="5837:5856" placeholder="SELECT * FRO..coach..." />
+            <marker date="1420578899508" expanded="true" signature="12766:12836" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
