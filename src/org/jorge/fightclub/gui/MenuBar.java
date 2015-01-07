@@ -20,6 +20,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     private JFileChooser fileChooser;
     private boolean changeTag;
     private int tag;
+    private Timer timer;
 
     public MenuBar(){}
 
@@ -65,7 +66,20 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
 
         tag = 0;
         manualSave.setEnabled(false);
+
+        seconds();
         return jmb;
+    }
+
+    private void seconds() {
+        timer = new Timer(3600000, new TimerListener());
+        timer.start();
+    }
+
+    class TimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent evt) {
+            window.loadSqlData();
+        }
     }
 
     /**
@@ -129,7 +143,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
             window.setPass(pass);
 
         window.connect();
-//        window.loadSqlData();
+        window.loadSqlData();
     }
     /**
      * change path where you save the files.

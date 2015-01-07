@@ -270,12 +270,15 @@ public class Window extends JFrame{
                 break;
         }
     }
-/*
+
     public void loadSqlData(){
+        actionDojo.setPos(0);
         actionDojo.loadInFile();
+        actionCoach.setPos(0);
         actionCoach.loadInFile();
+        actionBoxer.setPos(0);
         actionBoxer.loadInFile();
-    }*/
+    }
 
     /**
      * export data to JSON file, it depends on which tag you are.
