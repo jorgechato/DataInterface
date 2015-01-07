@@ -52,12 +52,14 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         exportJson.addActionListener(this);
         changePath.addActionListener(this);
         automaticSaved.addActionListener(this);
+        connect.addActionListener(this);
 
         file.add(manualSave);
         file.add(saveAs);
         file.add(importE);
         importE.add(importJson);
         file.add(exportJson);
+        file.add(connect);
         save.add(automaticSaved);
         save.add(changePath);
 
@@ -107,8 +109,28 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
             window.manualSave(tag);
             return;
         }
+        if (actionEvent.getSource() == connect){
+            userPass();
+            return;
+        }
     }
 
+    private void userPass() {
+        window.setUsr("root");
+        window.setPass("2015**Luz");
+        String usr = "", pass = "";
+        if ((usr = JOptionPane.showInputDialog(null,"usuario","usuario",JOptionPane.PLAIN_MESSAGE))==null)
+            return;
+        if (!usr.equals(""))
+            window.setUsr(usr);
+        if ((pass = JOptionPane.showInputDialog(null,"pass","pass",JOptionPane.PLAIN_MESSAGE))==null)
+            return;
+        if (!pass.equals(""))
+            window.setPass(pass);
+
+        window.connect();
+//        window.loadSqlData();
+    }
     /**
      * change path where you save the files.
      */

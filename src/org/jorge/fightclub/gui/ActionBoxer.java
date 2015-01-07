@@ -235,6 +235,8 @@ public class ActionBoxer extends FatherAction{
             }
         }
         this.consult = " SELECT * FROM boxer ";
+        loadData();
+
     }
 
     @Override
@@ -372,42 +374,8 @@ public class ActionBoxer extends FatherAction{
                 activateDeactivateEdition(false);
                 return;
             }
-            window.getArrayListBoxer().get(getPos()).setName(window.getTxtNameBoxer().getText());
-            try {
-                window.getArrayListBoxer().get(getPos()).setWin(Integer.parseInt(window.getTxtWinBoxer().getText()));
-            }catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "ERROR :: El campo Victorias tiene que ser un entero",
-                        "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
-                return;
+                update();
             }
-            try {
-                window.getArrayListBoxer().get(getPos()).setLose(Integer.parseInt(window.getTxtLoseBoxer().getText()));
-            }catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "ERROR :: El campo Derrotas tiene que ser un entero",
-                        "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            try {
-                window.getArrayListBoxer().get(getPos()).setWeight(Float.parseFloat(window.getTxtWeightBoxer().getText()));
-            }catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "ERROR :: El campo Peso tiene que ser un numero",
-                        "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            Dojo selectedDojo = null;
-            for (Dojo dojo : window.getArrayListDojo())
-                if(window.getCbDojoInBoxer().getSelectedItem().equals(dojo.toString()))
-                    selectedDojo = dojo;
-
-            window.getArrayListBoxer().get(getPos()).setDojo(selectedDojo);
-
-            Coach selectedCoach = null;
-            for (Coach coach : window.getArrayListCoach())
-                if(window.getCbCoachInBoxer().getSelectedItem().equals(coach.toString()))
-                    selectedCoach = coach;
-
-            window.getArrayListBoxer().get(getPos()).setCoach(selectedCoach);
-        }
 
         navigate();
         reloadModelData();
@@ -475,6 +443,66 @@ public class ActionBoxer extends FatherAction{
             }
         }
 
+        loadInFile();
+    }
+
+    @Override
+    public void update() {
+        String consultSql = "UPDATE boxer SET name = ? , wins = ? , lose = ? , weight = ? , id_dojo = ? " +
+                ", id_coach = ? WHERE id = ?";
+        Boxer boxer = (Boxer) getArray().get(getPos());
+        PreparedStatement sentencia = null ;
+        int wins,lose;
+        float weight;
+
+        try {
+            wins = Integer.parseInt(window.getTxtWinBoxer().getText());
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "ERROR :: El campo Victorias tiene que ser un entero",
+                    "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            lose = Integer.parseInt(window.getTxtLoseBoxer().getText());
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "ERROR :: El campo Derrotas tiene que ser un entero",
+                    "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            weight = Float.parseFloat(window.getTxtWeightBoxer().getText());
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "ERROR :: El campo Peso tiene que ser un numero",
+                    "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Dojo selectedDojo = null;
+        for (Dojo dojo : window.getArrayListDojo())
+            if(window.getCbDojoInBoxer().getSelectedItem().equals(dojo.toString()))
+                selectedDojo = dojo;
+
+        Coach selectedCoach = null;
+        for (Coach coach : window.getArrayListCoach())
+            if(window.getCbCoachInBoxer().getSelectedItem().equals(coach.toString()))
+                selectedCoach = coach;
+
+        try {
+            sentencia = connection.prepareStatement(consultSql);
+            sentencia.setString(1,window.getTxtNameBoxer().getText());
+            sentencia.setInt(2, wins);
+            sentencia.setInt(3, lose);
+            sentencia.setFloat(4, weight);
+            sentencia.setInt(5,selectedDojo.getId());
+            sentencia.setInt(6,selectedCoach.getId());
+            sentencia.setInt(7,boxer.getId());
+            sentencia.executeUpdate();
+        } catch ( SQLException e ) {e.getErrorCode();}
+        finally {
+            if (sentencia != null)
+                try {
+                    sentencia.close();
+                } catch (SQLException e) {e.getErrorCode();}
+        }
         loadInFile();
     }
 

@@ -276,10 +276,11 @@ public class ActionDojo extends FatherAction{
                 activateDeactivateButton(true);
                 activateDeactivateEdition(false);
                 return;
-            }
+            }/*
             window.getArrayListDojo().get(getPos()).setName(window.getTxtNameDojo().getText());
             window.getArrayListDojo().get(getPos()).setStreet(window.getTxtStreetDojo().getText());
-            window.getArrayListDojo().get(getPos()).setInauguration(window.getDateDojo().getDate());
+            window.getArrayListDojo().get(getPos()).setInauguration(window.getDateDojo().getDate());*/
+            update();
         }
 
         navigate();
@@ -397,7 +398,33 @@ public class ActionDojo extends FatherAction{
             }
         }
         this.consult = " SELECT * FROM dojo ";
+        loadData();
     }
+
+    @Override
+    public void update(){
+        String consultSql = "UPDATE dojo SET name = ? , street = ? , inauguration = ? WHERE id = ?";
+        PreparedStatement sentencia = null ;
+        Dojo dojo = (Dojo) getArray().get(getPos());
+        Date date = window.getDateDojo().getDate();
+
+        try {
+            sentencia = connection.prepareStatement(consultSql);
+            sentencia.setString(1,window.getTxtNameDojo().getText());
+            sentencia.setString(2,window.getTxtStreetDojo().getText());
+            sentencia.setDate(3, new java.sql.Date(date.getTime()));
+            sentencia.setInt(4,dojo.getId());
+            sentencia.executeUpdate();
+        } catch ( SQLException e ) {e.getErrorCode();}
+        finally {
+            if (sentencia != null)
+                try {
+                    sentencia.close();
+                } catch (SQLException e) {e.getErrorCode();}
+        }
+        loadInFile();
+    }
+
 
     @Override
     public void stateChanged(ChangeEvent changeEvent) {

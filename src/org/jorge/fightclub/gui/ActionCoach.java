@@ -240,6 +240,7 @@ public class ActionCoach extends FatherAction{
             }
         }
         this.consult = " SELECT * FROM coach ";
+        loadData();
     }
 
     @Override
@@ -355,22 +356,7 @@ public class ActionCoach extends FatherAction{
                 activateDeactivateEdition(false);
                 return;
             }
-            window.getArrayListCoach().get(getPos()).setName(window.getTxtNameCoach().getText());
-            try {
-                window.getArrayListCoach().get(getPos()).setYears(Integer.parseInt(window.getTxtYearCoach().getText()));
-            }catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "ERROR :: El campo Experiencia en años tiene que ser un entero",
-                        "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            window.getArrayListCoach().get(getPos()).setBirthday(window.getDateCoach().getDate());
-
-            Dojo selectedDojo = null;
-            for (Dojo dojo : window.getArrayListDojo())
-                if(window.getCbDojoInCoach().getSelectedItem().equals(dojo.toString()))
-                    selectedDojo = dojo;
-
-            window.getArrayListCoach().get(getPos()).setDojo(selectedDojo);
+            update();
         }
 
         navigate();
@@ -433,6 +419,46 @@ public class ActionCoach extends FatherAction{
             }
         }
 
+        loadInFile();
+    }
+
+    @Override
+    public void update() {
+        String consultSql = "UPDATE coach SET name = ? , birthday = ? , sperience = ? , id_dojo = ? WHERE id = ?";
+        PreparedStatement sentencia = null ;
+        Coach coach = (Coach) getArray().get(getPos());
+        Date date = window.getDateCoach().getDate();
+        int year;
+
+        try {
+            year = Integer.parseInt(window.getTxtYearCoach().getText());
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "ERROR :: El campo Experiencia en años tiene que ser un entero",
+                    "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+
+        Dojo selectedDojo = null;
+        for (Dojo dojo : window.getArrayListDojo())
+            if(window.getCbDojoInCoach().getSelectedItem().equals(dojo.toString()))
+                selectedDojo = dojo;
+
+        try {
+            sentencia = connection.prepareStatement(consultSql);
+            sentencia.setString(1,window.getTxtNameCoach().getText());
+            sentencia.setDate(2, new java.sql.Date(date.getTime()));
+            sentencia.setInt(3, year);
+            sentencia.setInt(4,selectedDojo.getId());
+            sentencia.setInt(5,coach.getId());
+            sentencia.executeUpdate();
+        } catch ( SQLException e ) {e.getErrorCode();}
+        finally {
+            if (sentencia != null)
+                try {
+                    sentencia.close();
+                } catch (SQLException e) {e.getErrorCode();}
+        }
         loadInFile();
     }
 

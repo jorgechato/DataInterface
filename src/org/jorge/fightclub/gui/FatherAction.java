@@ -311,9 +311,8 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
         try {
             statement = connection.prepareStatement(consult);
             result = statement.executeQuery();
-            result.last();
 
-            if (dojo != null){
+            if (result.last()){
                 Date newDate = result.getTimestamp(4);
                 dojo = new Dojo(result.getInt(1),result.getString(2),result.getString(3),
                         newDate);
@@ -341,8 +340,7 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
         try {
             statement = connection.prepareStatement(consult);
             result = statement.executeQuery();
-            result.last();
-            if (coach != null) {
+            if (result.last()) {
                 Date newDate = result.getTimestamp(3);
                 coach = new Coach(result.getInt(1), result.getString(2), newDate, result.getInt(4),
                         getDojoId(result.getInt(5)));
@@ -394,6 +392,8 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
     public abstract void findData();
 
     public abstract void insert();
+
+    public abstract void update();
 
     /**
      * load the data when you change between tag.

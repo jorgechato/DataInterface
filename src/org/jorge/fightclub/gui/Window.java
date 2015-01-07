@@ -151,14 +151,15 @@ public class Window extends JFrame{
         configureListeners();
     }
 
-    private void connect() {
+    public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fightclub", this.usr, this.pass);
+            loadLabel.setText("Conexion establecida");
         } catch (ClassNotFoundException  e) {
-            e.printStackTrace();
+            loadLabel.setText(e.getMessage());
         } catch (SQLException e) {
-            e.printStackTrace();
+            loadLabel.setText(e.getMessage());
         }
     }
 
@@ -269,6 +270,12 @@ public class Window extends JFrame{
                 break;
         }
     }
+/*
+    public void loadSqlData(){
+        actionDojo.loadInFile();
+        actionCoach.loadInFile();
+        actionBoxer.loadInFile();
+    }*/
 
     /**
      * export data to JSON file, it depends on which tag you are.
@@ -332,6 +339,14 @@ public class Window extends JFrame{
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public void setUsr(String usr) {
+        this.usr = usr;
     }
 
     public void setJsonPath(String jsonPath) {
