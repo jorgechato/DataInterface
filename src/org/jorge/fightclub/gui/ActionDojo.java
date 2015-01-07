@@ -25,10 +25,12 @@ public class ActionDojo extends FatherAction{
     private Window window;
     private String fileName;
     private boolean canLoadData;
+    private String consult;
 
     public ActionDojo(Window window){
         this.window = window;
         connection = window.getConnection();
+        this.consult = " SELECT * FROM dojo ";
         fileName = "Dojo";
         canLoadData = true;
         setBtnew(window.getBtNewDojo());
@@ -295,11 +297,10 @@ public class ActionDojo extends FatherAction{
     @Override
     public void findData() {
         window.getModelDojo().removeAllElements();
+        this.consult = " SELECT * FROM dojo WHERE name LIKE '%"+window.getSearchDojo().getText()+"%' ";
 
-        for (Dojo dojo : window.getArrayListDojo())
-            if (dojo.getName().toLowerCase().contains(window.getSearchDojo().getText().toLowerCase()) ||
-                    dojo.getStreet().toLowerCase().contains(window.getSearchDojo().getText().toLowerCase()))
-                window.getModelDojo().addElement(dojo);
+        loadInFile();
+        reloadModelData();
     }
 
     @Override
@@ -367,7 +368,6 @@ public class ActionDojo extends FatherAction{
 
     @Override
     public void loadInFile() {
-        String consult = " SELECT * FROM dojo ";
         PreparedStatement statement = null;
         ResultSet result = null;
 
@@ -396,6 +396,7 @@ public class ActionDojo extends FatherAction{
                 }
             }
         }
+        this.consult = " SELECT * FROM dojo ";
     }
 
     @Override

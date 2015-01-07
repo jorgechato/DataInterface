@@ -313,9 +313,11 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
             result = statement.executeQuery();
             result.last();
 
-            Date newDate = result.getTimestamp(4);
-            dojo = new Dojo(result.getInt(1),result.getString(2),result.getString(3),
-                    newDate);
+            if (dojo != null){
+                Date newDate = result.getTimestamp(4);
+                dojo = new Dojo(result.getInt(1),result.getString(2),result.getString(3),
+                        newDate);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
@@ -340,10 +342,11 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
             statement = connection.prepareStatement(consult);
             result = statement.executeQuery();
             result.last();
-
-            Date newDate = result.getTimestamp(3);
-            coach = new Coach(result.getInt(1),result.getString(2), newDate, result.getInt(4),
-                    getDojoId(result.getInt(5)));
+            if (coach != null) {
+                Date newDate = result.getTimestamp(3);
+                coach = new Coach(result.getInt(1), result.getString(2), newDate, result.getInt(4),
+                        getDojoId(result.getInt(5)));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {

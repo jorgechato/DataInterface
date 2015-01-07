@@ -23,10 +23,12 @@ public class ActionBoxer extends FatherAction{
     private Window window;
     private String fileName;
     private boolean canLoadData;
+    private String consult;
 
     public ActionBoxer(Window window){
         this.window = window;
         connection = window.getConnection();
+        this.consult = " SELECT * FROM boxer ";
         fileName = "Boxer";
         canLoadData = true;
         setBtnew(window.getBtNewBoxer());
@@ -205,12 +207,11 @@ public class ActionBoxer extends FatherAction{
 
     @Override
     public void loadInFile() {
-        String consult = " SELECT * FROM boxer ";
         PreparedStatement statement = null;
         ResultSet result = null;
 
         try {
-            statement = connection.prepareStatement(consult);
+            statement = connection.prepareStatement(this.consult);
             result = statement.executeQuery();
 
             window.setArrayListBoxer(new ArrayList<Boxer>());
@@ -233,6 +234,7 @@ public class ActionBoxer extends FatherAction{
                 }
             }
         }
+        this.consult = " SELECT * FROM boxer ";
     }
 
     @Override
@@ -334,7 +336,6 @@ public class ActionBoxer extends FatherAction{
         }
 
         if (isNew()) {
-            boxer.setName(window.getTxtNameBoxer().getText());
             try {
                 boxer.setWin(Integer.parseInt(window.getTxtWinBoxer().getText()));
             }catch (NumberFormatException e){
@@ -356,22 +357,8 @@ public class ActionBoxer extends FatherAction{
                         "Formato no aceptado", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            Dojo selectedDojo = null;
-            for (Dojo dojo : window.getArrayListDojo())
-                if(window.getCbDojoInBoxer().getSelectedItem().equals(dojo.toString()))
-                    selectedDojo = dojo;
 
-            boxer.setDojo(selectedDojo);
-
-            Coach selectedCoach = null;
-            for (Coach coach : window.getArrayListCoach())
-                if(window.getCbCoachInBoxer().getSelectedItem().equals(coach.toString()))
-                    selectedCoach = coach;
-
-            boxer.setCoach(selectedCoach);
-
-            window.getArrayListBoxer().add(boxer);
-
+            insert();
             setPos(window.getArrayListBoxer().size()-1);
         }else{
             if(JOptionPane.showConfirmDialog(null,"¿Estas seguro?",
@@ -437,16 +424,58 @@ public class ActionBoxer extends FatherAction{
     @Override
     public void findData() {
         window.getModelBoxer().removeAllElements();
+        this.consult = " SELECT * FROM boxer WHERE name LIKE '%"+window.getSearchBoxer().getText()+"%' ";
 
-        for (Boxer boxer : window.getArrayListBoxer())
-            if (boxer.getName().toLowerCase().contains(window.getSearchBoxer().getText().toLowerCase()) ||
-                    String.valueOf(boxer.getWin()).contains(window.getSearchBoxer().getText()))
-                window.getModelBoxer().addElement(boxer);
+        loadInFile();
+        reloadModelData();
     }
 
     @Override
     public void insert() {
+        String consult = " INSERT INTO boxer(name, wins, lose, weight, id_dojo, id_coach) VALUES (?,?,?,?,?,?) ";
+        PreparedStatement statement = null;
 
+        Dojo selectedDojo = null;
+        for (Dojo dojo : window.getArrayListDojo())
+            if(window.getCbDojoInBoxer().getSelectedItem().equals(dojo.toString()))
+                selectedDojo = dojo;
+        Coach selectedCoach = null;
+        for (Coach coach : window.getArrayListCoach())
+            if(window.getCbCoachInBoxer().getSelectedItem().equals(coach.toString()))
+                selectedCoach = coach;
+
+        try {
+            statement = connection.prepareStatement(consult);
+
+            statement.setString(1, window.getTxtNameBoxer().getText());
+            statement.setInt(2, Integer.parseInt(window.getTxtWinBoxer().getText()));
+            statement.setInt(3, Integer.parseInt(window.getTxtLoseBoxer().getText()));
+            statement.setFloat(4, Float.parseFloat(window.getTxtWeightBoxer().getText()));
+            if (!window.getArrayListDojo().isEmpty()) {
+                statement.setInt(5, selectedDojo.getId());
+            }else {
+                statement.setObject(5, null);
+            }
+            if (!window.getArrayListCoach().isEmpty()) {
+                statement.setInt(6, selectedCoach.getId());
+            }else {
+                statement.setObject(6, null);
+            }
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (statement != null){
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        loadInFile();
     }
 
     @Override

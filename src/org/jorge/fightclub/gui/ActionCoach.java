@@ -25,10 +25,12 @@ public class ActionCoach extends FatherAction{
     private Window window;
     private String fileName;
     private boolean canLoadData;
+    private String consult;
 
     public ActionCoach(Window window){
         this.window = window;
         connection = window.getConnection();
+        this.consult = " SELECT * FROM coach ";
         fileName = "Coach";
         canLoadData = true;
         setBtnew(window.getBtNewCoach());
@@ -208,7 +210,6 @@ public class ActionCoach extends FatherAction{
 
     @Override
     public void loadInFile() {
-        String consult = " SELECT * FROM coach ";
         PreparedStatement statement = null;
         ResultSet result = null;
 
@@ -219,6 +220,7 @@ public class ActionCoach extends FatherAction{
             window.setArrayListCoach(new ArrayList<Coach>());
             while (result.next()){
                 Date newDate = result.getTimestamp(3);
+
                 Coach coach = new Coach(result.getInt(1),result.getString(2), newDate, result.getInt(4),
                         getDojoId(result.getInt(5)));
                 window.getArrayListCoach().add(coach);
@@ -237,6 +239,7 @@ public class ActionCoach extends FatherAction{
                 }
             }
         }
+        this.consult = " SELECT * FROM coach ";
     }
 
     @Override
@@ -384,11 +387,10 @@ public class ActionCoach extends FatherAction{
     @Override
     public void findData() {
         window.getModelCoach().removeAllElements();
+        this.consult = " SELECT * FROM coach WHERE name LIKE '%"+window.getSearchCoach().getText()+"%' ";
 
-        for (Coach coach : window.getArrayListCoach())
-            if (coach.getName().toLowerCase().contains(window.getSearchCoach().getText().toLowerCase()) ||
-                    String.valueOf(coach.getYears()).contains(window.getSearchCoach().getText()))
-                window.getModelCoach().addElement(coach);
+        loadInFile();
+        reloadModelData();
     }
 
     @Override
@@ -397,7 +399,6 @@ public class ActionCoach extends FatherAction{
         PreparedStatement statement = null;
         Date date = window.getDateDojo().getDate();
         long current = Calendar.getInstance().getTimeInMillis();
-
 
         Dojo selectedDojo = null;
         for (Dojo dojo : window.getArrayListDojo())
@@ -414,8 +415,11 @@ public class ActionCoach extends FatherAction{
                 statement.setDate(2, new java.sql.Date(date.getTime()));
             }
             statement.setInt(3, Integer.parseInt(window.getTxtYearCoach().getText()));
-            statement.setInt(4, selectedDojo.getId());
-
+            if (!window.getArrayListDojo().isEmpty()) {
+                statement.setInt(4, selectedDojo.getId());
+            }else {
+                statement.setObject(4, null);
+            }
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
