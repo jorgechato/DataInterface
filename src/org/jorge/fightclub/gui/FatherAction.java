@@ -10,9 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -276,15 +273,15 @@ public abstract class FatherAction implements ActionListener,MouseListener,KeyLi
      * save the array of each tag in file.
      */
     public void saveInFile(){
-        try {
-            ObjectOutputStream printInFile = new ObjectOutputStream(new FileOutputStream(fullPath));
-            printInFile.writeObject(array);
-            if (!manualSave)
-                loadLabel.setText("Datos guardados automaticamente en "+fullPath);
-            else
-                loadLabel.setText("Datos gardados correctamente en directorio "+newPath);
-        } catch (IOException e) {
-            loadLabel.setText(e.getMessage());
+        if (!manualSave)
+            loadLabel.setText("Datos guardados automaticamente en "+fullPath);
+        else {
+            loadLabel.setText("Datos gardados correctamente en directorio " + newPath);
+            try {
+                connection.commit();
+            } catch (SQLException e) {
+                loadLabel.setText(e.getMessage());
+            }
         }
     }
 

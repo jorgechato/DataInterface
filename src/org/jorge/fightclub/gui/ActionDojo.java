@@ -341,12 +341,7 @@ public class ActionDojo extends FatherAction{
     @Override
     protected void deleteDatabase(Object object) {
         Dojo dojo = (Dojo) object;
-/*
-        try {
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
+
         String consult = " DELETE FROM dojo WHERE id = ? ";
         PreparedStatement statement = null;
 
@@ -365,6 +360,7 @@ public class ActionDojo extends FatherAction{
                 }
             }
         }
+        window.loadSqlData();
     }
 
     @Override

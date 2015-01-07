@@ -179,12 +179,6 @@ public class ActionBoxer extends FatherAction{
     @Override
     protected void deleteDatabase(Object object) {
         Boxer boxer = (Boxer) object;
-/*
-        try {
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
         String consult = " DELETE FROM boxer WHERE id = ? ";
         PreparedStatement statement = null;
 
@@ -203,6 +197,7 @@ public class ActionBoxer extends FatherAction{
                 }
             }
         }
+        window.loadSqlData();
     }
 
     @Override

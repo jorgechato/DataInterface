@@ -6,6 +6,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 /**
  * Menu bar Class
@@ -109,10 +110,20 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         }
         if (actionEvent.getSource() == automaticSaved) {
             if (!automaticSaved.isSelected()){
+                try {
+                    window.getConnection().setAutoCommit(true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 manualSave.setEnabled(false);
                 window.setManual(false);
                 window.getLoadLabel().setText("Guardado automatico activado");
             }else{
+                try {
+                    window.getConnection().setAutoCommit(false);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 manualSave.setEnabled(true);
                 window.setManual(true);
                 window.getLoadLabel().setText("Guardado manual activado");

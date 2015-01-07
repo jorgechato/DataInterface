@@ -182,12 +182,6 @@ public class ActionCoach extends FatherAction{
     @Override
     protected void deleteDatabase(Object object) {
         Coach coach = (Coach) object;
-/*
-        try {
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
         String consult = " DELETE FROM coach WHERE id = ? ";
         PreparedStatement statement = null;
 
@@ -206,6 +200,7 @@ public class ActionCoach extends FatherAction{
                 }
             }
         }
+        window.loadSqlData();
     }
 
     @Override
