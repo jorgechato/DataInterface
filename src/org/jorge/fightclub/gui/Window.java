@@ -8,15 +8,13 @@ import org.jorge.fightclub.base.Coach;
 import org.jorge.fightclub.base.Dojo;
 
 import javax.swing.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.*;
+import java.util.Properties;
 
 /**
  * Main Class
@@ -141,8 +139,27 @@ public class Window extends JFrame{
         fileNewPath = "";
         jsonPath = "";
 
-        usr = "root";
-        pass = "2015**Luz";
+        Properties prop = new Properties();
+        OutputStream os = null;
+
+        try {
+            os = new FileOutputStream("connection.properties");
+            prop.setProperty("servidor.host","127.0.0.1");
+            prop.setProperty("servidor.name","root");
+            prop.setProperty("servidor.pass","2015**Luz");
+
+            prop.store(os,null);
+        } catch(IOException e) {
+           loadLabel.setText(e.getMessage());
+        }finally {
+            if (os!=null){
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public Window(){
@@ -152,14 +169,34 @@ public class Window extends JFrame{
     }
 
     public void connect() {
+        Properties prop = new Properties();
+        InputStream is = null;
+
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/fightclub", this.usr, this.pass);
-            loadLabel.setText("Conexion establecida");
-        } catch (ClassNotFoundException  e) {
+            is = new FileInputStream("connection.properties");
+            prop.load(is);
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                connection = DriverManager.getConnection("jdbc:mysql://"+prop.getProperty("servidor.host")
+                +":3306/fightclub", prop.getProperty("servidor.name"), prop.getProperty("servidor.pass"));
+                loadLabel.setText("Conexion establecida");
+            } catch (ClassNotFoundException  e) {
+                loadLabel.setText(e.getMessage());
+            } catch (SQLException e) {
+                loadLabel.setText(e.getMessage());
+            }
+
+        } catch(IOException e) {
             loadLabel.setText(e.getMessage());
-        } catch (SQLException e) {
-            loadLabel.setText(e.getMessage());
+        }finally {
+            if (is!=null){
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

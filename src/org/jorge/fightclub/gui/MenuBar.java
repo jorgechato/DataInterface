@@ -8,11 +8,13 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * Menu bar Class
@@ -195,18 +197,43 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     }
 
     private void userPass() {
-        window.setUsr("root");
-        window.setPass("2015**Luz");
-        String usr = "", pass = "";
+        String name = "root" , password = "2015**Luz", host = "127.0.0.1";
+        String usr = "", pass = "", path = "";
+
+        if ((path = JOptionPane.showInputDialog(null,"host","host",JOptionPane.PLAIN_MESSAGE))==null)
+            return;
+        if (!path.equals(""))
+            host = path;
         if ((usr = JOptionPane.showInputDialog(null,"usuario","usuario",JOptionPane.PLAIN_MESSAGE))==null)
             return;
         if (!usr.equals(""))
-            window.setUsr(usr);
+            name = usr;
         if ((pass = JOptionPane.showInputDialog(null,"pass","pass",JOptionPane.PLAIN_MESSAGE))==null)
             return;
         if (!pass.equals(""))
-            window.setPass(pass);
+            password = pass;
 
+        Properties prop = new Properties();
+        OutputStream os = null;
+
+        try {
+            os = new FileOutputStream("connection.properties");
+            prop.setProperty("servidor.host",host);
+            prop.setProperty("servidor.name",name);
+            prop.setProperty("servidor.pass",password);
+
+            prop.store(os,null);
+        } catch(IOException e) {
+            window.getLoadLabel().setText(e.getMessage());
+        }finally {
+            if (os!=null){
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         window.connect();
         window.loadSqlData();
     }
