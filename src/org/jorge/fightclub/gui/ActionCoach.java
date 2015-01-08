@@ -370,6 +370,8 @@ public class ActionCoach extends FatherAction{
         window.getModelCoach().removeAllElements();
         this.consult = " SELECT * FROM coach WHERE name LIKE '%"+window.getSearchCoach().getText()+"%' ";
 
+        setPos(0);
+
         loadInFile();
         reloadModelData();
     }

@@ -297,6 +297,8 @@ public class ActionDojo extends FatherAction{
         window.getModelDojo().removeAllElements();
         this.consult = " SELECT * FROM dojo WHERE name LIKE '%"+window.getSearchDojo().getText()+"%' ";
 
+        setPos(0);
+
         loadInFile();
         reloadModelData();
     }

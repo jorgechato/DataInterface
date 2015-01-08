@@ -206,7 +206,7 @@ public class ActionBoxer extends FatherAction{
         ResultSet result = null;
 
         try {
-            statement = connection.prepareStatement(this.consult);
+            statement = connection.prepareStatement(consult);
             result = statement.executeQuery();
 
             window.setArrayListBoxer(new ArrayList<Boxer>());
@@ -388,6 +388,8 @@ public class ActionBoxer extends FatherAction{
     public void findData() {
         window.getModelBoxer().removeAllElements();
         this.consult = " SELECT * FROM boxer WHERE name LIKE '%"+window.getSearchBoxer().getText()+"%' ";
+
+        setPos(0);
 
         loadInFile();
         reloadModelData();

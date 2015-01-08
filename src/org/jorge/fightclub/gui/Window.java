@@ -272,12 +272,12 @@ public class Window extends JFrame{
     }
 
     public void loadSqlData(){
-        actionDojo.setPos(0);
-        actionDojo.loadInFile();
-        actionCoach.setPos(0);
-        actionCoach.loadInFile();
-        actionBoxer.setPos(0);
         actionBoxer.loadInFile();
+        actionCoach.loadInFile();
+        actionDojo.loadInFile();
+        actionBoxer.setPos(0);
+        actionCoach.setPos(0);
+        actionDojo.setPos(0);
     }
 
     public void procedureLoad(){

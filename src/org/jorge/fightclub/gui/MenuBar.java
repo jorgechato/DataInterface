@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     private JMenuBar jmb;
     private JMenu file,save,importE,procedures;
-    private JMenuItem manualSave,saveAs,importJson,exportJson, changePath,connect,deleteboxer,countboxer;
+    private JMenuItem manualSave,saveAs,importJson,exportJson, changePath,connect,deleteboxer,countboxer,oldestCoachName,updateOldCoach;
     private JCheckBoxMenuItem automaticSaved;
     private Window window;
     private JFileChooser fileChooser;
@@ -57,6 +57,8 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         connect = new JMenuItem("Conectar");
         deleteboxer = new JMenuItem("Eliminar boxeadores");
         countboxer = new JMenuItem("Mejor boxeador");
+        oldestCoachName = new JMenuItem("Coach mas anciano");
+        updateOldCoach = new JMenuItem("Bonificación en experiencia");
 
         manualSave.addActionListener(this);
         saveAs.addActionListener(this);
@@ -67,6 +69,8 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         connect.addActionListener(this);
         deleteboxer.addActionListener(this);
         countboxer.addActionListener(this);
+        oldestCoachName.addActionListener(this);
+        updateOldCoach.addActionListener(this);
 
         file.add(manualSave);
 //        file.add(saveAs);
@@ -78,6 +82,8 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
 //        save.add(changePath);
         procedures.add(deleteboxer);
         procedures.add(countboxer);
+        procedures.add(oldestCoachName);
+        procedures.add(updateOldCoach);
 
         tag = 0;
         manualSave.setEnabled(false);
@@ -158,6 +164,14 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         }
         if (actionEvent.getSource() == countboxer){
             winBoxer();
+            return;
+        }
+        if (actionEvent.getSource() == oldestCoachName){
+            oldestCoach();
+            return;
+        }
+        if (actionEvent.getSource() == updateOldCoach){
+            updateSperience();
             return;
         }
     }
@@ -275,6 +289,39 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
             }
             JOptionPane.showMessageDialog(null,winBoxer,"Mejor boxeador",JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException e){
+            window.getLoadLabel().setText(e.getMessage());
+        }
+    }
+
+    public void oldestCoach(){
+        PreparedStatement statement = null ;
+        ResultSet result = null ;
+        try {
+            statement = window.getConnection().prepareStatement("select oldest_coach()") ;
+            result = statement.executeQuery () ;
+            result.first();
+
+            String oldestCoach = "";
+            if (result.wasNull()){
+                oldestCoach = "No hay coach";
+            }else {
+                oldestCoach = result.getString(1).toUpperCase() + " es el coach mas anciano";
+            }
+            JOptionPane.showMessageDialog(null,oldestCoach,"Coach",JOptionPane.PLAIN_MESSAGE);
+        } catch (SQLException e){
+            window.getLoadLabel().setText(e.getMessage());
+        }
+    }
+
+    public void updateSperience(){
+        CallableStatement procedure = null ;
+        try {
+            procedure = window.getConnection().prepareCall("call plus_sperience() ");
+            procedure.execute();
+
+            window.loadSqlData();
+            window.getLoadLabel().setText("Experiencia actualizada");
+        } catch (SQLException e) {
             window.getLoadLabel().setText(e.getMessage());
         }
     }
