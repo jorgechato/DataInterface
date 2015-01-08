@@ -6,6 +6,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.CallableStatement;
 import java.sql.SQLException;
 
 /**
@@ -14,8 +15,8 @@ import java.sql.SQLException;
  */
 public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     private JMenuBar jmb;
-    private JMenu file,save,importE;
-    private JMenuItem manualSave,saveAs,importJson,exportJson, changePath,connect;
+    private JMenu file,save,importE,procedures;
+    private JMenuItem manualSave,saveAs,importJson,exportJson, changePath,connect,deleteboxer;
     private JCheckBoxMenuItem automaticSaved;
     private Window window;
     private JFileChooser fileChooser;
@@ -37,8 +38,10 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         file = new JMenu("Archivo");
         save = new JMenu("Guardado");
         importE = new JMenu("Importar Json");
+        procedures = new JMenu("Procedimientos");
         jmb.add(file);
         jmb.add(save);
+        jmb.add(procedures);
 
         manualSave = new JMenuItem("Guardar");
         saveAs = new JMenuItem("Guardar como..");
@@ -47,6 +50,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         changePath = new JMenuItem("Cambiar ruta");
         automaticSaved = new JCheckBoxMenuItem("Manual");
         connect = new JMenuItem("Conectar");
+        deleteboxer = new JMenuItem("Eliminar boxeadores");
 
         manualSave.addActionListener(this);
         saveAs.addActionListener(this);
@@ -55,15 +59,17 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         changePath.addActionListener(this);
         automaticSaved.addActionListener(this);
         connect.addActionListener(this);
+        deleteboxer.addActionListener(this);
 
         file.add(manualSave);
-        file.add(saveAs);
+//        file.add(saveAs);
         file.add(importE);
         importE.add(importJson);
         file.add(exportJson);
         file.add(connect);
         save.add(automaticSaved);
-        save.add(changePath);
+//        save.add(changePath);
+        procedures.add(deleteboxer);
 
         tag = 0;
         manualSave.setEnabled(false);
@@ -137,6 +143,24 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         if (actionEvent.getSource() == connect){
             userPass();
             return;
+        }
+        if (actionEvent.getSource() == deleteboxer){
+            deleteallboxer();
+            return;
+        }
+    }
+
+    private void deleteallboxer() {
+        CallableStatement procedure = null ;
+        try {
+            procedure = window.getConnection().prepareCall("call deleteboxer() ");
+            procedure.execute();
+            window.initialize();
+            window.loadSqlData();
+            window.procedureLoad();
+            window.getLoadLabel().setText("Eliminados todos los boxeadores");
+        } catch (SQLException e) {
+            window.getLoadLabel().setText(e.getMessage());
         }
     }
 

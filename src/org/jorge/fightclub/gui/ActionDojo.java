@@ -276,10 +276,7 @@ public class ActionDojo extends FatherAction{
                 activateDeactivateButton(true);
                 activateDeactivateEdition(false);
                 return;
-            }/*
-            window.getArrayListDojo().get(getPos()).setName(window.getTxtNameDojo().getText());
-            window.getArrayListDojo().get(getPos()).setStreet(window.getTxtStreetDojo().getText());
-            window.getArrayListDojo().get(getPos()).setInauguration(window.getDateDojo().getDate());*/
+            }
             update();
         }
 

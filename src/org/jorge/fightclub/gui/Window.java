@@ -280,6 +280,23 @@ public class Window extends JFrame{
         actionBoxer.loadInFile();
     }
 
+    public void procedureLoad(){
+        actionDojo.setNew(true);
+        actionDojo.navigate();
+        actionDojo.activateDeactivateEdition(false);
+        actionDojo.activateDeactivateButton(true);
+
+        actionCoach.setNew(true);
+        actionCoach.navigate();
+        actionCoach.activateDeactivateEdition(false);
+        actionCoach.activateDeactivateButton(true);
+
+        actionBoxer.setNew(true);
+        actionBoxer.navigate();
+        actionBoxer.activateDeactivateEdition(false);
+        actionBoxer.activateDeactivateButton(true);
+    }
+
     /**
      * export data to JSON file, it depends on which tag you are.
      * @param tag
