@@ -1,5 +1,7 @@
 package org.jorge.fightclub.gui;
 
+import org.jorge.fightclub.base.Boxer;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -7,7 +9,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Menu bar Class
@@ -16,7 +21,7 @@ import java.sql.SQLException;
 public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     private JMenuBar jmb;
     private JMenu file,save,importE,procedures;
-    private JMenuItem manualSave,saveAs,importJson,exportJson, changePath,connect,deleteboxer;
+    private JMenuItem manualSave,saveAs,importJson,exportJson, changePath,connect,deleteboxer,countboxer;
     private JCheckBoxMenuItem automaticSaved;
     private Window window;
     private JFileChooser fileChooser;
@@ -38,7 +43,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         file = new JMenu("Archivo");
         save = new JMenu("Guardado");
         importE = new JMenu("Importar Json");
-        procedures = new JMenu("Procedimientos");
+        procedures = new JMenu("Filtro");
         jmb.add(file);
         jmb.add(save);
         jmb.add(procedures);
@@ -51,6 +56,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         automaticSaved = new JCheckBoxMenuItem("Manual");
         connect = new JMenuItem("Conectar");
         deleteboxer = new JMenuItem("Eliminar boxeadores");
+        countboxer = new JMenuItem("Mejor boxeador");
 
         manualSave.addActionListener(this);
         saveAs.addActionListener(this);
@@ -60,6 +66,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         automaticSaved.addActionListener(this);
         connect.addActionListener(this);
         deleteboxer.addActionListener(this);
+        countboxer.addActionListener(this);
 
         file.add(manualSave);
 //        file.add(saveAs);
@@ -70,6 +77,7 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         save.add(automaticSaved);
 //        save.add(changePath);
         procedures.add(deleteboxer);
+        procedures.add(countboxer);
 
         tag = 0;
         manualSave.setEnabled(false);
@@ -148,6 +156,10 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
             deleteallboxer();
             return;
         }
+        if (actionEvent.getSource() == countboxer){
+            winBoxer();
+            return;
+        }
     }
 
     private void deleteallboxer() {
@@ -155,7 +167,11 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
         try {
             procedure = window.getConnection().prepareCall("call deleteboxer() ");
             procedure.execute();
-            window.initialize();
+
+            window.setArrayListBoxer(new ArrayList<Boxer>());
+            window.setModelBoxer(new DefaultListModel<Boxer>());
+            window.getListBoxer().setModel(window.getModelBoxer());
+
             window.loadSqlData();
             window.procedureLoad();
             window.getLoadLabel().setText("Eliminados todos los boxeadores");
@@ -241,5 +257,25 @@ public class MenuBar extends JMenuBar implements ActionListener,ChangeListener{
     public void stateChanged(ChangeEvent changeEvent) {
         changeTag = true;
         tag = window.getTabbedPane1().getSelectedIndex();
+    }
+
+    public void winBoxer(){
+        PreparedStatement statement = null ;
+        ResultSet result = null ;
+        try {
+            statement = window.getConnection().prepareStatement("select win_boxer()") ;
+            result = statement.executeQuery () ;
+            result.first();
+
+            String winBoxer = "";
+            if (result.wasNull()){
+                winBoxer = "No hay boxeadores";
+            }else {
+                winBoxer = result.getString(1).toUpperCase() + " es el boxeador con mas victorias";
+            }
+            JOptionPane.showMessageDialog(null,winBoxer,"Mejor boxeador",JOptionPane.PLAIN_MESSAGE);
+        } catch (SQLException e){
+            window.getLoadLabel().setText(e.getMessage());
+        }
     }
 }

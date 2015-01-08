@@ -281,16 +281,6 @@ public class Window extends JFrame{
     }
 
     public void procedureLoad(){
-        actionDojo.setNew(true);
-        actionDojo.navigate();
-        actionDojo.activateDeactivateEdition(false);
-        actionDojo.activateDeactivateButton(true);
-
-        actionCoach.setNew(true);
-        actionCoach.navigate();
-        actionCoach.activateDeactivateEdition(false);
-        actionCoach.activateDeactivateButton(true);
-
         actionBoxer.setNew(true);
         actionBoxer.navigate();
         actionBoxer.activateDeactivateEdition(false);
@@ -355,6 +345,12 @@ public class Window extends JFrame{
         } catch (IOException e) {
             loadLabel.setText(e.getMessage());
         }
+    }
+
+
+
+    public void setModelBoxer(DefaultListModel<Boxer> modelBoxer) {
+        this.modelBoxer = modelBoxer;
     }
 
     public Connection getConnection() {
