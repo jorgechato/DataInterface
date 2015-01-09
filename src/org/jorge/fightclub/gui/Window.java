@@ -138,7 +138,7 @@ public class Window extends JFrame{
         newPath = "";
         fileNewPath = "";
         jsonPath = "";
-
+/*
         Properties prop = new Properties();
         OutputStream os = null;
 
@@ -159,8 +159,51 @@ public class Window extends JFrame{
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
     }
+
+    public boolean userPass() {
+        String name = "root" , password = "2015**Luz", host = "127.0.0.1";
+        String usr = "", pass = "", path = "";
+
+        if ((path = JOptionPane.showInputDialog(null,"host","host",JOptionPane.PLAIN_MESSAGE))==null)
+            return false;
+        if (!path.equals(""))
+            host = path;
+        if ((usr = JOptionPane.showInputDialog(null,"usuario","usuario",JOptionPane.PLAIN_MESSAGE))==null)
+            return false;
+        if (!usr.equals(""))
+            name = usr;
+        if ((pass = JOptionPane.showInputDialog(null,"pass","pass",JOptionPane.PLAIN_MESSAGE))==null)
+            return false;
+        if (!pass.equals(""))
+            password = pass;
+
+        Properties prop = new Properties();
+        OutputStream os = null;
+
+        try {
+            os = new FileOutputStream("connection.properties");
+            prop.setProperty("servidor.host",host);
+            prop.setProperty("servidor.name",name);
+            prop.setProperty("servidor.pass",password);
+
+            prop.store(os,null);
+        } catch(IOException e) {
+            getLoadLabel().setText(e.getMessage());
+        }finally {
+            if (os!=null){
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return true;
+    }
+
 
     public Window(){
         initialize();
@@ -189,6 +232,8 @@ public class Window extends JFrame{
 
         } catch(IOException e) {
             loadLabel.setText(e.getMessage());
+            if (userPass())
+                connect();
         }finally {
             if (is!=null){
                 try {
