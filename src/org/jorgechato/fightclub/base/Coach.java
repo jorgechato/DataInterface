@@ -17,7 +17,11 @@ public class Coach {
     private Dojo dojo;
     private List<Boxer> boxers;
 
+    public Coach() {
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -98,5 +102,10 @@ public class Coach {
 
     public void setBoxers(List<Boxer> boxers) {
         this.boxers = boxers;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

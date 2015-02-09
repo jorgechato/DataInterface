@@ -16,7 +16,11 @@ public class Fight {
     private Date day;
     private List<Boxer> boxers;
 
+    public Fight() {
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -88,5 +92,10 @@ public class Fight {
 
     public void setBoxers(List<Boxer> boxers) {
         this.boxers = boxers;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

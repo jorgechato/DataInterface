@@ -62,35 +62,155 @@
               </scrollpane>
             </children>
           </grid>
-          <grid id="ba333" layout-manager="FormLayout">
-            <rowspec value="center:d:grow"/>
-            <colspec value="fill:d:grow"/>
+          <grid id="ba333" binding="coachPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
               <tabbedpane title="Entrenador"/>
             </constraints>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <grid id="8c2b1" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints border-constraint="North"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="42a44" class="javax.swing.JButton" binding="pushCoach">
+                    <constraints/>
+                    <properties>
+                      <label value="Alta"/>
+                      <text value="Alta"/>
+                    </properties>
+                  </component>
+                  <component id="7f6b7" class="javax.swing.JButton" binding="deleteCoach">
+                    <constraints/>
+                    <properties>
+                      <text value="Baja"/>
+                    </properties>
+                  </component>
+                  <component id="8f04d" class="javax.swing.JButton" binding="changeCoach">
+                    <constraints/>
+                    <properties>
+                      <text value="Modificar"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <scrollpane id="569a5">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <maximumSize width="750" height="550"/>
+                  <minimumSize width="750" height="550"/>
+                  <preferredSize width="750" height="550"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="c912f" class="javax.swing.JTable" binding="tableCoach">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
           </grid>
-          <grid id="784cf" layout-manager="FormLayout">
-            <rowspec value="center:d:grow"/>
-            <colspec value="fill:d:grow"/>
+          <grid id="784cf" binding="boxerPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
               <tabbedpane title="Boxeador"/>
             </constraints>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <grid id="307b5" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints border-constraint="North"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="9406c" class="javax.swing.JButton" binding="pushBoxer">
+                    <constraints/>
+                    <properties>
+                      <label value="Alta"/>
+                      <text value="Alta"/>
+                    </properties>
+                  </component>
+                  <component id="c11db" class="javax.swing.JButton" binding="deleteBoxer">
+                    <constraints/>
+                    <properties>
+                      <text value="Baja"/>
+                    </properties>
+                  </component>
+                  <component id="48df8" class="javax.swing.JButton" binding="changeBoxer">
+                    <constraints/>
+                    <properties>
+                      <text value="Modificar"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <scrollpane id="d222b">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <maximumSize width="750" height="550"/>
+                  <minimumSize width="750" height="550"/>
+                  <preferredSize width="750" height="550"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="e740" class="javax.swing.JTable" binding="tableBoxer">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
           </grid>
-          <grid id="6a778" layout-manager="FormLayout">
-            <rowspec value="center:d:grow"/>
-            <colspec value="fill:d:grow"/>
+          <grid id="6a778" binding="fightPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
               <tabbedpane title="Combate"/>
             </constraints>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <grid id="9872e" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints border-constraint="North"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="99414" class="javax.swing.JButton" binding="pushFight">
+                    <constraints/>
+                    <properties>
+                      <label value="Alta"/>
+                      <text value="Alta"/>
+                    </properties>
+                  </component>
+                  <component id="1e171" class="javax.swing.JButton" binding="deleteFight">
+                    <constraints/>
+                    <properties>
+                      <text value="Baja"/>
+                    </properties>
+                  </component>
+                  <component id="48cf5" class="javax.swing.JButton" binding="changeFight">
+                    <constraints/>
+                    <properties>
+                      <text value="Modificar"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <scrollpane id="b106a">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <maximumSize width="750" height="550"/>
+                  <minimumSize width="750" height="550"/>
+                  <preferredSize width="750" height="550"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="2b0a8" class="javax.swing.JTable" binding="tableFight">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
           </grid>
         </children>
       </tabbedpane>

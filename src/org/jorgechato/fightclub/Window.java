@@ -1,17 +1,23 @@
 package org.jorgechato.fightclub;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.jorgechato.fightclub.base.Boxer;
+import org.jorgechato.fightclub.base.Coach;
 import org.jorgechato.fightclub.base.Dojo;
+import org.jorgechato.fightclub.base.Fight;
 import org.jorgechato.fightclub.util.HibernateUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
  * Created by jorge on 4/02/15.
  */
-public class Window {
+public class Window implements ActionListener{
     private JTabbedPane tabbedPane;
     private JPanel panel1;
     private JTable tableDojo;
@@ -19,7 +25,29 @@ public class Window {
     private JButton deleteDojo;
     private JButton changeDojo;
     private JPanel dojoPanel;
+    private JPanel coachPanel;
+    private JPanel boxerPanel;
+    private JPanel fightPanel;
+    private JTable tableCoach;
+    private JTable tableBoxer;
+    private JTable tableFight;
+    private JButton pushCoach;
+    private JButton deleteCoach;
+    private JButton changeCoach;
+    private JButton pushBoxer;
+    private JButton deleteBoxer;
+    private JButton changeBoxer;
+    private JButton pushFight;
+    private JButton deleteFight;
+    private JButton changeFight;
     private DefaultTableModel modelDojo;
+    private DefaultTableModel modelCoach;
+    private DefaultTableModel modelBoxer;
+    private DefaultTableModel modelFight;
+    private List<Coach> listCoach;
+    private List<Dojo> listDojo;
+    private List<Boxer> listBoxer;
+    private List<Fight> listFight;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Window");
@@ -27,15 +55,22 @@ public class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
     }
 
     public Window() {
         HibernateUtil.buildSessionFactory();
         init();
         reloadDojoTable();
+        reloadCoachTable();
+        reloadBoxerTable();
+        reloadFightTable();
     }
-
     private void init() {
+        pushDojo.addActionListener(this);
+        changeDojo.addActionListener(this);
+        deleteDojo.addActionListener(this);
+
         //dojo
         modelDojo = new DefaultTableModel(){
             @Override
@@ -43,19 +78,128 @@ public class Window {
                 return false;
             }
         };
+        modelDojo.addColumn("#");
         modelDojo.addColumn("Nombre");
         modelDojo.addColumn("Dirección");
         modelDojo.addColumn("Inauguración");
+        //coach
+        modelCoach = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        modelCoach.addColumn("#");
+        modelCoach.addColumn("Nombre");
+        modelCoach.addColumn("Cumpleaños");
+        modelCoach.addColumn("Experiencia");
+        modelCoach.addColumn("Escuela");
+        //boxer
+        modelBoxer = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        modelBoxer.addColumn("#");
+        modelBoxer.addColumn("Nombre");
+        modelBoxer.addColumn("Ganados");
+        modelBoxer.addColumn("Perdidos");
+        modelBoxer.addColumn("Peso");
+        modelBoxer.addColumn("Escuela");
+        modelBoxer.addColumn("Entrenador");
+        //fight
+        modelFight = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        modelFight.addColumn("#");
+        modelFight.addColumn("Nombre");
+        modelFight.addColumn("Dirección");
+        modelFight.addColumn("Fecha");
 
         tableDojo.setModel(modelDojo);
+        tableCoach.setModel(modelCoach);
+        tableBoxer.setModel(modelBoxer);
+        tableFight.setModel(modelFight);
     }
 
-    private void reloadDojoTable() {
+    public void reloadDojoTable() {
+        modelDojo.setNumRows(0);
         Query query = HibernateUtil.getCurrentSession().createQuery("FROM Dojo ");
-        List<Dojo> listDojo= (List<Dojo>) query.list();
+        listDojo = (List<Dojo>) query.list();
         for (Dojo dojo : listDojo) {
-            Object [] object = new Object[]{ dojo.getName(),dojo.getStreet(),dojo.getInauguration() };
+            Object [] object = new Object[]{dojo.getId() ,dojo.getName(),dojo.getStreet(),dojo.getInauguration() };
             modelDojo.addRow(object);
+        }
+    }
+
+    public void reloadCoachTable() {
+        modelCoach.setNumRows(0);
+        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Coach ");
+        listCoach= (List<Coach>) query.list();
+        for (Coach coach : listCoach) {
+            Object [] object = new Object[]{ coach.getId(),coach.getName(),coach.getBirthday(),coach.getSperience(),coach.getDojo() };
+            modelCoach.addRow(object);
+        }
+    }
+
+    public void reloadBoxerTable() {
+        modelBoxer.setNumRows(0);
+        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Boxer ");
+        listBoxer= (List<Boxer>) query.list();
+        for (Boxer boxer : listBoxer) {
+            Object [] object = new Object[]{ boxer.getId(), boxer.getName(),boxer.getWins(),boxer.getLose(),boxer.getWeight(),
+            boxer.getDojo(),boxer.getCoach()};
+            modelBoxer.addRow(object);
+        }
+    }
+
+    public void reloadFightTable() {
+        modelFight.setNumRows(0);
+        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Fight ");
+        listFight= (List<Fight>) query.list();
+        for (Fight fight : listFight) {
+            Object [] object = new Object[]{ fight.getId(), fight.getName(),fight.getStreet(),fight.getDay()};
+            modelFight.addRow(object);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        actionDojo(actionEvent);
+    }
+
+    public void actionDojo(ActionEvent actionEvent) {
+        int dojoRow;
+
+        if ((dojoRow = tableDojo.getSelectedRow()) != -1){
+            if (actionEvent.getSource() == changeDojo){
+                new DojoIssue(this, (Integer) tableDojo.getValueAt(dojoRow,0)).setVisible(true);
+                return;
+            }
+            if (actionEvent.getSource() == deleteDojo){
+                if(JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminarlo?", "Eliminar",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                    return;
+                }
+                int id = (Integer) tableDojo.getValueAt(dojoRow, 0);
+                Dojo dojo =(Dojo) HibernateUtil.getCurrentSession().get(Dojo.class, id);
+                Session session = HibernateUtil.getCurrentSession();
+                session.beginTransaction();
+                session.delete(dojo);
+                session.getTransaction();
+                session.close();
+
+                reloadDojoTable();
+                return;
+            }
+        }
+        if (actionEvent.getSource() == pushDojo){
+            new DojoIssue(this,-1).setVisible(true);
+            return;
         }
     }
 }
