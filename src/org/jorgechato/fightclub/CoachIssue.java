@@ -2,6 +2,7 @@ package org.jorgechato.fightclub;
 
 import com.toedter.calendar.JDateChooser;
 import org.hibernate.Session;
+import org.jorgechato.fightclub.base.Coach;
 import org.jorgechato.fightclub.base.Dojo;
 import org.jorgechato.fightclub.util.HibernateUtil;
 
@@ -12,20 +13,21 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 
 /**
- * Created by jorge on 9/02/15.
+ * Created by jorge on 10/02/15.
  */
-public class DojoIssue extends JDialog implements ActionListener{
-    private JPanel panel1;
+public class CoachIssue extends JDialog implements ActionListener {
     private JTextField textField1;
     private JTextField textField2;
-    private JButton cancelarButton;
     private JDateChooser dateInnauguration;
     private JButton aceptarButton;
+    private JButton cancelarButton;
+    private JPanel panel1;
+    private JComboBox comboBox1;
     private Window window;
-    private int idDojo;
-    private Dojo query;
+    private int idCoach;
+    private Coach query;
 
-    public DojoIssue(Window window,int idDojo) {
+    public CoachIssue(Window window,int idCoach) {
         dateInnauguration.setPreferredSize(new Dimension(250, 29));
         setContentPane(panel1);
         pack();
@@ -34,7 +36,7 @@ public class DojoIssue extends JDialog implements ActionListener{
         setLocationRelativeTo(null);
 
         this.window = window;
-        this.idDojo = idDojo;
+        this.idCoach = idCoach;
 
         init();
     }
@@ -43,16 +45,16 @@ public class DojoIssue extends JDialog implements ActionListener{
         cancelarButton.addActionListener(this);
         aceptarButton.addActionListener(this);
 
-        if (idDojo != -1){
-            query = (Dojo) HibernateUtil.getCurrentSession().get(Dojo.class,idDojo);
-            textField1.setText(query.getName());
-            textField2.setText(query.getStreet());
-            dateInnauguration.setDate(new Date(query.getInauguration().getTime()));
-        }
-    }
+        for (Dojo dojo : window.getListDojo())
+            comboBox1.addItem(dojo);
 
-    public JPanel getPanel1() {
-        return panel1;
+        if (idCoach != -1){
+            query = (Coach) HibernateUtil.getCurrentSession().get(Coach.class,idCoach);
+            textField1.setText(query.getName());
+            textField2.setText(query.getSperience().toString());
+            dateInnauguration.setDate(new Date(query.getBirthday().getTime()));
+            comboBox1.setSelectedItem(query.getDojo());
+        }
     }
 
     @Override
@@ -62,20 +64,23 @@ public class DojoIssue extends JDialog implements ActionListener{
             return;
         }
         if(actionEvent.getSource() == aceptarButton){
-            if (idDojo == -1){
-                Dojo dojo = new Dojo();
-                dojo.setName(textField1.getText());
-                dojo.setStreet(textField2.getText());
-                dojo.setInauguration(new Date(dateInnauguration.getDate().getTime()));
+            if (idCoach == -1){
+                Coach coach = new Coach();
+                coach.setName(textField1.getText());
+                coach.setSperience(Integer.parseInt(textField2.getText()));
+                coach.setBirthday(new Date(dateInnauguration.getDate().getTime()));
+                coach.setDojo((Dojo) comboBox1.getSelectedItem());
+
                 Session session = HibernateUtil.getCurrentSession();
                 session.beginTransaction();
-                session.save(dojo);
+                session.save(coach);
                 session.getTransaction().commit();
                 session.close();
             }else {
                 query.setName(textField1.getText());
-                query.setStreet(textField2.getText());
-                query.setInauguration(new Date(dateInnauguration.getDate().getTime()));
+                query.setSperience(Integer.parseInt(textField2.getText()));
+                query.setBirthday(new Date(dateInnauguration.getDate().getTime()));
+                query.setDojo((Dojo) comboBox1.getSelectedItem());
 
                 Session session = HibernateUtil.getCurrentSession();
                 session.beginTransaction();
@@ -83,7 +88,7 @@ public class DojoIssue extends JDialog implements ActionListener{
                 session.getTransaction().commit();
                 session.close();
             }
-            window.reloadDojoTable();
+            window.reloadCoachTable();
             setVisible(false);
             return;
         }

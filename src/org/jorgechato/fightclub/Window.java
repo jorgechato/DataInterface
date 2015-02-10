@@ -18,7 +18,7 @@ import java.util.List;
  * Created by jorge on 4/02/15.
  */
 public class Window implements ActionListener{
-    private JTabbedPane tabbedPane;
+    private JTabbedPane searchBoxer;
     private JPanel panel1;
     private JTable tableDojo;
     private JButton pushDojo;
@@ -40,6 +40,9 @@ public class Window implements ActionListener{
     private JButton pushFight;
     private JButton deleteFight;
     private JButton changeFight;
+    private JTextField searchDojo;
+    private JTextField searchCoach;
+    private JTextField searchFight;
     private DefaultTableModel modelDojo;
     private DefaultTableModel modelCoach;
     private DefaultTableModel modelBoxer;
@@ -66,10 +69,52 @@ public class Window implements ActionListener{
         reloadBoxerTable();
         reloadFightTable();
     }
+
+    public List<Coach> getListCoach() {
+        return listCoach;
+    }
+
+    public void setListCoach(List<Coach> listCoach) {
+        this.listCoach = listCoach;
+    }
+
+    public List<Dojo> getListDojo() {
+        return listDojo;
+    }
+
+    public void setListDojo(List<Dojo> listDojo) {
+        this.listDojo = listDojo;
+    }
+
+    public List<Boxer> getListBoxer() {
+        return listBoxer;
+    }
+
+    public void setListBoxer(List<Boxer> listBoxer) {
+        this.listBoxer = listBoxer;
+    }
+
+    public List<Fight> getListFight() {
+        return listFight;
+    }
+
+    public void setListFight(List<Fight> listFight) {
+        this.listFight = listFight;
+    }
+
     private void init() {
         pushDojo.addActionListener(this);
         changeDojo.addActionListener(this);
         deleteDojo.addActionListener(this);
+        pushCoach.addActionListener(this);
+        changeCoach.addActionListener(this);
+        deleteCoach.addActionListener(this);
+        pushBoxer.addActionListener(this);
+        changeBoxer.addActionListener(this);
+        deleteBoxer.addActionListener(this);
+        pushFight.addActionListener(this);
+        changeFight.addActionListener(this);
+        deleteFight.addActionListener(this);
 
         //dojo
         modelDojo = new DefaultTableModel(){
@@ -170,6 +215,102 @@ public class Window implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         actionDojo(actionEvent);
+        actionCoach(actionEvent);
+        actionBoxer(actionEvent);
+        actionFight(actionEvent);
+    }
+
+    public void actionFight(ActionEvent actionEvent) {
+        int fightRow;
+
+        if ((fightRow = tableFight.getSelectedRow()) != -1){
+            if (actionEvent.getSource() == changeFight){
+                new FightIssue(this, (Integer) tableFight.getValueAt(fightRow,0)).setVisible(true);
+                return;
+            }
+            if (actionEvent.getSource() == deleteFight){
+                if(JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminarlo?", "Eliminar",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                    return;
+                }
+                int id = (Integer) tableDojo.getValueAt(fightRow, 0);
+                Fight fight =(Fight) HibernateUtil.getCurrentSession().get(Fight.class, id);
+                Session session = HibernateUtil.getCurrentSession();
+                session.beginTransaction();
+                session.delete(fight);
+                session.getTransaction().commit();
+                session.close();
+
+                reloadFightTable();
+                return;
+            }
+        }
+        if (actionEvent.getSource() == pushFight){
+            new FightIssue(this,-1).setVisible(true);
+            return;
+        }
+    }
+
+    private void actionBoxer(ActionEvent actionEvent) {
+        int boxerRow;
+
+        if ((boxerRow = tableBoxer.getSelectedRow()) != -1){
+            if (actionEvent.getSource() == changeBoxer){
+                new BoxerIssue(this, (Integer) tableBoxer.getValueAt(boxerRow,0)).setVisible(true);
+                return;
+            }
+            if (actionEvent.getSource() == deleteBoxer){
+                if(JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminarlo?", "Eliminar",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                    return;
+                }
+                int id = (Integer) tableBoxer.getValueAt(boxerRow, 0);
+                Boxer boxer =(Boxer) HibernateUtil.getCurrentSession().get(Boxer.class, id);
+                Session session = HibernateUtil.getCurrentSession();
+                session.beginTransaction();
+                session.delete(boxer);
+                session.getTransaction().commit();
+                session.close();
+
+                reloadBoxerTable();
+                return;
+            }
+        }
+        if (actionEvent.getSource() == pushBoxer){
+            new BoxerIssue(this,-1).setVisible(true);
+            return;
+        }
+    }
+
+    private void actionCoach(ActionEvent actionEvent) {
+        int coachRow;
+
+        if ((coachRow = tableCoach.getSelectedRow()) != -1){
+            if (actionEvent.getSource() == changeCoach){
+                new CoachIssue(this, (Integer) tableCoach.getValueAt(coachRow,0)).setVisible(true);
+                return;
+            }
+            if (actionEvent.getSource() == deleteCoach){
+                if(JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminarlo?", "Eliminar",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                    return;
+                }
+                int id = (Integer) tableCoach.getValueAt(coachRow, 0);
+                Coach coach =(Coach) HibernateUtil.getCurrentSession().get(Coach.class, id);
+                Session session = HibernateUtil.getCurrentSession();
+                session.beginTransaction();
+                session.delete(coach);
+                session.getTransaction().commit();
+                session.close();
+
+                reloadCoachTable();
+                return;
+            }
+        }
+        if (actionEvent.getSource() == pushCoach){
+            new CoachIssue(this,-1).setVisible(true);
+            return;
+        }
     }
 
     public void actionDojo(ActionEvent actionEvent) {
@@ -190,7 +331,7 @@ public class Window implements ActionListener{
                 Session session = HibernateUtil.getCurrentSession();
                 session.beginTransaction();
                 session.delete(dojo);
-                session.getTransaction();
+                session.getTransaction().commit();
                 session.close();
 
                 reloadDojoTable();

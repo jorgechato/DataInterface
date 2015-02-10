@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.jorgechato.fightclub.FightIssue">
+  <grid id="27dc6" binding="panel1" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="1203" height="400"/>
+    </constraints>
+    <properties>
+      <preferredSize width="300" height="400"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="db584" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Nombre"/>
+        </properties>
+      </component>
+      <component id="eaec9" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+        <constraints/>
+        <properties>
+          <maximumSize width="250" height="29"/>
+          <minimumSize width="250" height="29"/>
+          <preferredSize width="250" height="29"/>
+        </properties>
+      </component>
+      <component id="a7cc8" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Direcciòn"/>
+        </properties>
+      </component>
+      <component id="8f245" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+        <constraints/>
+        <properties>
+          <maximumSize width="250" height="29"/>
+          <minimumSize width="250" height="29"/>
+          <preferredSize width="250" height="29"/>
+        </properties>
+      </component>
+      <component id="34ee2" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Fecha"/>
+        </properties>
+      </component>
+      <component id="51137" class="com.toedter.calendar.JDateChooser" binding="dateInnauguration">
+        <constraints/>
+      </component>
+      <component id="e7fc5" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Boxeadores"/>
+        </properties>
+      </component>
+      <scrollpane id="a3451">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="a9c2d" class="javax.swing.JList" binding="list1" default-binding="true">
+            <constraints/>
+            <properties>
+              <preferredSize width="250" height="0"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="a40a1" class="javax.swing.JButton" binding="aceptarButton">
+        <constraints/>
+        <properties>
+          <actionCommand value="Ok"/>
+          <label value="Aceptar"/>
+          <maximumSize width="93" height="37"/>
+          <minimumSize width="93" height="37"/>
+          <text value="Aceptar"/>
+        </properties>
+      </component>
+      <component id="599b" class="javax.swing.JButton" binding="cancelarButton" default-binding="true">
+        <constraints/>
+        <properties>
+          <maximumSize width="93" height="37"/>
+          <minimumSize width="93" height="37"/>
+          <text value="Cancelar"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

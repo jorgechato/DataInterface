@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.jorgechato.fightclub.BoxerIssue">
+  <grid id="27dc6" binding="panel1" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="1894" height="400"/>
+    </constraints>
+    <properties>
+      <preferredSize width="300" height="500"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="9fed5" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Nombre"/>
+        </properties>
+      </component>
+      <component id="8e689" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+        <constraints/>
+        <properties>
+          <maximumSize width="250" height="29"/>
+          <minimumSize width="250" height="29"/>
+          <preferredSize width="250" height="29"/>
+        </properties>
+      </component>
+      <component id="f289e" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Combates ganados"/>
+        </properties>
+      </component>
+      <component id="ca941" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+        <constraints/>
+        <properties>
+          <maximumSize width="250" height="29"/>
+          <minimumSize width="250" height="29"/>
+          <preferredSize width="250" height="29"/>
+        </properties>
+      </component>
+      <component id="6c703" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Combates perdidos"/>
+        </properties>
+      </component>
+      <component id="5208" class="javax.swing.JTextField" binding="textField3">
+        <constraints/>
+        <properties>
+          <maximumSize width="250" height="29"/>
+          <minimumSize width="250" height="29"/>
+          <preferredSize width="250" height="29"/>
+        </properties>
+      </component>
+      <component id="4fbba" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Peso"/>
+        </properties>
+      </component>
+      <component id="5040d" class="javax.swing.JTextField" binding="textField4">
+        <constraints/>
+        <properties>
+          <maximumSize width="250" height="29"/>
+          <minimumSize width="250" height="29"/>
+          <preferredSize width="250" height="29"/>
+        </properties>
+      </component>
+      <component id="d2c3c" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Escuela"/>
+        </properties>
+      </component>
+      <component id="51c87" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+        <constraints/>
+        <properties>
+          <preferredSize width="250" height="31"/>
+        </properties>
+      </component>
+      <component id="3e33b" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <preferredSize width="250" height="21"/>
+          <text value="Entrenador"/>
+        </properties>
+      </component>
+      <component id="359dd" class="javax.swing.JComboBox" binding="comboBox2">
+        <constraints/>
+        <properties>
+          <preferredSize width="250" height="31"/>
+        </properties>
+      </component>
+      <component id="83cbf" class="javax.swing.JButton" binding="aceptarButton">
+        <constraints/>
+        <properties>
+          <actionCommand value="Ok"/>
+          <label value="Aceptar"/>
+          <maximumSize width="93" height="37"/>
+          <minimumSize width="93" height="37"/>
+          <text value="Aceptar"/>
+        </properties>
+      </component>
+      <component id="48655" class="javax.swing.JButton" binding="cancelarButton" default-binding="true">
+        <constraints/>
+        <properties>
+          <maximumSize width="93" height="37"/>
+          <minimumSize width="93" height="37"/>
+          <text value="Cancelar"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

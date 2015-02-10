@@ -7,9 +7,11 @@
     <properties/>
     <border type="none"/>
     <children>
-      <tabbedpane id="bbf49" binding="tabbedPane">
+      <tabbedpane id="bbf49" binding="searchBoxer">
         <constraints border-constraint="Center"/>
-        <properties/>
+        <properties>
+          <preferredSize width="981" height="600"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="5ae7d" binding="dojoPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -21,7 +23,9 @@
             <children>
               <grid id="97a17" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="North"/>
-                <properties/>
+                <properties>
+                  <preferredSize width="981" height="75"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="c18b5" class="javax.swing.JButton" binding="pushDojo">
@@ -41,6 +45,12 @@
                     <constraints/>
                     <properties>
                       <text value="Modificar"/>
+                    </properties>
+                  </component>
+                  <component id="31137" class="javax.swing.JTextField" binding="searchDojo">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="750" height="29"/>
                     </properties>
                   </component>
                 </children>
@@ -71,7 +81,9 @@
             <children>
               <grid id="8c2b1" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="North"/>
-                <properties/>
+                <properties>
+                  <preferredSize width="981" height="75"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="42a44" class="javax.swing.JButton" binding="pushCoach">
@@ -91,6 +103,12 @@
                     <constraints/>
                     <properties>
                       <text value="Modificar"/>
+                    </properties>
+                  </component>
+                  <component id="4932a" class="javax.swing.JTextField" binding="searchCoach">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="750" height="29"/>
                     </properties>
                   </component>
                 </children>
@@ -121,7 +139,9 @@
             <children>
               <grid id="307b5" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="North"/>
-                <properties/>
+                <properties>
+                  <preferredSize width="981" height="75"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="9406c" class="javax.swing.JButton" binding="pushBoxer">
@@ -141,6 +161,12 @@
                     <constraints/>
                     <properties>
                       <text value="Modificar"/>
+                    </properties>
+                  </component>
+                  <component id="a58c1" class="javax.swing.JTextField" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="750" height="29"/>
                     </properties>
                   </component>
                 </children>
@@ -171,7 +197,9 @@
             <children>
               <grid id="9872e" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="North"/>
-                <properties/>
+                <properties>
+                  <preferredSize width="981" height="75"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="99414" class="javax.swing.JButton" binding="pushFight">
@@ -191,6 +219,12 @@
                     <constraints/>
                     <properties>
                       <text value="Modificar"/>
+                    </properties>
+                  </component>
+                  <component id="9428d" class="javax.swing.JTextField" binding="searchFight">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="750" height="29"/>
                     </properties>
                   </component>
                 </children>
