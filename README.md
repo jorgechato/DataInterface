@@ -19,4 +19,4 @@ Program to manage a fight club
 -JGoodies Layout [link](http://www.jgoodies.com)
 
 
-#### JAR file in [link](https://github.com/orggue/DataInterface/blob/MySql/out/artifacts/FightClub_jar2/FightClub.jar)
+#### JAR file in [link](https://github.com/orggue/DataInterface/releases/download/ra3/Fightclub.jar)
