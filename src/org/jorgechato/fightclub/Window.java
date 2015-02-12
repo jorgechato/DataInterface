@@ -1,5 +1,7 @@
 package org.jorgechato.fightclub;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jorgechato.fightclub.base.Boxer;
@@ -10,10 +12,11 @@ import org.jorgechato.fightclub.util.HibernateUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,18 +48,30 @@ public class Window implements ActionListener{
     private JTextField searchCoach;
     private JTextField searchFight;
     private JTextField searchBoxer;
+    private JLabel logLabel;
+    private JScrollPane dojoTab;
+    private JTabbedPane tabPanel;
     private DefaultTableModel modelDojo;
     private DefaultTableModel modelCoach;
     private DefaultTableModel modelBoxer;
     private DefaultTableModel modelFight;
     private List<Coach> listCoach;
-    private List<Dojo> listDojo;
+    private ArrayList<Dojo> listDojo;
     private List<Boxer> listBoxer;
     private List<Fight> listFight;
+    private static MenuBar menuBar;
+    private String jsonPath;
+
+    private java.lang.reflect.Type type;
+
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Window");
-        frame.setContentPane(new Window().panel1);
+        menuBar = new MenuBar();
+        frame.setJMenuBar(menuBar.menuBar());
+        Window window =new Window();
+        menuBar.setWindow(window);
+        frame.setContentPane(window.panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -71,6 +86,74 @@ public class Window implements ActionListener{
         reloadCoachTable(HibernateUtil.getCurrentSession().createQuery("FROM Coach "));
         reloadBoxerTable(HibernateUtil.getCurrentSession().createQuery("FROM Boxer "));
         reloadFightTable(HibernateUtil.getCurrentSession().createQuery("FROM Fight "));
+        timer();
+
+        tabPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                switch (tabPanel.getSelectedIndex()){
+                    case 0:
+                        logLabel.setText("Tabla de escuela");
+                        break;
+                    case 1:
+                        logLabel.setText("Tabla de entrenador");
+                        break;
+                    case 2:
+                        logLabel.setText("Tabla de boxeador");
+                        break;
+                    case 3:
+                        logLabel.setText("Tabla de combate");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        tableDojo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                logLabel.setText("Fila seleccionada: "+tableDojo.getSelectedRow());
+            }
+        });
+
+        tableCoach.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                logLabel.setText("Fila seleccionada: "+tableCoach.getSelectedRow());
+            }
+        });
+
+        tableBoxer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                logLabel.setText("Fila seleccionada: "+tableBoxer.getSelectedRow());
+            }
+        });
+
+        tableFight.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                logLabel.setText("Fila seleccionada: " + tableFight.getSelectedRow());
+            }
+        });
+    }
+
+    private void timer() {
+        Timer timer = new Timer(60000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                reloadDojoTable(HibernateUtil.getCurrentSession().createQuery("FROM Dojo "));
+                reloadCoachTable(HibernateUtil.getCurrentSession().createQuery("FROM Coach "));
+                reloadBoxerTable(HibernateUtil.getCurrentSession().createQuery("FROM Boxer "));
+                reloadFightTable(HibernateUtil.getCurrentSession().createQuery("FROM Fight "));
+            }
+        });timer.start();
     }
 
     public void search() {
@@ -153,7 +236,7 @@ public class Window implements ActionListener{
             num = 0;
         }
         Query query = HibernateUtil.getCurrentSession().createQuery("FROM Coach WHERE name like '%" +
-                searchCoach.getText() +"%' or sperience = "+num);
+                searchCoach.getText() +"%' or sperience = "+num+" or dojo.name like '%"+searchCoach.getText()+"%'");
         reloadCoachTable(query);
 
     }
@@ -172,7 +255,7 @@ public class Window implements ActionListener{
         }
 
         Query query = HibernateUtil.getCurrentSession().createQuery("FROM Boxer WHERE name like '%" +
-                searchBoxer.getText() +"%' or wins = "+win);
+                searchBoxer.getText() +"%' or wins = "+win+ " or dojo.name like '%"+searchBoxer.getText()+"%' or coach.name like '%"+searchBoxer.getText()+"%'");
         reloadBoxerTable(query);
 
     }
@@ -188,7 +271,7 @@ public class Window implements ActionListener{
         return listDojo;
     }
 
-    public void setListDojo(List<Dojo> listDojo) {
+    public void setListDojo(ArrayList<Dojo> listDojo) {
         this.listDojo = listDojo;
     }
 
@@ -206,6 +289,10 @@ public class Window implements ActionListener{
 
     public void setListFight(List<Fight> listFight) {
         this.listFight = listFight;
+    }
+
+    public void setJsonPath(String jsonPath) {
+        this.jsonPath = jsonPath;
     }
 
     private void init() {
@@ -279,11 +366,12 @@ public class Window implements ActionListener{
 
     public void reloadDojoTable(Query query) {
         modelDojo.setNumRows(0);
-        listDojo = (List<Dojo>) query.list();
+        listDojo = (ArrayList<Dojo>) query.list();
         for (Dojo dojo : listDojo) {
             Object [] object = new Object[]{dojo.getId() ,dojo.getName(),dojo.getStreet(),dojo.getInauguration() };
             modelDojo.addRow(object);
         }
+        logLabel.setText("Tabla de escuela actualizada \t Filas: "+modelDojo.getRowCount());
     }
 
     public void reloadCoachTable(Query query) {
@@ -293,6 +381,7 @@ public class Window implements ActionListener{
             Object [] object = new Object[]{ coach.getId(),coach.getName(),coach.getBirthday(),coach.getSperience(),coach.getDojo() };
             modelCoach.addRow(object);
         }
+        logLabel.setText("Tabla de entrenador actualizada \t Filas: "+modelCoach.getRowCount());
     }
 
     public void reloadBoxerTable(Query query) {
@@ -303,6 +392,7 @@ public class Window implements ActionListener{
             boxer.getDojo(),boxer.getCoach()};
             modelBoxer.addRow(object);
         }
+        logLabel.setText("Tabla de boxeador actualizada \t Filas: "+modelBoxer.getRowCount());
     }
 
     public void reloadFightTable(Query query) {
@@ -312,6 +402,7 @@ public class Window implements ActionListener{
             Object [] object = new Object[]{ fight.getId(), fight.getName(),fight.getStreet(),fight.getDay()};
             modelFight.addRow(object);
         }
+        logLabel.setText("Tabla de combate actualizada \t Filas: "+modelFight.getRowCount());
     }
 
     @Override
@@ -444,5 +535,44 @@ public class Window implements ActionListener{
             new DojoIssue(this,-1).setVisible(true);
             return;
         }
+    }
+
+    public void importFromJson(){
+        Gson gson = new Gson();
+        try {
+            FileReader fileReader = new FileReader(jsonPath);
+
+            type = new TypeToken<ArrayList<Dojo>>() {
+            }.getType();
+            List<Dojo> newListDojo= gson.fromJson(fileReader,type);
+
+            fileReader.close();
+
+            Session session = HibernateUtil.getCurrentSession();
+            for (Dojo dojo : newListDojo){
+                session.beginTransaction();
+                session.save(dojo);
+                session.getTransaction().commit();
+            }
+            session.close();
+
+            reloadDojoTable(HibernateUtil.getCurrentSession().createQuery("FROM Dojo "));
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+    }
+
+    public void exportToJson(){
+        Gson gson = new Gson();
+//        String json = gson.toJson(listDojo);
+        System.out.println(gson.toJson(listDojo));
+//        try {
+//            FileWriter fileWriter = new FileWriter(jsonPath+".json");
+//            fileWriter.write(json);
+//            fileWriter.close();
+//        } catch (IOException e) {
+//            System.out.println(e.fillInStackTrace());
+//        }
     }
 }

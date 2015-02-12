@@ -12,10 +12,14 @@ public class HibernateUtil {
 	private static Session session;
 
 	public static void buildSessionFactory() {
-	
-		Configuration configuration = new Configuration();
-		configuration.configure();
-		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(
+
+        Root root = new Root();
+        root.setVisible(true);
+
+        Configuration configuration = new Configuration();
+        configuration.configure().setProperty("hibernate.connection.username",root.NAME).setProperty("hibernate.connection.password", root.PASS);
+
+        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(
 						configuration.getProperties()).buildServiceRegistry();
 		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 	}

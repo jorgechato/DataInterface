@@ -1,6 +1,7 @@
 package org.jorgechato.fightclub.base;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="dojo")
-public class Dojo {
+public class Dojo  implements Serializable {
     private int id;
     private String name;
     private String street;

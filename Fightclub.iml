@@ -22,5 +22,6 @@
     <orderEntry type="library" name="mysql-connector-java-3.1.14-bin" level="project" />
     <orderEntry type="library" name="jgoodies-common-1.8.0" level="project" />
     <orderEntry type="library" name="jcalendar-1.4" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.3.1" level="project" />
   </component>
 </module>

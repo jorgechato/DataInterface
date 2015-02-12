@@ -8,7 +8,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="boxer")
-public class Boxer {
+public class Boxer{
     private int id;
     private String name;
     private Integer wins;
