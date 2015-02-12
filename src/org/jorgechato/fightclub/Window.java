@@ -371,6 +371,10 @@ public class Window implements ActionListener{
             Object [] object = new Object[]{dojo.getId() ,dojo.getName(),dojo.getStreet(),dojo.getInauguration() };
             modelDojo.addRow(object);
         }
+        Session session = HibernateUtil.getCurrentSession();
+        session.beginTransaction();
+        session.getTransaction().commit();
+        session.close();
         logLabel.setText("Tabla de escuela actualizada \t Filas: "+modelDojo.getRowCount());
     }
 
@@ -381,6 +385,10 @@ public class Window implements ActionListener{
             Object [] object = new Object[]{ coach.getId(),coach.getName(),coach.getBirthday(),coach.getSperience(),coach.getDojo() };
             modelCoach.addRow(object);
         }
+        Session session = HibernateUtil.getCurrentSession();
+        session.beginTransaction();
+        session.getTransaction().commit();
+        session.close();
         logLabel.setText("Tabla de entrenador actualizada \t Filas: "+modelCoach.getRowCount());
     }
 
@@ -392,6 +400,10 @@ public class Window implements ActionListener{
             boxer.getDojo(),boxer.getCoach()};
             modelBoxer.addRow(object);
         }
+        Session session = HibernateUtil.getCurrentSession();
+        session.beginTransaction();
+        session.getTransaction().commit();
+        session.close();
         logLabel.setText("Tabla de boxeador actualizada \t Filas: "+modelBoxer.getRowCount());
     }
 
@@ -402,6 +414,10 @@ public class Window implements ActionListener{
             Object [] object = new Object[]{ fight.getId(), fight.getName(),fight.getStreet(),fight.getDay()};
             modelFight.addRow(object);
         }
+        Session session = HibernateUtil.getCurrentSession();
+        session.beginTransaction();
+        session.getTransaction().commit();
+        session.close();
         logLabel.setText("Tabla de combate actualizada \t Filas: "+modelFight.getRowCount());
     }
 
