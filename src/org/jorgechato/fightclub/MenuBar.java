@@ -28,7 +28,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
         exportJson.addActionListener(this);
 
         file.add(importJson);
-        file.add(exportJson);
+//        file.add(exportJson);
 
         return jmb;
     }

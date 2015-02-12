@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Fightclub:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="0c853d0d-3b74-4682-acce-18205bc6244f" name="Default" comment="" />
     <ignored path="Fightclub.iws" />
@@ -46,10 +51,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Window.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Window.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/jorgechato/fightclub/Window.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2784091" vertical-offset="2265" max-vertical-offset="11508">
+            <state vertical-scroll-proportion="-19.852942" vertical-offset="2265" max-vertical-offset="11508">
               <caret line="140" column="39" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -92,15 +97,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MenuBar.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MenuBar.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/jorgechato/fightclub/MenuBar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="769" max-vertical-offset="1659">
-              <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.56173915" vertical-offset="328" max-vertical-offset="1659">
+              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#915#916#0" expanded="true" />
-                <element signature="e#951#952#0" expanded="true" />
+                <element signature="e#917#918#0" expanded="true" />
+                <element signature="e#953#954#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -137,10 +142,10 @@
         <option value="$PROJECT_DIR$/src/org/jorgechato/fightclub/base/Dojo.java" />
         <option value="$PROJECT_DIR$/src/org/jorgechato/fightclub/util/HibernateProxyTypeAdapter.java" />
         <option value="$PROJECT_DIR$/src/org/jorgechato/fightclub/util/UnitilsException.java" />
-        <option value="$PROJECT_DIR$/src/org/jorgechato/fightclub/MenuBar.java" />
         <option value="$PROJECT_DIR$/src/org/jorgechato/fightclub/Window.form" />
         <option value="$PROJECT_DIR$/src/org/jorgechato/fightclub/Window.java" />
         <option value="$PROJECT_DIR$/src/org/jorgechato/fightclub/util/HibernateUtil.java" />
+        <option value="$PROJECT_DIR$/src/org/jorgechato/fightclub/MenuBar.java" />
       </list>
     </option>
   </component>
@@ -335,7 +340,7 @@
     <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -670,15 +675,15 @@
       <workItem from="1423582074606" duration="15440000" />
       <workItem from="1423648877426" duration="1991000" />
       <workItem from="1423672226108" duration="1197000" />
-      <workItem from="1423750754500" duration="16711000" />
+      <workItem from="1423750754500" duration="17154000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60081000" />
+    <option name="totallyTimeSpent" value="60524000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1366" height="741" extended-state="0" />
+    <frame x="0" y="27" width="1366" height="741" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1236,18 +1241,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/jorgechato/fightclub/MenuBar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="769" max-vertical-offset="1659">
-          <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#915#916#0" expanded="true" />
-            <element signature="e#951#952#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/jorgechato/fightclub/Window.form">
       <provider selected="true" editor-type-id="ui-designer">
         <state />
@@ -1275,7 +1268,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/jorgechato/fightclub/Window.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2784091" vertical-offset="2265" max-vertical-offset="11508">
+        <state vertical-scroll-proportion="-19.852942" vertical-offset="2265" max-vertical-offset="11508">
           <caret line="140" column="39" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1305,16 +1298,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/jorgechato/fightclub/MenuBar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.56173915" vertical-offset="328" max-vertical-offset="1659">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#917#918#0" expanded="true" />
+            <element signature="e#953#954#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="masterDetails">
     <states>
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>Fightclub:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
