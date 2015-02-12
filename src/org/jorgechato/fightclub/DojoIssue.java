@@ -83,7 +83,7 @@ public class DojoIssue extends JDialog implements ActionListener{
                 session.getTransaction().commit();
                 session.close();
             }
-            window.reloadDojoTable();
+            window.reloadDojoTable(HibernateUtil.getCurrentSession().createQuery("FROM Dojo "));
             setVisible(false);
             return;
         }

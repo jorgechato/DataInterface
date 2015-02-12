@@ -12,13 +12,14 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 /**
  * Created by jorge on 4/02/15.
  */
 public class Window implements ActionListener{
-    private JTabbedPane searchBoxer;
     private JPanel panel1;
     private JTable tableDojo;
     private JButton pushDojo;
@@ -43,6 +44,7 @@ public class Window implements ActionListener{
     private JTextField searchDojo;
     private JTextField searchCoach;
     private JTextField searchFight;
+    private JTextField searchBoxer;
     private DefaultTableModel modelDojo;
     private DefaultTableModel modelCoach;
     private DefaultTableModel modelBoxer;
@@ -64,12 +66,116 @@ public class Window implements ActionListener{
     public Window() {
         HibernateUtil.buildSessionFactory();
         init();
-        reloadDojoTable();
-        reloadCoachTable();
-        reloadBoxerTable();
-        reloadFightTable();
+        search();
+        reloadDojoTable(HibernateUtil.getCurrentSession().createQuery("FROM Dojo "));
+        reloadCoachTable(HibernateUtil.getCurrentSession().createQuery("FROM Coach "));
+        reloadBoxerTable(HibernateUtil.getCurrentSession().createQuery("FROM Boxer "));
+        reloadFightTable(HibernateUtil.getCurrentSession().createQuery("FROM Fight "));
     }
 
+    public void search() {
+        searchDojo.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                searchDojoTable();
+            }
+        });
+        searchCoach.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                searchCoachTable();
+            }
+        });
+        searchFight.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                searchFightTable();
+            }
+        });
+        searchBoxer.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                searchBoxerTable();
+            }
+        });
+    }
+
+    public void searchDojoTable() {
+        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Dojo WHERE name like '%" +
+                searchDojo.getText() +"%' or street like '%"+searchDojo.getText()+"%'");
+        reloadDojoTable(query);
+    }
+    public void searchCoachTable(){
+        int num;
+        try{
+            num = Integer.parseInt(searchCoach.getText());
+        }catch (NumberFormatException e){
+            num = 0;
+        }
+        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Coach WHERE name like '%" +
+                searchCoach.getText() +"%' or sperience = "+num);
+        reloadCoachTable(query);
+
+    }
+    public void searchFightTable(){
+        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Fight WHERE name like '%" +
+                searchFight.getText() +"%' or street like '%"+searchFight.getText()+"%'");
+        reloadFightTable(query);
+
+    }
+    public void searchBoxerTable(){
+        int win;
+        try{
+            win = Integer.parseInt(searchBoxer.getText());
+        }catch (NumberFormatException e){
+            win = 0;
+        }
+
+        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Boxer WHERE name like '%" +
+                searchBoxer.getText() +"%' or wins = "+win);
+        reloadBoxerTable(query);
+
+    }
     public List<Coach> getListCoach() {
         return listCoach;
     }
@@ -171,9 +277,8 @@ public class Window implements ActionListener{
         tableFight.setModel(modelFight);
     }
 
-    public void reloadDojoTable() {
+    public void reloadDojoTable(Query query) {
         modelDojo.setNumRows(0);
-        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Dojo ");
         listDojo = (List<Dojo>) query.list();
         for (Dojo dojo : listDojo) {
             Object [] object = new Object[]{dojo.getId() ,dojo.getName(),dojo.getStreet(),dojo.getInauguration() };
@@ -181,9 +286,8 @@ public class Window implements ActionListener{
         }
     }
 
-    public void reloadCoachTable() {
+    public void reloadCoachTable(Query query) {
         modelCoach.setNumRows(0);
-        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Coach ");
         listCoach= (List<Coach>) query.list();
         for (Coach coach : listCoach) {
             Object [] object = new Object[]{ coach.getId(),coach.getName(),coach.getBirthday(),coach.getSperience(),coach.getDojo() };
@@ -191,9 +295,8 @@ public class Window implements ActionListener{
         }
     }
 
-    public void reloadBoxerTable() {
+    public void reloadBoxerTable(Query query) {
         modelBoxer.setNumRows(0);
-        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Boxer ");
         listBoxer= (List<Boxer>) query.list();
         for (Boxer boxer : listBoxer) {
             Object [] object = new Object[]{ boxer.getId(), boxer.getName(),boxer.getWins(),boxer.getLose(),boxer.getWeight(),
@@ -202,9 +305,8 @@ public class Window implements ActionListener{
         }
     }
 
-    public void reloadFightTable() {
+    public void reloadFightTable(Query query) {
         modelFight.setNumRows(0);
-        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Fight ");
         listFight= (List<Fight>) query.list();
         for (Fight fight : listFight) {
             Object [] object = new Object[]{ fight.getId(), fight.getName(),fight.getStreet(),fight.getDay()};
@@ -241,7 +343,7 @@ public class Window implements ActionListener{
                 session.getTransaction().commit();
                 session.close();
 
-                reloadFightTable();
+                reloadFightTable(HibernateUtil.getCurrentSession().createQuery("FROM Fight "));
                 return;
             }
         }
@@ -272,7 +374,7 @@ public class Window implements ActionListener{
                 session.getTransaction().commit();
                 session.close();
 
-                reloadBoxerTable();
+                reloadBoxerTable(HibernateUtil.getCurrentSession().createQuery("FROM Boxer "));
                 return;
             }
         }
@@ -303,7 +405,7 @@ public class Window implements ActionListener{
                 session.getTransaction().commit();
                 session.close();
 
-                reloadCoachTable();
+                reloadCoachTable(HibernateUtil.getCurrentSession().createQuery("FROM Coach "));
                 return;
             }
         }
@@ -334,7 +436,7 @@ public class Window implements ActionListener{
                 session.getTransaction().commit();
                 session.close();
 
-                reloadDojoTable();
+                reloadDojoTable(HibernateUtil.getCurrentSession().createQuery("FROM Dojo "));
                 return;
             }
         }

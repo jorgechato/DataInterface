@@ -97,7 +97,7 @@ public class BoxerIssue extends JDialog implements ActionListener {
                 session.getTransaction().commit();
                 session.close();
             }
-            window.reloadBoxerTable();
+            window.reloadBoxerTable(HibernateUtil.getCurrentSession().createQuery("FROM Boxer "));
             setVisible(false);
             return;
         }

@@ -88,7 +88,7 @@ public class CoachIssue extends JDialog implements ActionListener {
                 session.getTransaction().commit();
                 session.close();
             }
-            window.reloadCoachTable();
+            window.reloadCoachTable(HibernateUtil.getCurrentSession().createQuery("FROM Coach "));
             setVisible(false);
             return;
         }

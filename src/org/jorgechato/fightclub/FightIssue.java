@@ -117,7 +117,7 @@ public class FightIssue  extends JDialog implements ActionListener {
                 session.getTransaction().commit();
                 session.close();
             }
-            window.reloadFightTable();
+            window.reloadFightTable(HibernateUtil.getCurrentSession().createQuery("FROM Fight "));
             setVisible(false);
             return;
         }

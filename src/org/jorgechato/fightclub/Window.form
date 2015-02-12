@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <tabbedpane id="bbf49" binding="searchBoxer">
+      <tabbedpane id="bbf49">
         <constraints border-constraint="Center"/>
         <properties>
           <preferredSize width="981" height="600"/>
@@ -163,7 +163,7 @@
                       <text value="Modificar"/>
                     </properties>
                   </component>
-                  <component id="a58c1" class="javax.swing.JTextField" default-binding="true">
+                  <component id="a58c1" class="javax.swing.JTextField" binding="searchBoxer">
                     <constraints/>
                     <properties>
                       <preferredSize width="750" height="29"/>
