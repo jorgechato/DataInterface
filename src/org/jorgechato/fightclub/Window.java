@@ -1,20 +1,21 @@
 package org.jorgechato.fightclub;
 
+import com.db4o.Db4oEmbedded;
+import com.db4o.query.Predicate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.jorgechato.fightclub.base.Boxer;
 import org.jorgechato.fightclub.base.Coach;
 import org.jorgechato.fightclub.base.Dojo;
 import org.jorgechato.fightclub.base.Fight;
-import org.jorgechato.fightclub.util.HibernateUtil;
+import org.jorgechato.fightclub.util.Util;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class Window implements ActionListener{
     private DefaultTableModel modelBoxer;
     private DefaultTableModel modelFight;
     private List<Coach> listCoach;
-    private ArrayList<Dojo> listDojo;
+    private List<Dojo> listDojo;
     private List<Boxer> listBoxer;
     private List<Fight> listFight;
     private static MenuBar menuBar;
@@ -79,13 +80,18 @@ public class Window implements ActionListener{
     }
 
     public Window() {
-        HibernateUtil.buildSessionFactory();
+        Util.db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "FightClub.db4o") ;
+
         init();
         search();
-        reloadDojoTable(HibernateUtil.getCurrentSession().createQuery("FROM Dojo "));
-        reloadCoachTable(HibernateUtil.getCurrentSession().createQuery("FROM Coach "));
-        reloadBoxerTable(HibernateUtil.getCurrentSession().createQuery("FROM Boxer "));
-        reloadFightTable(HibernateUtil.getCurrentSession().createQuery("FROM Fight "));
+        if (Util.db.query(Dojo.class).size()>0)
+            reloadDojoTable(Util.db.query(Dojo.class));
+        if (Util.db.query(Coach.class).size()>0)
+            reloadCoachTable(Util.db.query(Coach.class));
+        if (Util.db.query(Boxer.class).size()>0)
+            reloadBoxerTable(Util.db.query(Boxer.class));
+        if (Util.db.query(Fight.class).size()>0)
+            reloadFightTable(Util.db.query(Fight.class));
         timer();
 
         tabPanel.addMouseListener(new MouseAdapter() {
@@ -148,10 +154,14 @@ public class Window implements ActionListener{
         Timer timer = new Timer(60000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                reloadDojoTable(HibernateUtil.getCurrentSession().createQuery("FROM Dojo "));
-                reloadCoachTable(HibernateUtil.getCurrentSession().createQuery("FROM Coach "));
-                reloadBoxerTable(HibernateUtil.getCurrentSession().createQuery("FROM Boxer "));
-                reloadFightTable(HibernateUtil.getCurrentSession().createQuery("FROM Fight "));
+            if (Util.db.query(Dojo.class).size()>0)
+                reloadDojoTable(Util.db.query(Dojo.class));
+            if (Util.db.query(Coach.class).size()>0)
+                reloadCoachTable(Util.db.query(Coach.class));
+            if (Util.db.query(Boxer.class).size()>0)
+                reloadBoxerTable(Util.db.query(Boxer.class));
+            if (Util.db.query(Fight.class).size()>0)
+                reloadFightTable(Util.db.query(Fight.class));
             }
         });timer.start();
     }
@@ -224,40 +234,62 @@ public class Window implements ActionListener{
     }
 
     public void searchDojoTable() {
-        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Dojo WHERE name like '%" +
-                searchDojo.getText() +"%' or street like '%"+searchDojo.getText()+"%'");
-        reloadDojoTable(query);
+        List<Dojo> list = Util.db.query(new Predicate<Dojo>() {
+            @Override
+            public boolean match(Dojo dojo) {
+                if (dojo.getName().contains(searchDojo.getText()))
+                    return true;
+                if (dojo.getStreet().contains(searchDojo.getText()))
+                    return true;
+                return false;
+            }
+        });
+        reloadDojoTable(list);
     }
     public void searchCoachTable(){
-        int num;
-        try{
-            num = Integer.parseInt(searchCoach.getText());
-        }catch (NumberFormatException e){
-            num = 0;
-        }
-        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Coach WHERE name like '%" +
-                searchCoach.getText() +"%' or sperience = "+num+" or dojo.name like '%"+searchCoach.getText()+"%'");
-        reloadCoachTable(query);
-
+        List<Coach> list = Util.db.query(new Predicate<Coach>() {
+            @Override
+            public boolean match(Coach coach) {
+                if (coach.getName().contains(searchCoach.getText()))
+                    return true;
+                if (coach.getDojo().getName().contains(searchCoach.getText()))
+                    return true;
+                if (String.valueOf(coach.getSperience()).contains(searchCoach.getText()))
+                    return true;
+                return false;
+            }
+        });
+        reloadCoachTable(list);
     }
     public void searchFightTable(){
-        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Fight WHERE name like '%" +
-                searchFight.getText() +"%' or street like '%"+searchFight.getText()+"%'");
-        reloadFightTable(query);
-
+        List<Fight> list = Util.db.query(new Predicate<Fight>() {
+            @Override
+            public boolean match(Fight fight) {
+                if (fight.getName().contains(searchFight.getText()))
+                    return true;
+                if (fight.getStreet().contains(searchFight.getText()))
+                    return true;
+                return false;
+            }
+        });
+        reloadFightTable(list);
     }
     public void searchBoxerTable(){
-        int win;
-        try{
-            win = Integer.parseInt(searchBoxer.getText());
-        }catch (NumberFormatException e){
-            win = 0;
-        }
-
-        Query query = HibernateUtil.getCurrentSession().createQuery("FROM Boxer WHERE name like '%" +
-                searchBoxer.getText() +"%' or wins = "+win+ " or dojo.name like '%"+searchBoxer.getText()+"%' or coach.name like '%"+searchBoxer.getText()+"%'");
-        reloadBoxerTable(query);
-
+        List<Boxer> list = Util.db.query(new Predicate<Boxer>() {
+            @Override
+            public boolean match(Boxer boxer) {
+                if (boxer.getName().contains(searchBoxer.getText()))
+                    return true;
+                if (boxer.getDojo().getName().contains(searchBoxer.getText()))
+                    return true;
+                if (boxer.getCoach().getName().contains(searchBoxer.getText()))
+                    return true;
+                if (String.valueOf(boxer.getWins()).contains(searchBoxer.getText()))
+                    return true;
+                return false;
+            }
+        });
+        reloadBoxerTable(list);
     }
     public List<Coach> getListCoach() {
         return listCoach;
@@ -316,7 +348,6 @@ public class Window implements ActionListener{
                 return false;
             }
         };
-        modelDojo.addColumn("#");
         modelDojo.addColumn("Nombre");
         modelDojo.addColumn("Dirección");
         modelDojo.addColumn("Inauguración");
@@ -327,7 +358,6 @@ public class Window implements ActionListener{
                 return false;
             }
         };
-        modelCoach.addColumn("#");
         modelCoach.addColumn("Nombre");
         modelCoach.addColumn("Cumpleaños");
         modelCoach.addColumn("Experiencia");
@@ -339,7 +369,6 @@ public class Window implements ActionListener{
                 return false;
             }
         };
-        modelBoxer.addColumn("#");
         modelBoxer.addColumn("Nombre");
         modelBoxer.addColumn("Ganados");
         modelBoxer.addColumn("Perdidos");
@@ -353,7 +382,6 @@ public class Window implements ActionListener{
                 return false;
             }
         };
-        modelFight.addColumn("#");
         modelFight.addColumn("Nombre");
         modelFight.addColumn("Dirección");
         modelFight.addColumn("Fecha");
@@ -364,60 +392,48 @@ public class Window implements ActionListener{
         tableFight.setModel(modelFight);
     }
 
-    public void reloadDojoTable(Query query) {
+    public void reloadDojoTable(List<Dojo> list) {
         modelDojo.setNumRows(0);
-        listDojo = (ArrayList<Dojo>) query.list();
-        for (Dojo dojo : listDojo) {
-            Object [] object = new Object[]{dojo.getId() ,dojo.getName(),dojo.getStreet(),dojo.getInauguration() };
+        for (Dojo dojo : list) {
+            Object [] object = new Object[]{dojo.getName(),dojo.getStreet(),dojo.getInauguration() };
             modelDojo.addRow(object);
         }
-        Session session = HibernateUtil.getCurrentSession();
-        session.beginTransaction();
-        session.getTransaction().commit();
-        session.close();
+        listDojo = list;
+
         logLabel.setText("Tabla de escuela actualizada \t Filas: "+modelDojo.getRowCount());
     }
 
-    public void reloadCoachTable(Query query) {
+    public void reloadCoachTable(List<Coach> list) {
         modelCoach.setNumRows(0);
-        listCoach= (List<Coach>) query.list();
-        for (Coach coach : listCoach) {
-            Object [] object = new Object[]{ coach.getId(),coach.getName(),coach.getBirthday(),coach.getSperience(),coach.getDojo() };
+        for (Coach coach : list) {
+            Object [] object = new Object[]{ coach.getName(),coach.getBirthday(),coach.getSperience(),coach.getDojo() };
             modelCoach.addRow(object);
         }
-        Session session = HibernateUtil.getCurrentSession();
-        session.beginTransaction();
-        session.getTransaction().commit();
-        session.close();
+        listCoach = list;
+
         logLabel.setText("Tabla de entrenador actualizada \t Filas: "+modelCoach.getRowCount());
     }
 
-    public void reloadBoxerTable(Query query) {
+    public void reloadBoxerTable(List<Boxer> list) {
         modelBoxer.setNumRows(0);
-        listBoxer= (List<Boxer>) query.list();
-        for (Boxer boxer : listBoxer) {
-            Object [] object = new Object[]{ boxer.getId(), boxer.getName(),boxer.getWins(),boxer.getLose(),boxer.getWeight(),
+        for (Boxer boxer : list) {
+            Object [] object = new Object[]{boxer.getName(),boxer.getWins(),boxer.getLose(),boxer.getWeight(),
             boxer.getDojo(),boxer.getCoach()};
             modelBoxer.addRow(object);
         }
-        Session session = HibernateUtil.getCurrentSession();
-        session.beginTransaction();
-        session.getTransaction().commit();
-        session.close();
+        listBoxer = list;
+
         logLabel.setText("Tabla de boxeador actualizada \t Filas: "+modelBoxer.getRowCount());
     }
 
-    public void reloadFightTable(Query query) {
+    public void reloadFightTable(List<Fight> list) {
         modelFight.setNumRows(0);
-        listFight= (List<Fight>) query.list();
-        for (Fight fight : listFight) {
-            Object [] object = new Object[]{ fight.getId(), fight.getName(),fight.getStreet(),fight.getDay()};
+        for (Fight fight : list) {
+            Object [] object = new Object[]{ fight.getName(),fight.getStreet(),fight.getDay()};
             modelFight.addRow(object);
         }
-        Session session = HibernateUtil.getCurrentSession();
-        session.beginTransaction();
-        session.getTransaction().commit();
-        session.close();
+        listFight = list;
+
         logLabel.setText("Tabla de combate actualizada \t Filas: "+modelFight.getRowCount());
     }
 
@@ -434,7 +450,7 @@ public class Window implements ActionListener{
 
         if ((fightRow = tableFight.getSelectedRow()) != -1){
             if (actionEvent.getSource() == changeFight){
-                new FightIssue(this, (Integer) tableFight.getValueAt(fightRow,0)).setVisible(true);
+                new FightIssue(this, tableFight.getValueAt(fightRow,0).toString()).setVisible(true);
                 return;
             }
             if (actionEvent.getSource() == deleteFight){
@@ -442,22 +458,41 @@ public class Window implements ActionListener{
                         JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
                     return;
                 }
-                int id = (Integer) tableDojo.getValueAt(fightRow, 0);
-                Fight fight =(Fight) HibernateUtil.getCurrentSession().get(Fight.class, id);
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.delete(fight);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.delete(searchFightByName(tableFight.getValueAt(fightRow,0).toString()).get(0));
+                Util.db.commit();
 
-                reloadFightTable(HibernateUtil.getCurrentSession().createQuery("FROM Fight "));
+                reloadFightTable(Util.db.query(Fight.class));
                 return;
             }
         }
         if (actionEvent.getSource() == pushFight){
-            new FightIssue(this,-1).setVisible(true);
+            new FightIssue(this,null).setVisible(true);
             return;
         }
+    }
+
+    public List<Fight> searchFightByName(String fightRow){
+        Fight fight = new Fight() ;
+        fight.setName(fightRow);
+        return Util.db.queryByExample(fight);
+    }
+
+    public List<Boxer> searchBoxerByName(String boxerRow){
+        Boxer boxer = new Boxer() ;
+        boxer.setName(boxerRow);
+        return Util.db.queryByExample(boxer);
+    }
+
+    public List<Coach> searchCoachByName(String coachRow){
+        Coach coach = new Coach() ;
+        coach.setName(coachRow);
+        return Util.db.queryByExample(coach);
+    }
+
+    public List<Dojo> searchDojoByName(String dojoRow){
+        Dojo dojo = new Dojo() ;
+        dojo.setName(dojoRow);
+        return Util.db.queryByExample(dojo);
     }
 
     private void actionBoxer(ActionEvent actionEvent) {
@@ -465,7 +500,7 @@ public class Window implements ActionListener{
 
         if ((boxerRow = tableBoxer.getSelectedRow()) != -1){
             if (actionEvent.getSource() == changeBoxer){
-                new BoxerIssue(this, (Integer) tableBoxer.getValueAt(boxerRow,0)).setVisible(true);
+                new BoxerIssue(this, tableBoxer.getValueAt(boxerRow,0).toString()).setVisible(true);
                 return;
             }
             if (actionEvent.getSource() == deleteBoxer){
@@ -473,20 +508,15 @@ public class Window implements ActionListener{
                         JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
                     return;
                 }
-                int id = (Integer) tableBoxer.getValueAt(boxerRow, 0);
-                Boxer boxer =(Boxer) HibernateUtil.getCurrentSession().get(Boxer.class, id);
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.delete(boxer);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.delete(searchBoxerByName(tableBoxer.getValueAt(boxerRow,0).toString()).get(0));
+                Util.db.commit();
 
-                reloadBoxerTable(HibernateUtil.getCurrentSession().createQuery("FROM Boxer "));
+                reloadBoxerTable(Util.db.query(Boxer.class));
                 return;
             }
         }
         if (actionEvent.getSource() == pushBoxer){
-            new BoxerIssue(this,-1).setVisible(true);
+            new BoxerIssue(this,null).setVisible(true);
             return;
         }
     }
@@ -496,7 +526,7 @@ public class Window implements ActionListener{
 
         if ((coachRow = tableCoach.getSelectedRow()) != -1){
             if (actionEvent.getSource() == changeCoach){
-                new CoachIssue(this, (Integer) tableCoach.getValueAt(coachRow,0)).setVisible(true);
+                new CoachIssue(this, tableCoach.getValueAt(coachRow,0).toString()).setVisible(true);
                 return;
             }
             if (actionEvent.getSource() == deleteCoach){
@@ -504,20 +534,15 @@ public class Window implements ActionListener{
                         JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
                     return;
                 }
-                int id = (Integer) tableCoach.getValueAt(coachRow, 0);
-                Coach coach =(Coach) HibernateUtil.getCurrentSession().get(Coach.class, id);
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.delete(coach);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.delete(searchCoachByName(tableCoach.getValueAt(coachRow,0).toString()).get(0));
+                Util.db.commit();
 
-                reloadCoachTable(HibernateUtil.getCurrentSession().createQuery("FROM Coach "));
+                reloadCoachTable(Util.db.query(Coach.class));
                 return;
             }
         }
         if (actionEvent.getSource() == pushCoach){
-            new CoachIssue(this,-1).setVisible(true);
+            new CoachIssue(this,null).setVisible(true);
             return;
         }
     }
@@ -527,7 +552,7 @@ public class Window implements ActionListener{
 
         if ((dojoRow = tableDojo.getSelectedRow()) != -1){
             if (actionEvent.getSource() == changeDojo){
-                new DojoIssue(this, (Integer) tableDojo.getValueAt(dojoRow,0)).setVisible(true);
+                new DojoIssue(this,tableDojo.getValueAt(dojoRow,0).toString()).setVisible(true);
                 return;
             }
             if (actionEvent.getSource() == deleteDojo){
@@ -535,20 +560,15 @@ public class Window implements ActionListener{
                         JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
                     return;
                 }
-                int id = (Integer) tableDojo.getValueAt(dojoRow, 0);
-                Dojo dojo =(Dojo) HibernateUtil.getCurrentSession().get(Dojo.class, id);
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.delete(dojo);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.delete(searchDojoByName(tableDojo.getValueAt(dojoRow,0).toString()).get(0));
+                Util.db.commit();
 
-                reloadDojoTable(HibernateUtil.getCurrentSession().createQuery("FROM Dojo "));
+                reloadDojoTable(Util.db.query(Dojo.class));
                 return;
             }
         }
         if (actionEvent.getSource() == pushDojo){
-            new DojoIssue(this,-1).setVisible(true);
+            new DojoIssue(this,null).setVisible(true);
             return;
         }
     }
@@ -564,16 +584,12 @@ public class Window implements ActionListener{
 
             fileReader.close();
 
-            Session session = HibernateUtil.getCurrentSession();
             for (Dojo dojo : newListDojo){
-                session.beginTransaction();
-                session.save(dojo);
-                session.getTransaction().commit();
+                Util.db.store(dojo) ;
+                Util.db.commit() ;
             }
-            session.close();
 
-            reloadDojoTable(HibernateUtil.getCurrentSession().createQuery("FROM Dojo "));
-
+            reloadDojoTable(Util.db.query(Dojo.class));
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
@@ -581,14 +597,14 @@ public class Window implements ActionListener{
 
     public void exportToJson(){
         Gson gson = new Gson();
-//        String json = gson.toJson(listDojo);
+        String json = gson.toJson(listDojo);
         System.out.println(gson.toJson(listDojo));
-//        try {
-//            FileWriter fileWriter = new FileWriter(jsonPath+".json");
-//            fileWriter.write(json);
-//            fileWriter.close();
-//        } catch (IOException e) {
-//            System.out.println(e.fillInStackTrace());
-//        }
+        try {
+            FileWriter fileWriter = new FileWriter(jsonPath+".json");
+            fileWriter.write(json);
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println(e.fillInStackTrace());
+        }
     }
 }

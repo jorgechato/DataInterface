@@ -1,10 +1,9 @@
 package org.jorgechato.fightclub;
 
 import com.toedter.calendar.JDateChooser;
-import org.hibernate.Session;
 import org.jorgechato.fightclub.base.Coach;
 import org.jorgechato.fightclub.base.Dojo;
-import org.jorgechato.fightclub.util.HibernateUtil;
+import org.jorgechato.fightclub.util.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,10 +23,10 @@ public class CoachIssue extends JDialog implements ActionListener {
     private JPanel panel1;
     private JComboBox comboBox1;
     private Window window;
-    private int idCoach;
+    private String nameCoach;
     private Coach query;
 
-    public CoachIssue(Window window,int idCoach) {
+    public CoachIssue(Window window,String nameCoach) {
         dateInnauguration.setPreferredSize(new Dimension(250, 29));
         setContentPane(panel1);
         pack();
@@ -36,7 +35,7 @@ public class CoachIssue extends JDialog implements ActionListener {
         setLocationRelativeTo(null);
 
         this.window = window;
-        this.idCoach = idCoach;
+        this.nameCoach = nameCoach;
 
         init();
     }
@@ -48,8 +47,8 @@ public class CoachIssue extends JDialog implements ActionListener {
         for (Dojo dojo : window.getListDojo())
             comboBox1.addItem(dojo);
 
-        if (idCoach != -1){
-            query = (Coach) HibernateUtil.getCurrentSession().get(Coach.class,idCoach);
+        if (nameCoach != null){
+            query = window.searchCoachByName(nameCoach).get(0);
             textField1.setText(query.getName());
             textField2.setText(query.getSperience().toString());
             dateInnauguration.setDate(new Date(query.getBirthday().getTime()));
@@ -64,31 +63,25 @@ public class CoachIssue extends JDialog implements ActionListener {
             return;
         }
         if(actionEvent.getSource() == aceptarButton){
-            if (idCoach == -1){
+            if (nameCoach == null){
                 Coach coach = new Coach();
                 coach.setName(textField1.getText());
                 coach.setSperience(Integer.parseInt(textField2.getText()));
                 coach.setBirthday(new Date(dateInnauguration.getDate().getTime()));
                 coach.setDojo((Dojo) comboBox1.getSelectedItem());
 
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.save(coach);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.store(coach);
+                Util.db.commit();
             }else {
                 query.setName(textField1.getText());
                 query.setSperience(Integer.parseInt(textField2.getText()));
                 query.setBirthday(new Date(dateInnauguration.getDate().getTime()));
                 query.setDojo((Dojo) comboBox1.getSelectedItem());
 
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.update(query);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.store(query);
+                Util.db.commit();
             }
-            window.reloadCoachTable(HibernateUtil.getCurrentSession().createQuery("FROM Coach "));
+            window.reloadCoachTable(Util.db.query(Coach.class));
             setVisible(false);
             return;
         }

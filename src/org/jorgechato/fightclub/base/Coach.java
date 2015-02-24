@@ -1,12 +1,13 @@
 package org.jorgechato.fightclub.base;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 /**
  * Created by jorge on 4/02/15.
  */
-public class Coach {
+public class Coach implements Serializable {
     private String name;
     private Date birthday;
     private Integer sperience;

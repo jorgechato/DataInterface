@@ -1,12 +1,13 @@
 package org.jorgechato.fightclub.base;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 /**
  * Created by jorge on 4/02/15.
  */
-public class Fight {
+public class Fight implements Serializable{
     private String name;
     private String street;
     private Date day;

@@ -1,11 +1,12 @@
 package org.jorgechato.fightclub.base;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by jorge on 4/02/15.
  */
-public class Boxer{
+public class Boxer implements Serializable{
     private String name;
     private Integer wins;
     private Integer lose;

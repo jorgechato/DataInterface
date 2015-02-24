@@ -1,11 +1,10 @@
 package org.jorgechato.fightclub;
 
 import com.toedter.calendar.JDateChooser;
-import org.hibernate.Session;
 import org.jorgechato.fightclub.base.Boxer;
 import org.jorgechato.fightclub.base.Coach;
 import org.jorgechato.fightclub.base.Dojo;
-import org.jorgechato.fightclub.util.HibernateUtil;
+import org.jorgechato.fightclub.util.Util;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,10 +25,10 @@ public class BoxerIssue extends JDialog implements ActionListener {
     private JTextField textField3;
     private JTextField textField4;
     private Window window;
-    private int idBoxer;
+    private String nameBoxer;
     private Boxer query;
 
-    public BoxerIssue(Window window,int idBoxer) {
+    public BoxerIssue(Window window,String nameBoxer) {
         setContentPane(panel1);
         pack();
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -37,7 +36,7 @@ public class BoxerIssue extends JDialog implements ActionListener {
         setLocationRelativeTo(null);
 
         this.window = window;
-        this.idBoxer = idBoxer;
+        this.nameBoxer = nameBoxer;
 
         init();
     }
@@ -51,8 +50,8 @@ public class BoxerIssue extends JDialog implements ActionListener {
         for (Coach coach : window.getListCoach())
             comboBox2.addItem(coach);
 
-        if (idBoxer != -1){
-            query = (Boxer) HibernateUtil.getCurrentSession().get(Boxer.class,idBoxer);
+        if (nameBoxer != null){
+            query = window.searchBoxerByName(nameBoxer).get(0);
             textField1.setText(query.getName());
             textField2.setText(String.valueOf(query.getWins()));
             textField3.setText(String.valueOf(query.getLose()));
@@ -69,7 +68,7 @@ public class BoxerIssue extends JDialog implements ActionListener {
             return;
         }
         if(actionEvent.getSource() == aceptarButton){
-            if (idBoxer == -1){
+            if (nameBoxer == null){
                 Boxer boxer = new Boxer();
                 boxer.setName(textField1.getText());
                 boxer.setWins(Integer.parseInt(textField2.getText()));
@@ -78,11 +77,8 @@ public class BoxerIssue extends JDialog implements ActionListener {
                 boxer.setDojo((Dojo) comboBox1.getSelectedItem());
                 boxer.setCoach((Coach) comboBox2.getSelectedItem());
 
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.save(boxer);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.store(boxer);
+                Util.db.commit();
             }else {
                 query.setName(textField1.getText());
                 query.setWins(Integer.parseInt(textField2.getText()));
@@ -91,13 +87,10 @@ public class BoxerIssue extends JDialog implements ActionListener {
                 query.setDojo((Dojo) comboBox1.getSelectedItem());
                 query.setCoach((Coach) comboBox2.getSelectedItem());
 
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.update(query);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.store(query);
+                Util.db.commit();
             }
-            window.reloadBoxerTable(HibernateUtil.getCurrentSession().createQuery("FROM Boxer "));
+            window.reloadBoxerTable(Util.db.query(Boxer.class));
             setVisible(false);
             return;
         }

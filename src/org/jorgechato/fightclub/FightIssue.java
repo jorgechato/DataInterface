@@ -1,10 +1,9 @@
 package org.jorgechato.fightclub;
 
 import com.toedter.calendar.JDateChooser;
-import org.hibernate.Session;
 import org.jorgechato.fightclub.base.Boxer;
 import org.jorgechato.fightclub.base.Fight;
-import org.jorgechato.fightclub.util.HibernateUtil;
+import org.jorgechato.fightclub.util.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,11 +28,11 @@ public class FightIssue  extends JDialog implements ActionListener {
     private JDateChooser dateInnauguration;
     private JList list1;
     private Window window;
-    private int idFight;
+    private String nameFight;
     private Fight query;
     private DefaultListModel<Boxer> model;
 
-    public FightIssue(Window window,int idFight) {
+    public FightIssue(Window window,String nameFight) {
         dateInnauguration.setPreferredSize(new Dimension(250, 29));
         setContentPane(panel1);
         pack();
@@ -42,7 +41,7 @@ public class FightIssue  extends JDialog implements ActionListener {
         setLocationRelativeTo(null);
 
         this.window = window;
-        this.idFight = idFight;
+        this.nameFight = nameFight;
 
         model = new DefaultListModel<Boxer>();
         list1.setModel(model);
@@ -59,8 +58,8 @@ public class FightIssue  extends JDialog implements ActionListener {
             model.addElement(boxer);
         }
 
-        if (idFight != -1){
-            query = (Fight) HibernateUtil.getCurrentSession().get(Fight.class,idFight);
+        if (nameFight != null){
+            query = window.searchFightByName(nameFight).get(0);
             textField1.setText(query.getName());
             textField2.setText(query.getStreet());
             dateInnauguration.setDate(new Date(query.getDay().getTime()));
@@ -91,7 +90,7 @@ public class FightIssue  extends JDialog implements ActionListener {
             return;
         }
         if(actionEvent.getSource() == aceptarButton){
-            if (idFight == -1){
+            if (nameFight == null){
                 Fight fight = new Fight();
                 fight.setName(textField1.getText());
                 fight.setStreet(textField2.getText());
@@ -99,11 +98,8 @@ public class FightIssue  extends JDialog implements ActionListener {
 
                 fight.setBoxers(list1.getSelectedValuesList());
 
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.save(fight);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.store(fight);
+                Util.db.commit();
             }else {
                 query.setName(textField1.getText());
                 query.setStreet(textField2.getText());
@@ -111,13 +107,10 @@ public class FightIssue  extends JDialog implements ActionListener {
 
                 query.setBoxers(list1.getSelectedValuesList());
 
-                Session session = HibernateUtil.getCurrentSession();
-                session.beginTransaction();
-                session.update(query);
-                session.getTransaction().commit();
-                session.close();
+                Util.db.store(query);
+                Util.db.commit();
             }
-            window.reloadFightTable(HibernateUtil.getCurrentSession().createQuery("FROM Fight "));
+            window.reloadFightTable(Util.db.query(Fight.class));
             setVisible(false);
             return;
         }
